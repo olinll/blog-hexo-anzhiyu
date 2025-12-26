@@ -1,0 +1,50 @@
+- class_name: 开启创造力
+  creativity_list:
+    - name: Java
+      color: "#fff"
+      icon: /website/creativity/java.jpg
+    - name: Docker
+      color: "#57b6e6"
+      icon: /website/creativity/docker.png
+    - name: Photoshop
+      color: "#4082c3"
+      icon: /website/creativity/photoshop.png
+    - name: Node
+      color: "#333"
+      icon: /website/creativity/node.svg
+    - name: Webpack
+      color: "#2e3a41"
+      icon: /website/creativity/webpack.png
+    - name: Pinia
+      color: "#fff"
+      icon: /website/creativity/pinia.svg
+    - name: Python
+      color: "#fff"
+      icon: /website/creativity/python.png
+    - name: Vite
+      color: "#937df7"
+      icon: /website/creativity/vite.svg
+    - name: Flutter
+      color: "#4499e4"
+      icon: /website/creativity/flutter.png
+    - name: Vue
+      color: "#b8f0ae"
+      icon: /website/creativity/vue.png
+    - name: React
+      color: "#222"
+      icon: /website/creativity/react.svg
+    - name: CSS3
+      color: "#2c51db"
+      icon: /website/creativity/CSS3.png
+    - name: JS
+      color: "#f7cb4f"
+      icon: /website/creativity/js.png
+    - name: HTML
+      color: "#e9572b"
+      icon: /website/creativity/HTML.png
+    - name: Git
+      color: "#df5b40"
+      icon: /website/creativity/Git.webp
+    - name: Apifox
+      color: "#e65164"
+      icon: /website/creativity/apifox.png
