@@ -1,0 +1,10 @@
+{
+  "attachmentFolderPath": "./image",
+  "trashOption": "local",
+  "readableLineLength": false,
+  "showLineNumber": false,
+  "newLinkFormat": "relative",
+  "useMarkdownLinks": true,
+  "focusNewTab": true,
+  "promptDelete": false
+}
