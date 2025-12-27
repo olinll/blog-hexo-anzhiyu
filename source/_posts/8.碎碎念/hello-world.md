@@ -1,5 +1,13 @@
 ---
 title: Hello World
+updated: 2025-12-27T15:22
+date: 2025-11-08T13:01:00
+aliases:
+categories:
+  - 碎碎念
+tags:
+cover:
+published: true
 ---
 Welcome to [Hexo](https://hexo.io/)! This is your very first post. Check [documentation](https://hexo.io/docs/) for more info. If you get any problems when using Hexo, you can find the answer in [troubleshooting](https://hexo.io/docs/troubleshooting.html) or you can ask me on [GitHub](https://github.com/hexojs/hexo/issues).
 

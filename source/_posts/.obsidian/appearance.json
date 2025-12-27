@@ -9,5 +9,6 @@
   ],
   "nativeMenus": false,
   "textFontFamily": "霞鹜文楷",
-  "monospaceFontFamily": "JetBrains Mono"
+  "monospaceFontFamily": "JetBrains Mono",
+  "theme": "system"
 }

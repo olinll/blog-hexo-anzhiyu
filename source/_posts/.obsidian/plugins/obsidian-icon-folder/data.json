@@ -34,14 +34,14 @@
     "debugMode": false,
     "useInternalPlugins": false
   },
-  "1 软件开发": "LiFolderCode",
-  "2 网站建设": "CoCloud",
-  "3 Linux": "SiLinux",
-  "4 HomeLab": "TiHomeLink",
-  "8 其他": "TiTooltip",
-  "9 待整理": "FasStreetView",
   "_Template": "TiTemplate",
   "share-files": "CoFiles",
   "4 HomeLab/1 ProxmoxVE": "SiProxmox",
-  "5 Docker&Apps": "SiDocker"
+  "1.软件开发": "LiFolderCode",
+  "2.网站建设": "CoCloud",
+  "3.Linux": "SiLinux",
+  "4.HomeLab": "TiHomeLink",
+  "8.碎碎念": "TiTooltip",
+  "9.待整理": "FasStreetView",
+  "5.Docker": "SiDocker"
 }

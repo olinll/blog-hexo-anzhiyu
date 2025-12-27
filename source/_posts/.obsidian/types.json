@@ -5,6 +5,6 @@
     "tags": "tags",
     "published": "checkbox",
     "categories": "multitext",
-    "created": "datetime"
+    "date": "datetime"
   }
 }

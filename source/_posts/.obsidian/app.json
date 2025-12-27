@@ -1,6 +1,6 @@
 {
-  "attachmentFolderPath": "./image",
-  "trashOption": "local",
+  "attachmentFolderPath": "assets",
+  "trashOption": "none",
   "readableLineLength": false,
   "showLineNumber": false,
   "newLinkFormat": "relative",
