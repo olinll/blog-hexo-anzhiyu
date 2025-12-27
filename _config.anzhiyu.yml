@@ -20,6 +20,8 @@ menu:
     关于本人: /about/ || anzhiyu-icon-paper-plane
     闲言碎语: /essay/ || anzhiyu-icon-lightbulb
     随便逛逛: javascript:toRandomPost() || anzhiyu-icon-shoe-prints1
+  eo流量监控: https://eo.olinl.com
+  本站流量监控: https://cloud.umami.is/analytics/us/share/tZIs7EXmXaSUJGP4
 
 # 导航栏设置
 nav:
