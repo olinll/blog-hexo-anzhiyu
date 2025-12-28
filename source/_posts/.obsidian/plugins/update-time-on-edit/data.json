@@ -78,6 +78,7 @@
     "5.Docker/01.安装与卸载Docker.md": "b592b2765724fac9680f69a5664f9e79967cad1777ff066dbddf28f67b768ff0",
     "5.Docker/99.Docker应用合集(旧).md": "09c55ebe23ee26e1f43748661578c6896501762433fe4e1042cffba46c6cceed",
     "4.HomeLab/09.Immich私有图片管理.md": "263cf2d01e1ef8f7e339f8c3ce40abd82a386a84fced4de8ca4bc70ec307f4db",
-    "4.HomeLab/10.RustDesk远程.md": "01929478a4efe6fb6df06dfb00a7ee87b85251c7f7e970d3ff879346b5860040"
+    "4.HomeLab/10.RustDesk远程.md": "01929478a4efe6fb6df06dfb00a7ee87b85251c7f7e970d3ff879346b5860040",
+    "4.HomeLab/11.Uptime Kuma部署.md": "b7c48510b991fce93335553a9199238e124cf12b80c9564f65587075e7ebc5fe"
   }
 }
