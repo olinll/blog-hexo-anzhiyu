@@ -1,0 +1,7 @@
+*.log
+.DS_Store
+*bak
+.history
+node_modules/
+public/
+.idea/
