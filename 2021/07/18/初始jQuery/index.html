@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-bbt.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-bbt.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"olinl.gitee.io","root":"/","images":"/images","scheme":"Gemini","version":"8.6.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="jQuery简介 jQuery介绍 jQuery由美国人John Resig于2006年创建 jQuery是目前最流行的JavaScript程序库，它是对JavaScript对象和函数的封装 它的设计思想是write less,do more">
+<meta property="og:type" content="article">
+<meta property="og:title" content="初始jQuery">
+<meta property="og:url" content="https://olinl.gitee.io/2021/07/18/%E5%88%9D%E5%A7%8BjQuery/index.html">
+<meta property="og:site_name" content="拾柒的博客">
+<meta property="og:description" content="jQuery简介 jQuery介绍 jQuery由美国人John Resig于2006年创建 jQuery是目前最流行的JavaScript程序库，它是对JavaScript对象和函数的封装 它的设计思想是write less,do more">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://olinl.gitee.io/2021/07/18/%E5%88%9D%E5%A7%8BjQuery/image-20210718153121263.png">
+<meta property="og:image" content="https://olinl.gitee.io/2021/07/18/%E5%88%9D%E5%A7%8BjQuery/image-20210718155322438.png">
+<meta property="og:image" content="https://olinl.gitee.io/2021/07/18/%E5%88%9D%E5%A7%8BjQuery/image-20210718155514742.png">
+<meta property="og:image" content="https://olinl.gitee.io/2021/07/18/%E5%88%9D%E5%A7%8BjQuery/image-20210718160422713.png">
+<meta property="og:image" content="https://olinl.gitee.io/2021/07/18/%E5%88%9D%E5%A7%8BjQuery/image-20210718160859199.png">
+<meta property="og:image" content="https://olinl.gitee.io/2021/07/18/%E5%88%9D%E5%A7%8BjQuery/image-20210718161437470.png">
+<meta property="og:image" content="https://olinl.gitee.io/2021/07/18/%E5%88%9D%E5%A7%8BjQuery/image-20210718161923661.png">
+<meta property="article:published_time" content="2021-07-18T07:27:09.000Z">
+<meta property="article:modified_time" content="2021-07-18T08:19:35.230Z">
+<meta property="article:author" content="姜霖">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://olinl.gitee.io/2021/07/18/%E5%88%9D%E5%A7%8BjQuery/image-20210718153121263.png">
+
+
+<link rel="canonical" href="https://olinl.gitee.io/2021/07/18/%E5%88%9D%E5%A7%8BjQuery/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://olinl.gitee.io/2021/07/18/%E5%88%9D%E5%A7%8BjQuery/","path":"2021/07/18/初始jQuery/","title":"初始jQuery"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>初始jQuery | 拾柒的博客</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+
+
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">拾柒的博客</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">顾拾柒</p>
+      <img class="custom-logo-image" src="/images/logo1.svg" alt="拾柒的博客">
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">4</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#jQuery%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">jQuery简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#jQuery%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.1.</span> <span class="nav-text">jQuery介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jQuery%E4%B8%8EJavaScript"><span class="nav-number">1.2.</span> <span class="nav-text">jQuery与JavaScript</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jQuery%E8%83%BD%E5%81%9A%E4%BB%80%E4%B9%88"><span class="nav-number">1.3.</span> <span class="nav-text">jQuery能做什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jQuery%E7%9A%84%E4%BC%98%E5%8A%BF"><span class="nav-number">1.4.</span> <span class="nav-text">jQuery的优势</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jQuery%E5%BA%93%E6%96%87%E4%BB%B6"><span class="nav-number">1.5.</span> <span class="nav-text">jQuery库文件</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#jQuery%E8%AF%AD%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">jQuery语法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8jQuery%E5%BC%B9%E5%87%BA%E6%8F%90%E7%A4%BA%E6%A1%86"><span class="nav-number">2.1.</span> <span class="nav-text">使用jQuery弹出提示框</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#document-ready"><span class="nav-number">2.2.</span> <span class="nav-text">$(document).ready()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jQuery%E8%AF%AD%E6%B3%95%E7%BB%93%E6%9E%84"><span class="nav-number">2.3.</span> <span class="nav-text">jQuery语法结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jQuery%E6%93%8D%E4%BD%9C%E9%A1%B5%E9%9D%A2%E5%85%83%E7%B4%A0"><span class="nav-number">2.4.</span> <span class="nav-text">jQuery操作页面元素</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jQuery%E4%BB%A3%E7%A0%81%E9%A3%8E%E6%A0%BC"><span class="nav-number">2.5.</span> <span class="nav-text">jQuery代码风格</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%80%9C-%E2%80%9D%E7%AD%89%E5%90%8C%E4%BA%8E%E2%80%9C-jQuery-%E2%80%9D"><span class="nav-number">2.5.1.</span> <span class="nav-text">“$”等同于“ jQuery ”</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9A%90%E5%BC%8F%E8%BF%AD%E4%BB%A3"><span class="nav-number">2.5.2.</span> <span class="nav-text">隐式迭代</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E6%B3%A8%E9%87%8A"><span class="nav-number">2.5.3.</span> <span class="nav-text">添加注释</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DOM%E5%AF%B9%E8%B1%A1%E5%92%8CjQuery%E5%AF%B9%E8%B1%A1"><span class="nav-number">3.</span> <span class="nav-text">DOM对象和jQuery对象</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#DOM%E6%A8%A1%E5%9E%8B"><span class="nav-number">3.1.</span> <span class="nav-text">DOM模型</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="姜霖"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">姜霖</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jianglin428" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jianglin428" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:jianglin428@yeah.net" title="E-Mail → mailto:jianglin428@yeah.net" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://jq.qq.com/?_wv=1027&k=4dyoeB6O" title="QQ群 → https:&#x2F;&#x2F;jq.qq.com&#x2F;?_wv&#x3D;1027&amp;k&#x3D;4dyoeB6O" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>QQ群</a>
+      </span>
+  </div>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://olinl.gitee.io/2021/07/18/%E5%88%9D%E5%A7%8BjQuery/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="姜霖">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="拾柒的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          初始jQuery
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2021-07-18 15:27:09 / 修改时间：16:19:35" itemprop="dateCreated datePublished" datetime="2021-07-18T15:27:09+08:00">2021-07-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E4%BD%BF%E7%94%A8jQuery%E5%BF%AB%E9%80%9F%E9%AB%98%E6%95%88%E5%88%B6%E4%BD%9C%E7%BD%91%E9%A1%B5%E4%BA%A4%E4%BA%92%E7%89%B9%E6%95%88/" itemprop="url" rel="index"><span itemprop="name">使用jQuery快速高效制作网页交互特效</span></a>
+        </span>
+    </span>
+
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>4.2k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="jQuery简介"><a href="#jQuery简介" class="headerlink" title="jQuery简介"></a>jQuery简介</h1><ol>
+<li><h2 id="jQuery介绍"><a href="#jQuery介绍" class="headerlink" title="jQuery介绍"></a>jQuery介绍</h2><ol>
+<li>jQuery由美国人John Resig于2006年创建</li>
+<li>jQuery是目前最流行的JavaScript程序库，它是对JavaScript对象和函数的封装</li>
+<li>它的设计思想是write less,do more</li>
+</ol>
+</li>
+</ol>
+<span id="more"></span>
+
+<ol>
+<li><h2 id="jQuery与JavaScript"><a href="#jQuery与JavaScript" class="headerlink" title="jQuery与JavaScript"></a>jQuery与JavaScript</h2><ol>
+<li><p>jQuery是JavaScript的程序库之一，它是JavaScript对象和实用函数的封装</p>
+</li>
+<li><p>实现隔行变色效果，只需一句关键代码</p>
+<p><img src="/2021/07/18/%E5%88%9D%E5%A7%8BjQuery/image-20210718153121263.png" alt="image-20210718153121263"></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">&quot;tr:even&quot;</span>).css(<span class="string">&quot;background-color&quot;</span>,<span class="string">&quot;#e8f0f2&quot;</span>);</span><br></pre></td></tr></table></figure></li>
+<li><p>jQuery制作交互特效的语法更为简单，代码量大大减少了</p>
+</li>
+<li><p><strong>jQuery只是JavaScript的程序库，相当于JavaScript技术的一个子集，所有它并不能完全取代JavaScript。</strong></p>
+</li>
+</ol>
+</li>
+<li><h2 id="jQuery能做什么"><a href="#jQuery能做什么" class="headerlink" title="jQuery能做什么"></a>jQuery能做什么</h2><ol>
+<li>访问和操作DOM元素</li>
+<li>控制页面样式</li>
+<li>对页面事件进行处理</li>
+<li>扩展新的jQuery插件</li>
+<li>与Ajax技术完美结合</li>
+<li>jQuery能做的JavaScript也都能做，但使用jQuery能大幅提高开发效率</li>
+</ol>
+</li>
+<li><h2 id="jQuery的优势"><a href="#jQuery的优势" class="headerlink" title="jQuery的优势"></a>jQuery的优势</h2><ol>
+<li>体积小，压缩后只有100KB左右</li>
+<li>强大的选择器</li>
+<li>出色的DOM封装</li>
+<li>可靠的事件处理机制</li>
+<li>出色的浏览器兼容性</li>
+<li>使用隐式迭代简化编程</li>
+<li>丰富的插件支持</li>
+</ol>
+</li>
+<li><h2 id="jQuery库文件"><a href="#jQuery库文件" class="headerlink" title="jQuery库文件"></a>jQuery库文件</h2><ol>
+<li><p>jQuery库分开发版和发布版</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>大小</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>jquery-1.版本号.js（开发版）</td>
+<td>约286KB</td>
+<td>完整无压缩版本，主要用于测试、学习和开发</td>
+</tr>
+<tr>
+<td>jquery-1.版本号.min.js（发布版）</td>
+<td>约94.8KB</td>
+<td>经过工具压缩或经过服务器开启Gzip压缩，主要应用于发布的产品和项目</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>在页面中引入jQuery</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script src=<span class="string">&quot;js/jquery-1.12.4.js&quot;</span> type=<span class="string">&quot;text/javascript&quot;</span>&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure></li>
+</ol>
+</li>
+</ol>
+<h1 id="jQuery语法"><a href="#jQuery语法" class="headerlink" title="jQuery语法"></a>jQuery语法</h1><ol>
+<li><h2 id="使用jQuery弹出提示框"><a href="#使用jQuery弹出提示框" class="headerlink" title="使用jQuery弹出提示框"></a>使用jQuery弹出提示框</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">     $(<span class="built_in">document</span>).ready(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;<span class="comment">//为页面加载事件绑定方法 </span></span><br><span class="line">        alert(<span class="string">&quot;我欲奔赴沙场征战jQuery，势必攻克之！&quot;</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure></li>
+<li><h2 id="document-ready"><a href="#document-ready" class="headerlink" title="$(document).ready()"></a><strong>$(document).ready()</strong></h2><ol>
+<li><strong>$(document).ready()</strong> 与 <strong>window.onload</strong> 类似，但也有区别</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>————————————–</th>
+<th>window.onload</th>
+<th>$(document).ready()</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>执行时机</td>
+<td>必须等待网页中所有的内容加载完毕后（包括图片、flash、视频等）才能执行</td>
+<td>网页中所有DOM文档结构绘制完毕后即刻执行，可能与DOM元素关联的内容（图片、flash、视频等）并没有加载完</td>
+</tr>
+<tr>
+<td>编写个数</td>
+<td>同一页面不能同时编写多个</td>
+<td>同一页面能同时编写多个</td>
+</tr>
+<tr>
+<td>简化写法</td>
+<td>无</td>
+<td>$(function(){     //执行代码  }) ;</td>
+</tr>
+</tbody></table>
+</li>
+<li><h2 id="jQuery语法结构"><a href="#jQuery语法结构" class="headerlink" title="jQuery语法结构"></a>jQuery语法结构</h2>   <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(selector).action() ; </span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><p>工厂函数$()：将DOM对象转化为jQuery对象</p>
+<ol>
+<li>在jQuery中， 美元符号“$”等价于jQuey. 即$( )=Quey( )。$()的作用是将DOM对象转化为Qnery对象，只有将DOM对象转化为jQuey对象后，才能使用jQuery的方法。</li>
+<li>例如，示例1中的documen是一个DOM对象，当它使用S( )函数包裹起来时，就变成了一个jQuery对象，它能使用jQuery中的rady( )方法.而不能再使用DOM对象的geElemenByld( )方法。例如.代码$ (document) .getElementByld( )和document. ready( )均是不正确的。</li>
+<li>规范当$()的参数是DOM对象时，该对象无须使用双引号包裹起来，如果获取的是document 对象，则写作$(document)。</li>
+</ol>
+</li>
+<li><p>选择器 selector：获取需要操作的DOM 元素</p>
+<ol>
+<li><p>jQuery支持CSS 1.0到CSS 3.0规则中几乎所有的选择器.如标签选择器.类选择器、1ID 选择和后代选择器等，使用jQuey选择器和S( )工厂函数可以非常方便地获取需要操作的DOM元素，语法格式如下。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ (selector)</span><br></pre></td></tr></table></figure></li>
+<li><p>ID选择器、标签选择器、 类选择器的用法如下所示。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ (<span class="string">&quot;#userName&quot;</span>) ;   <span class="comment">//获取DOM中id为userName的元素</span></span><br><span class="line">$ (<span class="string">&quot;div&quot;</span>) ;    		<span class="comment">//获取DOM中所有的div元素</span></span><br><span class="line">$ (<span class="string">&quot;. content&quot;</span>) ;  	<span class="comment">//获取DOM中class为content的元素</span></span><br></pre></td></tr></table></figure>
+
+<p>jOuey中提供的选择器远不止上述几种，在以后的章节中将进行更加系统的介绍。</p>
+</li>
+</ol>
+</li>
+<li><p>方法action()：jQuery中提供的方法，其中包括绑定事件处理的方法</p>
+<ol>
+<li>jQuery中提供了一系列方法。在这些方法中，一类重要的方法就是事件处理方法，主要用来绑定DOM元素的事件和事件处理方法。在jQuery中，许多基础的事件，如鼠标事件、键盘事件和表单事件等，都可以通过这些事件方法进行绑定，对应的在jQuery 中则写作click( )、mouseover( )和mouseout( )等。</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><h2 id="jQuery操作页面元素"><a href="#jQuery操作页面元素" class="headerlink" title="jQuery操作页面元素"></a>jQuery操作页面元素</h2><ol>
+<li><p>使用addClass( )方法为元素添加样式</p>
+<ol>
+<li><p>语法</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jQuery 对象.addClass([样式名]);</span><br></pre></td></tr></table></figure></li>
+<li><p>示例</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">&quot;#current&quot;</span>).addClass(<span class="string">&quot;current&quot;</span>);      </span><br></pre></td></tr></table></figure>
+
+<p><img src="/2021/07/18/%E5%88%9D%E5%A7%8BjQuery/image-20210718155322438.png" alt="image-20210718155322438"></p>
+</li>
+</ol>
+</li>
+<li><p>使用css( )方法设置元素样式</p>
+<ol>
+<li><p>语法</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">css(<span class="string">&quot;属性&quot;</span>,<span class="string">&quot;属性值&quot;</span>) ;							<span class="comment">//设置一个CSS属性</span></span><br><span class="line">css(&#123;<span class="string">&quot;属性1&quot;</span>:<span class="string">&quot;属性值1&quot;</span>,<span class="string">&quot;属性2&quot;</span>:<span class="string">&quot;属性值2&quot;</span>...&#125;) ;	 <span class="comment">//同时设置多个CSS属性</span></span><br></pre></td></tr></table></figure></li>
+<li><p>示例</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="built_in">this</span>).css(&#123;<span class="string">&quot;background&quot;</span>:<span class="string">&quot;#c81623&quot;</span>&#125;);</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2021/07/18/%E5%88%9D%E5%A7%8BjQuery/image-20210718155514742.png" alt="image-20210718155514742"></p>
+</li>
+</ol>
+</li>
+<li><p>使用show( )、hide( ) 方法设置元素的显示和隐藏</p>
+<ol>
+<li><p>语法</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$(selector).show( );	<span class="comment">//()里是延迟</span></span><br><span class="line">$(selector).hide( );	<span class="comment">//()里是延迟</span></span><br></pre></td></tr></table></figure></li>
+<li><p>示例</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">&quot;.nav-top&quot;</span>).show( );</span><br><span class="line">$(<span class="string">&quot;p&quot;</span>).hide( );</span><br></pre></td></tr></table></figure></li>
+</ol>
+</li>
+</ol>
+</li>
+<li><h2 id="jQuery代码风格"><a href="#jQuery代码风格" class="headerlink" title="jQuery代码风格"></a>jQuery代码风格</h2><ol>
+<li><h3 id="“-”等同于“-jQuery-”"><a href="#“-”等同于“-jQuery-”" class="headerlink" title="“$”等同于“ jQuery ”"></a>“$”等同于“ jQuery ”</h3><ol>
+<li><p>~~~js<br>$(document).ready()=jQuery(document).ready()<br>$(function(){…})=jQuery (function(){…})      </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">2. ### 链式操作</span><br><span class="line"></span><br><span class="line">   1. 在对DOM元素进行多个操作时，为了避免过度使用临时变量或不必要的重复代码，在大多数jQuery代码中采用了一种链式编程模式。它可以对一个对象进行多重操作，并将操作结果返回给该对象，以便于将返回结果应用于该对象的下一次操作。</span><br><span class="line"></span><br><span class="line">   2. 对一个对象进行多重操作，并将操作结果返回给该对象</span><br><span class="line"></span><br><span class="line">      ~~~js</span><br><span class="line">       $(&quot;h2&quot;).css(&quot;background-color&quot;,&quot;#ccffff&quot;).next().css(&quot;display&quot;,&quot;block&quot;);</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2021/07/18/%E5%88%9D%E5%A7%8BjQuery/image-20210718160422713.png" alt="image-20210718160422713"></p>
+</li>
+</ol>
+</li>
+<li><h3 id="隐式迭代"><a href="#隐式迭代" class="headerlink" title="隐式迭代"></a>隐式迭代</h3><ol>
+<li><p>在jQuery编写中，除了链式操作外，还有一种方式，即隐式迭代，</p>
+</li>
+<li><p>获取所有1i标签，并设置字体样式。如果在传统的JavaScript写法中，需要使用getElementsByTagName( )获取li标签集合，然后使用for循环一个一个设置字样样式，而这里使用jQuery就不一样了。它不需要遍历所有元素，可以直接设置元素的样式，这就是隐式迭代，在jQuery中获取一个集合后会默认遍历内部的所有元素。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="built_in">document</span>).ready(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">       $(<span class="string">&quot;li&quot;</span>).css(&#123;<span class="string">&quot;font-weight&quot;</span>:<span class="string">&quot;bold&quot;</span>,<span class="string">&quot;color&quot;</span>:<span class="string">&quot;red&quot;</span>&#125;);</span><br><span class="line">   &#125;);</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2021/07/18/%E5%88%9D%E5%A7%8BjQuery/image-20210718160859199.png" alt="image-20210718160859199"></p>
+</li>
+</ol>
+</li>
+<li><h3 id="添加注释"><a href="#添加注释" class="headerlink" title="添加注释"></a>添加注释</h3><table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>开发阶段</td>
+<td>为代码添加注释，可以增加代码的可读性，能够让别人很容易的读懂你的代码，便于后期维护</td>
+</tr>
+<tr>
+<td>维护阶段</td>
+<td>建议把关键的模块形成开发文档，便于后期维护，即便后期删除代码注释，也不影响后期维护</td>
+</tr>
+<tr>
+<td>产品正式发布</td>
+<td>建议删除注释，减少文件大小，加快下载速度，提高用户体验</td>
+</tr>
+</tbody></table>
+</li>
+</ol>
+</li>
+</ol>
+<h1 id="DOM对象和jQuery对象"><a href="#DOM对象和jQuery对象" class="headerlink" title="DOM对象和jQuery对象"></a>DOM对象和jQuery对象</h1><ol>
+<li><h2 id="DOM模型"><a href="#DOM模型" class="headerlink" title="DOM模型"></a>DOM模型</h2><ol>
+<li><p>浏览器把HTML文档的元素转换成节点对象，所有节点组成了一个树状结构</p>
+<p><img src="/2021/07/18/%E5%88%9D%E5%A7%8BjQuery/image-20210718161437470.png" alt="image-20210718161437470"></p>
+</li>
+</ol>
+</li>
+<li><p><strong>DOM对象</strong>：直接使用JavaScript获取的节点对象</p>
+   <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> objDOM=<span class="built_in">document</span>.getElementById(<span class="string">&quot;title&quot;</span>); </span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> objHTML=objDOM.innerHTML;  </span><br></pre></td></tr></table></figure></li>
+<li><p><strong>jQuery对象</strong>：使用jQuery包装DOM对象后产生的对象，它能够使用jQuery中的方法</p>
+   <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">&quot;#title&quot;</span>).html( );</span><br><span class="line">等同于</span><br><span class="line"><span class="built_in">document</span>.getElementById(<span class="string">&quot;title&quot;</span>).innerHTML; </span><br></pre></td></tr></table></figure>
+
+<pre><code>**DOM对象和jQuery对象分别拥有一套独立的方法，不能混用**
+</code></pre>
+</li>
+<li><p><strong>DOM对象转jQuery对象</strong></p>
+<ol>
+<li><p>使用$()函数进行转化：$(DOM对象)</p>
+   <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> txtName =<span class="built_in">document</span>.getElementById(<span class="string">&quot;txtName&quot;</span>); <span class="comment">//DOM对象</span></span><br><span class="line"><span class="keyword">var</span> $txtName =$(txtName);  <span class="comment">//jQuery对象</span></span><br></pre></td></tr></table></figure></li>
+<li><p>注意</p>
+<ol>
+<li>jQuery对象命名一般约定以$开头</li>
+<li>在事件中经常使用$(this)，this是触发该事件的对象</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p><strong>jQuery对象转DOM对象</strong></p>
+<ol>
+<li><p>jQuery对象是一个类似数组的对象，可以通过[index]的方法得到相应的DOM对象</p>
+   <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> $txtName =$ (<span class="string">&quot;#txtName&quot;</span>); <span class="comment">//jQuery对象</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> txtName =$txtName[<span class="number">0</span>]; <span class="comment">//DOM对象</span></span><br></pre></td></tr></table></figure></li>
+<li><p>通过get(index)方法得到相应的DOM对象</p>
+   <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> $txtName =$(<span class="string">&quot;#txtName&quot;</span>); <span class="comment">//jQuery对象</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> txtName =$txtName.get(<span class="number">0</span>);<span class="comment">//DOM对象  </span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+</li>
+</ol>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p><img src="/2021/07/18/%E5%88%9D%E5%A7%8BjQuery/image-20210718161923661.png" alt="image-20210718161923661"></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>姜霖
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://olinl.gitee.io/2021/07/18/%E5%88%9D%E5%A7%8BjQuery/" title="初始jQuery">https://olinl.gitee.io/2021/07/18/初始jQuery/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/07/18/JavaScript%E5%AF%B9%E8%B1%A1%E5%8F%8A%E5%88%9D%E5%A7%8B%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/" rel="prev" title="JavaScript对象及初始面向对象">
+                  <i class="fa fa-chevron-left"></i> JavaScript对象及初始面向对象
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/11/15/Mybatis%E7%9F%A5%E8%AF%86%E7%82%B9/" rel="next" title="Mybatis知识点">
+                  Mybatis知识点 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+        
+	<div style="text-align:center;color: #ccc;font-size:20px;">
+		---------本文结束---------
+	</div>
+
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">姜霖</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">67k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">1:01</span>
+  </span>
+</div>
+<span id="busuanzi_container_site_uv">
+  本站访问次数：1314520 次<span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+</span>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
+   <!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/clicklove.js"></script>
+   <!-- 动态背景 -->
+
+<script type="text/javascript"
+color="0,0,255" opacity='0.7' zIndex="-2" count="99" src="/js/canvas-nest.min.js"></script>
+
+<!-- 代码块复制功能 -->
+<script src="https://cdn.jsdelivr.net/npm/clipboard@1/dist/clipboard.min.js"></script>
+<script type="text/javascript" src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<!-- <script type="text/javascript" src="/js/clipboard.js"></script>  -->
+<script type="text/javascript" src="/js/clipboard_use.js"></script>

@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-bbt.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-bbt.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"olinl.gitee.io","root":"/","images":"/images","scheme":"Gemini","version":"8.6.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="一、为什么使用面向对象1、软件出现的目的用计算机的语言描述现实世界 用计算机解决现实世界的问题 2、面向对象设计和开发程序的好处交流更加流畅 提高设计和开发效率">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第一章 对象和封装">
+<meta property="og:url" content="https://olinl.gitee.io/2021/06/04/%E7%AC%AC%E4%B8%80%E7%AB%A0%20%E5%AF%B9%E8%B1%A1%E5%92%8C%E5%B0%81%E8%A3%85/index.html">
+<meta property="og:site_name" content="拾柒的博客">
+<meta property="og:description" content="一、为什么使用面向对象1、软件出现的目的用计算机的语言描述现实世界 用计算机解决现实世界的问题 2、面向对象设计和开发程序的好处交流更加流畅 提高设计和开发效率">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://olinimg.oss-cn-shanghai.aliyuncs.com/HexoImg/202205131511722.png">
+<meta property="article:published_time" content="2021-06-03T17:50:51.000Z">
+<meta property="article:modified_time" content="2022-05-13T07:11:09.475Z">
+<meta property="article:author" content="姜霖">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://olinimg.oss-cn-shanghai.aliyuncs.com/HexoImg/202205131511722.png">
+
+
+<link rel="canonical" href="https://olinl.gitee.io/2021/06/04/%E7%AC%AC%E4%B8%80%E7%AB%A0%20%E5%AF%B9%E8%B1%A1%E5%92%8C%E5%B0%81%E8%A3%85/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://olinl.gitee.io/2021/06/04/%E7%AC%AC%E4%B8%80%E7%AB%A0%20%E5%AF%B9%E8%B1%A1%E5%92%8C%E5%B0%81%E8%A3%85/","path":"2021/06/04/第一章 对象和封装/","title":"第一章 对象和封装"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>第一章 对象和封装 | 拾柒的博客</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+
+
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">拾柒的博客</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">顾拾柒</p>
+      <img class="custom-logo-image" src="/images/logo1.svg" alt="拾柒的博客">
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">4</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%BF%E7%94%A8%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1"><span class="nav-number">1.</span> <span class="nav-text">一、为什么使用面向对象</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1%E3%80%81%E8%BD%AF%E4%BB%B6%E5%87%BA%E7%8E%B0%E7%9A%84%E7%9B%AE%E7%9A%84"><span class="nav-number">1.1.</span> <span class="nav-text">1、软件出现的目的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%E3%80%81%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E8%AE%BE%E8%AE%A1%E5%92%8C%E5%BC%80%E5%8F%91%E7%A8%8B%E5%BA%8F%E7%9A%84%E5%A5%BD%E5%A4%84"><span class="nav-number">1.2.</span> <span class="nav-text">2、面向对象设计和开发程序的好处</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3%E3%80%81%E7%84%B6%E5%90%8E%E4%BB%8E%E7%8E%B0%E5%AE%9E%E4%B8%AD%E6%8A%BD%E5%87%BA%E7%B1%BB%E5%88%86%E4%B8%89%E6%AD%A5"><span class="nav-number">1.3.</span> <span class="nav-text">3、然后从现实中抽出类分三步</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%89%BE%E5%87%BA%E5%AE%83%E7%9A%84%E7%A7%8D%E7%B1%BB"><span class="nav-number">1.3.1.</span> <span class="nav-text">1.找出它的种类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%89%BE%E5%87%BA%E5%AE%83%E7%9A%84%E5%B1%9E%E6%80%A7"><span class="nav-number">1.3.2.</span> <span class="nav-text">2.找出它的属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E6%89%BE%E5%87%BA%E5%AE%83%E7%9A%84%E8%A1%8C%E4%B8%BA"><span class="nav-number">1.3.3.</span> <span class="nav-text">3.找出它的行为</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">二、构造方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1%E3%80%81%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95%E8%AF%AD%E6%B3%95"><span class="nav-number">2.1.</span> <span class="nav-text">1、构造方法语法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%E3%80%81%E6%B3%A8%E6%84%8F"><span class="nav-number">2.2.</span> <span class="nav-text">2、注意</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3%E3%80%81%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95%E7%9A%84%E9%87%8D%E8%BD%BD"><span class="nav-number">2.3.</span> <span class="nav-text">3、构造方法的重载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4%E3%80%81static%E5%85%B3%E9%94%AE%E5%AD%97"><span class="nav-number">2.4.</span> <span class="nav-text">4、static关键字</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%94%A8static%E5%85%B3%E9%94%AE%E5%AD%97"><span class="nav-number">2.4.1.</span> <span class="nav-text">1、为什么要用static关键字</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E4%BB%80%E4%B9%88%E6%98%AF%E5%B0%81%E8%A3%85"><span class="nav-number">3.</span> <span class="nav-text">三、什么是封装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1%E3%80%81%E9%9D%A2%E6%83%B3%E5%AF%B9%E8%B1%A1%E4%B8%89%E5%A4%A7%E7%89%B9%E5%BE%81%E4%B9%8B%E4%B8%80%E2%80%94%E2%80%94%E5%B0%81%E8%A3%85"><span class="nav-number">3.1.</span> <span class="nav-text">1、面想对象三大特征之一——封装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%881%EF%BC%89%E5%B0%81%E8%A3%85%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="nav-number">3.1.1.</span> <span class="nav-text">（1）封装的概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%882%EF%BC%89%E5%B0%81%E8%A3%85%E7%9A%84%E5%A5%BD%E5%A4%84"><span class="nav-number">3.1.2.</span> <span class="nav-text">（2）封装的好处</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%883%EF%BC%89%E5%B0%81%E8%A3%85%E7%9A%84%E6%AD%A5%E9%AA%A4"><span class="nav-number">3.1.3.</span> <span class="nav-text">（3）封装的步骤</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%E3%80%81this%E5%85%B3%E9%94%AE%E8%AF%8D%E7%9A%84%E7%94%A8%E6%B3%95"><span class="nav-number">3.2.</span> <span class="nav-text">2、this关键词的用法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%881%EF%BC%89%E8%B0%83%E7%94%A8%E5%B1%9E%E6%80%A7"><span class="nav-number">3.2.1.</span> <span class="nav-text">（1）调用属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%882%EF%BC%89%E8%B0%83%E7%94%A8%E6%96%B9%E6%B3%95"><span class="nav-number">3.2.2.</span> <span class="nav-text">（2）调用方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%883%EF%BC%89%E8%B0%83%E7%94%A8%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95"><span class="nav-number">3.2.3.</span> <span class="nav-text">（3）调用构造方法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E6%80%BB%E7%BB%93"><span class="nav-number">4.</span> <span class="nav-text">四、总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="姜霖"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">姜霖</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jianglin428" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jianglin428" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:jianglin428@yeah.net" title="E-Mail → mailto:jianglin428@yeah.net" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://jq.qq.com/?_wv=1027&k=4dyoeB6O" title="QQ群 → https:&#x2F;&#x2F;jq.qq.com&#x2F;?_wv&#x3D;1027&amp;k&#x3D;4dyoeB6O" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>QQ群</a>
+      </span>
+  </div>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://olinl.gitee.io/2021/06/04/%E7%AC%AC%E4%B8%80%E7%AB%A0%20%E5%AF%B9%E8%B1%A1%E5%92%8C%E5%B0%81%E8%A3%85/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="姜霖">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="拾柒的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          第一章 对象和封装
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-06-04 01:50:51" itemprop="dateCreated datePublished" datetime="2021-06-04T01:50:51+08:00">2021-06-04</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-05-13 15:11:09" itemprop="dateModified" datetime="2022-05-13T15:11:09+08:00">2022-05-13</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E4%BD%BF%E7%94%A8Java%E5%AE%9E%E7%8E%B0%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B%E6%95%B4%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">使用Java实现面向对象编程整理</span></a>
+        </span>
+    </span>
+
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="一、为什么使用面向对象"><a href="#一、为什么使用面向对象" class="headerlink" title="一、为什么使用面向对象"></a>一、为什么使用面向对象</h1><h2 id="1、软件出现的目的"><a href="#1、软件出现的目的" class="headerlink" title="1、软件出现的目的"></a>1、软件出现的目的</h2><p>用计算机的语言描述现实世界</p>
+<p>用计算机解决现实世界的问题</p>
+<h2 id="2、面向对象设计和开发程序的好处"><a href="#2、面向对象设计和开发程序的好处" class="headerlink" title="2、面向对象设计和开发程序的好处"></a>2、面向对象设计和开发程序的好处</h2><p>交流更加流畅</p>
+<p>提高设计和开发效率</p>
+<span id="more"></span>
+
+<h2 id="3、然后从现实中抽出类分三步"><a href="#3、然后从现实中抽出类分三步" class="headerlink" title="3、然后从现实中抽出类分三步"></a>3、然后从现实中抽出类分三步</h2><h3 id="1-找出它的种类"><a href="#1-找出它的种类" class="headerlink" title="1.找出它的种类"></a>1.找出它的种类</h3><p>面向对象的思想描述世界</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Dog</span></span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-找出它的属性"><a href="#2-找出它的属性" class="headerlink" title="2.找出它的属性"></a>2.找出它的属性</h3><h3 id="3-找出它的行为"><a href="#3-找出它的行为" class="headerlink" title="3.找出它的行为"></a>3.找出它的行为</h3><h1 id="二、构造方法"><a href="#二、构造方法" class="headerlink" title="二、构造方法"></a>二、构造方法</h1><p>在完成构造方法同时完成了属性的赋值   <strong>什么时候用：new的时候用</strong></p>
+<h2 id="1、构造方法语法"><a href="#1、构造方法语法" class="headerlink" title="1、构造方法语法"></a>1、构造方法语法</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">访问修饰符   构造方法名 ( ) &#123; </span><br><span class="line">       <span class="comment">//初始化代码</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>构造方法：无返回值类型       </p>
+<p>构造方法名：  与类名相同</p>
+<p>括号里可以指定参数</p>
+<h2 id="2、注意"><a href="#2、注意" class="headerlink" title="2、注意"></a>2、注意</h2><p>系统会默认提供无参构造方法</p>
+<p>如果写构造方法，系统就不自动提供无参构造方法</p>
+<h2 id="3、构造方法的重载"><a href="#3、构造方法的重载" class="headerlink" title="3、构造方法的重载"></a>3、构造方法的重载</h2><p>this 关键字是对应该对象的默认引用，这里用以区分同名成员变量</p>
+<p>如何用调用构造方法的重载</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pgn = <span class="keyword">new</span> Penguin();</span><br><span class="line">pgn.print();</span><br><span class="line">pgn = <span class="keyword">new</span> Penguin(<span class="string">&quot;美美&quot;</span>, <span class="number">80</span>, <span class="number">20</span>, <span class="string">&quot;Q仔&quot;</span>);</span><br><span class="line">pgn.print();</span><br></pre></td></tr></table></figure>
+
+<h2 id="4、static关键字"><a href="#4、static关键字" class="headerlink" title="4、static关键字"></a>4、static关键字</h2><h3 id="1、为什么要用static关键字"><a href="#1、为什么要用static关键字" class="headerlink" title="1、为什么要用static关键字"></a>1、为什么要用static关键字</h3><p>直接用类名.变量名 类似：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">类名.变量名</span><br></pre></td></tr></table></figure>
+
+<p>2、final修饰词<br>用fianl修饰的变量称为常量，其值固定不变</p>
+<p>被final修饰的变量通常称为常量</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><strong>static、非private修饰</strong></th>
+<th><strong>非static、prvate修饰</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>属性</strong></td>
+<td>类属性、类变量</td>
+<td>实例属性、实例变量</td>
+</tr>
+<tr>
+<td><strong>方法</strong></td>
+<td>类方法</td>
+<td>实例方法</td>
+</tr>
+<tr>
+<td><strong>调用方法</strong></td>
+<td>类名.属性</td>
+<td>对象.属性,对象.方法（）</td>
+</tr>
+<tr>
+<td><strong>调用方法</strong></td>
+<td>类名.方法（）</td>
+<td>对象.属性,对象.方法（）</td>
+</tr>
+<tr>
+<td><strong>调用方法</strong></td>
+<td>对象，属性</td>
+<td>对象.属性,对象.方法（）</td>
+</tr>
+<tr>
+<td><strong>调用方法</strong></td>
+<td>对象.方法（）</td>
+<td>对象.属性,对象.方法（）</td>
+</tr>
+<tr>
+<td><strong>归属</strong></td>
+<td>类</td>
+<td>单个对象</td>
+</tr>
+</tbody></table>
+<p>注意：</p>
+<p>切记不可定义为static变量</p>
+<h1 id="三、什么是封装"><a href="#三、什么是封装" class="headerlink" title="三、什么是封装"></a>三、什么是封装</h1><h2 id="1、面想对象三大特征之一——封装"><a href="#1、面想对象三大特征之一——封装" class="headerlink" title="1、面想对象三大特征之一——封装"></a>1、面想对象三大特征之一——封装</h2><h3 id="（1）封装的概念"><a href="#（1）封装的概念" class="headerlink" title="（1）封装的概念"></a>（1）封装的概念</h3><p>封装：将类的某些信息隐藏的类的内部，不允许外部程序直接访问，而是通过该类提供的方法来实现对隐藏信息的操作和访问</p>
+<h3 id="（2）封装的好处"><a href="#（2）封装的好处" class="headerlink" title="（2）封装的好处"></a>（2）封装的好处</h3><p>1.隐藏类的实现细节</p>
+<p>2.方便加入控制语句</p>
+<p>3.方便修改实现</p>
+<p>4.只能通过规定的方法访问数据</p>
+<h3 id="（3）封装的步骤"><a href="#（3）封装的步骤" class="headerlink" title="（3）封装的步骤"></a>（3）封装的步骤</h3><p>1.修改属性的可见性——设置为private</p>
+<p>2.创建共有的getter/setter方法——用于属性的读写</p>
+<p>3.在getter/setter方法说中加入属性控制的语句——对属性值的合法性进行判断</p>
+<h2 id="2、this关键词的用法"><a href="#2、this关键词的用法" class="headerlink" title="2、this关键词的用法"></a>2、this关键词的用法</h2><h3 id="（1）调用属性"><a href="#（1）调用属性" class="headerlink" title="（1）调用属性"></a>（1）调用属性</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.health=<span class="number">100</span>;</span><br><span class="line"><span class="keyword">this</span>.name=<span class="string">&quot;大黄&quot;</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="（2）调用方法"><a href="#（2）调用方法" class="headerlink" title="（2）调用方法"></a>（2）调用方法</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.print();</span><br></pre></td></tr></table></figure>
+
+<h3 id="（3）调用构造方法"><a href="#（3）调用构造方法" class="headerlink" title="（3）调用构造方法"></a>（3）调用构造方法</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>();</span><br><span class="line"><span class="keyword">this</span>(<span class="string">&quot;小黑&quot;</span>,<span class="number">100</span>,<span class="number">100</span>,<span class="string">&quot;雄&quot;</span>);<span class="comment">//如果使用，必须是构造方法 中的第一条语句</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="四、总结"><a href="#四、总结" class="headerlink" title="四、总结"></a>四、总结</h1><p> <img src="https://olinimg.oss-cn-shanghai.aliyuncs.com/HexoImg/202205131511722.png" alt="第一章 对象和封装"></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>姜霖
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://olinl.gitee.io/2021/06/04/%E7%AC%AC%E4%B8%80%E7%AB%A0%20%E5%AF%B9%E8%B1%A1%E5%92%8C%E5%B0%81%E8%A3%85/" title="第一章 对象和封装">https://olinl.gitee.io/2021/06/04/第一章 对象和封装/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/06/04/%E7%AC%AC%E4%BA%8C%E7%AB%A0%20%E7%BB%A7%E6%89%BF/" rel="next" title="第二章 继承">
+                  第二章 继承 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+        
+	<div style="text-align:center;color: #ccc;font-size:20px;">
+		---------本文结束---------
+	</div>
+
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">姜霖</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">67k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">1:01</span>
+  </span>
+</div>
+<span id="busuanzi_container_site_uv">
+  本站访问次数：1314520 次<span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+</span>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
+   <!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/clicklove.js"></script>
+   <!-- 动态背景 -->
+
+<script type="text/javascript"
+color="0,0,255" opacity='0.7' zIndex="-2" count="99" src="/js/canvas-nest.min.js"></script>
+
+<!-- 代码块复制功能 -->
+<script src="https://cdn.jsdelivr.net/npm/clipboard@1/dist/clipboard.min.js"></script>
+<script type="text/javascript" src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<!-- <script type="text/javascript" src="/js/clipboard.js"></script>  -->
+<script type="text/javascript" src="/js/clipboard_use.js"></script>

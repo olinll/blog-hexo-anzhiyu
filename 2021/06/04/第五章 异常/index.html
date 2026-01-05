@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-bbt.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-bbt.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"olinl.gitee.io","root":"/","images":"/images","scheme":"Gemini","version":"8.6.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="一、什么是异常​    异常就是在程序的允许过程中所发生的不正常的事件。 二、异常处理​    Java的异常处理是通过五个关键词来实现的： **try、catch、finally、throw和throws **">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第五章 异常">
+<meta property="og:url" content="https://olinl.gitee.io/2021/06/04/%E7%AC%AC%E4%BA%94%E7%AB%A0%20%E5%BC%82%E5%B8%B8/index.html">
+<meta property="og:site_name" content="拾柒的博客">
+<meta property="og:description" content="一、什么是异常​    异常就是在程序的允许过程中所发生的不正常的事件。 二、异常处理​    Java的异常处理是通过五个关键词来实现的： **try、catch、finally、throw和throws **">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://olinl.gitee.io/2021/06/04/%E7%AC%AC%E4%BA%94%E7%AB%A0%20%E5%BC%82%E5%B8%B8/img%5Cimage-20210528154353741.png">
+<meta property="og:image" content="https://olinimg.oss-cn-shanghai.aliyuncs.com/HexoImg/202205131511450.png">
+<meta property="og:image" content="https://olinimg.oss-cn-shanghai.aliyuncs.com/HexoImg/202205131511331.png">
+<meta property="article:published_time" content="2021-06-03T21:50:51.000Z">
+<meta property="article:modified_time" content="2022-05-13T07:11:04.959Z">
+<meta property="article:author" content="姜霖">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://olinl.gitee.io/2021/06/04/%E7%AC%AC%E4%BA%94%E7%AB%A0%20%E5%BC%82%E5%B8%B8/img%5Cimage-20210528154353741.png">
+
+
+<link rel="canonical" href="https://olinl.gitee.io/2021/06/04/%E7%AC%AC%E4%BA%94%E7%AB%A0%20%E5%BC%82%E5%B8%B8/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://olinl.gitee.io/2021/06/04/%E7%AC%AC%E4%BA%94%E7%AB%A0%20%E5%BC%82%E5%B8%B8/","path":"2021/06/04/第五章 异常/","title":"第五章 异常"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>第五章 异常 | 拾柒的博客</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+
+
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">拾柒的博客</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">顾拾柒</p>
+      <img class="custom-logo-image" src="/images/logo1.svg" alt="拾柒的博客">
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">4</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E4%BB%80%E4%B9%88%E6%98%AF%E5%BC%82%E5%B8%B8"><span class="nav-number">1.</span> <span class="nav-text">一、什么是异常</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86"><span class="nav-number">2.</span> <span class="nav-text">二、异常处理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-try-catch"><span class="nav-number">2.1.</span> <span class="nav-text">1.try-catch</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-try-catch-finally"><span class="nav-number">2.2.</span> <span class="nav-text">2.try-catch-finally</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%A4%9A%E9%87%8Dcatch%E5%9D%97"><span class="nav-number">2.3.</span> <span class="nav-text">3.多重catch块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E5%A3%B0%E6%98%8E%E5%BC%82%E5%B8%B8%E2%80%94%E2%80%94throws"><span class="nav-number">2.4.</span> <span class="nav-text">4.声明异常——throws</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E6%8A%9B%E5%87%BA%E5%BC%82%E5%B8%B8%E2%80%94%E2%80%94throw"><span class="nav-number">2.5.</span> <span class="nav-text">5.抛出异常——throw</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-throw%E5%92%8Cthrows%E7%9A%84%E5%8C%BA%E5%88%AB%E8%A1%A8%E7%8E%B0%E5%9C%A8%E4%BB%A5%E4%B8%8B%E4%B8%89%E4%B8%AA%E6%96%B9%E9%9D%A2"><span class="nav-number">2.6.</span> <span class="nav-text">6.throw和throws的区别表现在以下三个方面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-%E5%B8%B8%E8%A7%81%E7%9A%84%E5%BC%82%E5%B8%B8%E7%B1%BB%E5%9E%8B"><span class="nav-number">2.7.</span> <span class="nav-text">7.常见的异常类型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81-%E5%BC%82%E5%B8%B8%E7%9A%84%E5%88%86%E7%B1%BB"><span class="nav-number">3.</span> <span class="nav-text">二、.异常的分类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81Log4j%E2%80%94%E2%80%94%E5%BC%80%E6%BA%90%E6%97%A5%E5%BF%97%E8%AE%B0%E5%BD%95%E5%B7%A5%E5%85%B7"><span class="nav-number">4.</span> <span class="nav-text">三、Log4j——开源日志记录工具</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E8%AE%B0%E5%BD%95%E7%9A%84%E5%86%85%E5%AE%B9%E5%88%86%E4%B8%BA%E4%BB%A5%E4%B8%8B%E4%B8%89%E7%A7%8D%EF%BC%9A"><span class="nav-number">4.1.</span> <span class="nav-text">1.记录的内容分为以下三种：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8log4j%E8%AE%B0%E5%BD%95%E6%97%A5%E5%BF%97"><span class="nav-number">4.2.</span> <span class="nav-text">2.如何使用log4j记录日志</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-log4j-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">4.3.</span> <span class="nav-text">3.log4j 配置文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E6%80%BB%E7%BB%93%EF%BC%9A"><span class="nav-number">5.</span> <span class="nav-text">四、总结：</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="姜霖"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">姜霖</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jianglin428" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jianglin428" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:jianglin428@yeah.net" title="E-Mail → mailto:jianglin428@yeah.net" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://jq.qq.com/?_wv=1027&k=4dyoeB6O" title="QQ群 → https:&#x2F;&#x2F;jq.qq.com&#x2F;?_wv&#x3D;1027&amp;k&#x3D;4dyoeB6O" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>QQ群</a>
+      </span>
+  </div>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://olinl.gitee.io/2021/06/04/%E7%AC%AC%E4%BA%94%E7%AB%A0%20%E5%BC%82%E5%B8%B8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="姜霖">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="拾柒的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          第五章 异常
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-06-04 05:50:51" itemprop="dateCreated datePublished" datetime="2021-06-04T05:50:51+08:00">2021-06-04</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-05-13 15:11:04" itemprop="dateModified" datetime="2022-05-13T15:11:04+08:00">2022-05-13</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E4%BD%BF%E7%94%A8Java%E5%AE%9E%E7%8E%B0%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B%E6%95%B4%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">使用Java实现面向对象编程整理</span></a>
+        </span>
+    </span>
+
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>3.3k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="一、什么是异常"><a href="#一、什么是异常" class="headerlink" title="一、什么是异常"></a>一、什么是异常</h2><p>​    异常就是在程序的允许过程中所发生的不正常的事件。</p>
+<h2 id="二、异常处理"><a href="#二、异常处理" class="headerlink" title="二、异常处理"></a>二、异常处理</h2><p>​    Java的异常处理是通过五个关键词来实现的： **try、catch、finally、throw和throws ** </p>
+<span id="more"></span>
+
+<h3 id="1-try-catch"><a href="#1-try-catch" class="headerlink" title="1.try-catch"></a>1.try-catch</h3><ul>
+<li>如果 <strong>try</strong> 块中所有语句正常执行完毕，不会发生异常，那么 <strong>catch</strong> 快中的所有语句都将会被忽略。</li>
+<li>如果 <strong>try</strong> 语句快在执行的过程中遇到异常，并且这个异常与 <strong>catch</strong> 中声明的异常类型相匹配。那么 <strong>try</strong> 快中其余剩下的代码被忽略，而相应的 <strong>catch</strong> 快将会被执行。匹配是指catch所处理的异常类型与所生存的异常类型完全一致或是它的父类。</li>
+<li>如果 <strong>try</strong> 语句块中在执行过程中遇到异常，而抛出的异常在 <strong>catch</strong> 块里面没有被声明，那么程序立即退出。<ul>
+<li>报异常的方法有以下两种<ul>
+<li> <strong>void printStackTrace</strong> ：输出异常的信息。信息包括程序运行到当前类的执行流程，他讲输出从方法调用到异常抛出处的方法调用序列。</li>
+<li> **String getMessage ( ) ** ：返回异常信息描述字符串。该字符描述异常产生的类型，是 <strong>printStackTrace（ ）</strong> 方法输出信息的一部分。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-try-catch-finally"><a href="#2-try-catch-finally" class="headerlink" title="2.try-catch-finally"></a>2.try-catch-finally</h3><ul>
+<li>在 <strong>try-catch</strong>  语句后加入 <strong>finally</strong> 快，把该语句放入 <strong>finally</strong> 块。无论是否发生异常， <strong>finally</strong> 块中的代码总能被执行。</li>
+<li> <strong>try-catch-finally</strong> 程序块的执行的流程大致分为两种</li>
+<li>如果 <strong>try</strong> 块中所有的语句正常执行完毕，那么 <strong>finally</strong> 块就会被执行。</li>
+<li>如果 <strong>try</strong> 语句块在执行过程中碰到异常，无论这种异常能否被catch块捕获到，都将执行 <strong>finally</strong> 块中的代码</li>
+<li><strong>try-catch-finally</strong> 结构中的 <strong>try</strong> 块是必需的， <strong>catch</strong> 和 <strong>fina</strong> 块为可选，但两者至少必须出现其中之一。</li>
+<li>需要注意的是，即使在 <strong>try</strong> 块和 <strong>catch</strong> 块中存在 <strong>return</strong> 语句， <strong>finally</strong> 块中语句也会被执行。发生异常时的执行顺序：执行 <strong>try</strong> 块或 <strong>catch</strong> 中 <strong>return</strong> 之前的语句，执行 <strong>finally</strong> 块中的语句，执行 <strong>try</strong> 块或 <strong>catch</strong> 中的 <strong>return</strong> 语句退出。</li>
+<li> <strong>finally</strong> 块中语句不被执行的唯一情况：在异常处理代码中执行 <strong>System.exit(1)</strong> ，直接退出。</li>
+</ul>
+<h3 id="3-多重catch块"><a href="#3-多重catch块" class="headerlink" title="3.多重catch块"></a>3.多重catch块</h3><ul>
+<li><p>系统从上到下分别对每个catch语句块处理的异常类型进行检查，并执行第一个与异常类型匹配的catch语句。执行其中一条catch语句之后，其后的catch语句都将被忽略。</p>
+</li>
+<li><p>在使用多重 <strong>catch</strong> 块中， <strong>catch</strong> 块的排列顺序必须是从子类到父类，最后一个一般都是 <strong>Exception</strong> 父类。</p>
+<h3 id="4-声明异常——throws"><a href="#4-声明异常——throws" class="headerlink" title="4.声明异常——throws"></a>4.声明异常——throws</h3></li>
+<li><p>在java中用关键字 <strong>throws</strong> 声明摸个方法可能抛出的各种异常。 <strong>throws</strong> 可以同时声明多个异常，之间用逗号隔开。<strong>被声明异常之后调用必须处理异常</strong></p>
+</li>
+</ul>
+<p>处理异常的<strong>两种</strong>方式</p>
+<ul>
+<li>通过 <strong>try-catch</strong> 捕获</li>
+<li>通过 <strong>throws</strong> 继续声明异常。如果调用者不打算处理异常，则可以继续通过 <strong>throws</strong> 声明异常，让下一个调用者处理异常。 <strong>main()</strong> 方法声明的异常将由Java虚拟机来处理。</li>
+</ul>
+<p><strong>语法</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> 方法名 <span class="keyword">throws</span> 异常，异常（）&#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-抛出异常——throw"><a href="#5-抛出异常——throw" class="headerlink" title="5.抛出异常——throw"></a>5.抛出异常——throw</h3><p>手动抛出异常</p>
+<p>语法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">throw</span> <span class="keyword">new</span> Exception(<span class="string">&quot;错误语句&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-throw和throws的区别表现在以下三个方面"><a href="#6-throw和throws的区别表现在以下三个方面" class="headerlink" title="6.throw和throws的区别表现在以下三个方面"></a>6.throw和throws的区别表现在以下三个方面</h3><p><strong>作用不同</strong> ：<strong>throw</strong> 用于在程序中抛出异常；<strong>throws</strong> 用于声明在该方法内抛出了异常。</p>
+<p><strong>使用的位置不同</strong> ：<strong>throw</strong> 位于方法体内部，都可以作为单独语句使用；<strong>throws</strong> 必须跟在方法参数列表的后面，不能单独使用。</p>
+<p><strong>内容不同</strong>： <strong>throw</strong> 抛出一个异常对象，而且只能是一个；throws后面跟异常类，而且可以跟多个异常类。</p>
+<h3 id="7-常见的异常类型"><a href="#7-常见的异常类型" class="headerlink" title="7.常见的异常类型"></a>7.常见的异常类型</h3><table>
+<thead>
+<tr>
+<th>异常</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Exception</strong></td>
+<td>异常层次结构的跟类</td>
+</tr>
+<tr>
+<td><strong>ArithmeticException</strong></td>
+<td>算术错误情形，如以零作除数</td>
+</tr>
+<tr>
+<td><strong>ArrayIndexOutOfBoundsException</strong></td>
+<td>数组下标越界</td>
+</tr>
+<tr>
+<td><strong>NullPointerException</strong></td>
+<td>尝试访问 null 对象成员</td>
+</tr>
+<tr>
+<td><strong>ClassNotFoundException</strong></td>
+<td>不能加载所需的类</td>
+</tr>
+<tr>
+<td><strong>IllegalArgumentException</strong></td>
+<td>方法接收到非法参数</td>
+</tr>
+<tr>
+<td><strong>ClassCastException</strong></td>
+<td>对象强制类型转换出错</td>
+</tr>
+<tr>
+<td><strong>NumberFormatException</strong></td>
+<td>数字格式转换异常，如把”abc”转换成数字</td>
+</tr>
+</tbody></table>
+<h2 id="二、-异常的分类"><a href="#二、-异常的分类" class="headerlink" title="二、.异常的分类"></a>二、.异常的分类</h2><p><img src="/2021/06/04/%E7%AC%AC%E4%BA%94%E7%AB%A0%20%E5%BC%82%E5%B8%B8/img%5Cimage-20210528154353741.png" alt="image-20210528154353741"></p>
+<p><strong>Throwable</strong> 类：所有异常都是 <strong>Throwable</strong> 类的子类，他派生两个子类，即 <strong>Error</strong> 和 <strong>Exception</strong> 。</p>
+<p><strong>Error</strong> 类：表示仅靠程序本身无法恢复的严重错误，如内存溢出动态链接失败，虚拟机错误。应用程序不应该抛出这种类型的对象（一般是由虚拟机抛出的）。加入出现这种错误，除了尽力使程序安全退出为，在其他方面是无能为力的。使用在进行程序设计时，应该更关注 <strong>Exception</strong> 类。</p>
+<p><strong>Exception</strong> 类：由java应用程序抛出和处理的非严重错误，如所需文件找不到、网络连接不通或终端、算书运算出错（如被零除）、数字（下标越界）、数组下标越界、装在了一个不存在的类、对null对象操作、类型转换异常等。它的各种不同的子类分半对应不同类型的异常。</p>
+<p><strong>运行时异常</strong>：包括 <strong>RuntimeException</strong> 及其使用子类，不要求程序必须对题目做出处理。</p>
+<p><strong>Checked</strong> 异常：（非运行时异常）除了运行时异常外的其他由Exception继承来的继承类。程序必须捕获或者声明抛出这种异常，否则会出现编译错误，无法通过编译。处理方式包括两种：通过 <strong>try-catch</strong> 捕获；通过 <strong>throws</strong> 继续声明异常，交给上一级调用方法处理。</p>
+<h2 id="三、Log4j——开源日志记录工具"><a href="#三、Log4j——开源日志记录工具" class="headerlink" title="三、Log4j——开源日志记录工具"></a>三、Log4j——开源日志记录工具</h2><h3 id="1-记录的内容分为以下三种："><a href="#1-记录的内容分为以下三种：" class="headerlink" title="1.记录的内容分为以下三种："></a>1.记录的内容分为以下三种：</h3><ul>
+<li>SQL日志：记录系统执行的SQL语句。</li>
+<li>异常日志：记录系统运行中发生的异常事件</li>
+<li>业务日志：记录系统运行过程，如用户登录，操作记录</li>
+</ul>
+<h3 id="2-如何使用log4j记录日志"><a href="#2-如何使用log4j记录日志" class="headerlink" title="2.如何使用log4j记录日志"></a>2.如何使用log4j记录日志</h3><p>​    （1）在项目中加入log4j的 <strong>JAR</strong> 文件 直接在项目上 Ctrl+C-Ctrl+V</p>
+<p>​    （2）创建 <strong>log4j.properties</strong> 文件。</p>
+<p>​    （3）编写 <strong>log4j.properties</strong> 文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">### 设置Logger输出级别和输出目的地 ###</span><br><span class="line">log4j.rootLogger=debug, stdout,logfile</span><br><span class="line"></span><br><span class="line">### 把日志信息输出到控制台 ###</span><br><span class="line">log4j.appender.stdout=org.apache.log4j.ConsoleAppender</span><br><span class="line">log4j.appender.stdout.Target=System.err</span><br><span class="line">log4j.appender.stdout.layout=org.apache.log4j.SimpleLayout</span><br><span class="line"></span><br><span class="line">### 把日志信息输出到文件：jbit.log ###</span><br><span class="line">log4j.appender.logfile=org.apache.log4j.FileAppender</span><br><span class="line">log4j.appender.logfile.File=jbit.log</span><br><span class="line">log4j.appender.logfile.layout=org.apache.log4j.PatternLayout</span><br><span class="line">log4j.appender.logfile.layout.ConversionPattern=%d&#123;yyyy-MM-dd HH:mm:ss&#125; %l %F %p %m%n</span><br></pre></td></tr></table></figure>
+
+<p>​    （4）使用 <strong>log4j</strong> 记录日志信息</p>
+<p>声明一个成员变量</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> Logger logger=Logger.getLogger(类名.class.getName());</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-log4j-配置文件"><a href="#3-log4j-配置文件" class="headerlink" title="3.log4j 配置文件"></a>3.log4j 配置文件</h3><p>（1）输出级别<br>$$<br>日志记录器输出级别：fatal &gt; error &gt; warn &gt; info &gt;debug<br>$$<br><strong>fatal</strong>：指出验证的错误事件将会导致应用程序的退出</p>
+<p><strong>error</strong>:指出虽然发生错误事件，但仍然不影响系统的继续运行</p>
+<p><strong>warn</strong>：表明会出现潜在错误的情形</p>
+<p><strong>info</strong>：在粗粒度级别上指明消息，强调应用程序的运行过程。</p>
+<p><strong>debug</strong>：指出细粒度信息事件，对调试应用程序是非常有帮助的。</p>
+<p><img src="https://olinimg.oss-cn-shanghai.aliyuncs.com/HexoImg/202205131511450.png" alt="log4j 配置文件"></p>
+<h2 id="四、总结："><a href="#四、总结：" class="headerlink" title="四、总结："></a>四、总结：</h2><p><img src="https://olinimg.oss-cn-shanghai.aliyuncs.com/HexoImg/202205131511331.png" alt="第五章 异常总结"></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>姜霖
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://olinl.gitee.io/2021/06/04/%E7%AC%AC%E4%BA%94%E7%AB%A0%20%E5%BC%82%E5%B8%B8/" title="第五章 异常">https://olinl.gitee.io/2021/06/04/第五章 异常/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/06/04/%E7%AC%AC%E5%9B%9B%E7%AB%A0%20%E6%8E%A5%E5%8F%A3/" rel="prev" title="第四章 接口">
+                  <i class="fa fa-chevron-left"></i> 第四章 接口
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/06/04/%E7%AC%AC%E5%85%AD%E7%AB%A0%20%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/" rel="next" title="第六章 集合框架">
+                  第六章 集合框架 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+        
+	<div style="text-align:center;color: #ccc;font-size:20px;">
+		---------本文结束---------
+	</div>
+
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">姜霖</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">67k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">1:01</span>
+  </span>
+</div>
+<span id="busuanzi_container_site_uv">
+  本站访问次数：1314520 次<span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+</span>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
+   <!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/clicklove.js"></script>
+   <!-- 动态背景 -->
+
+<script type="text/javascript"
+color="0,0,255" opacity='0.7' zIndex="-2" count="99" src="/js/canvas-nest.min.js"></script>
+
+<!-- 代码块复制功能 -->
+<script src="https://cdn.jsdelivr.net/npm/clipboard@1/dist/clipboard.min.js"></script>
+<script type="text/javascript" src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<!-- <script type="text/javascript" src="/js/clipboard.js"></script>  -->
+<script type="text/javascript" src="/js/clipboard_use.js"></script>

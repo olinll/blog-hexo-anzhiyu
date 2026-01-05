@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-bbt.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-bbt.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"olinl.gitee.io","root":"/","images":"/images","scheme":"Gemini","version":"8.6.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="框架的简单介绍定义是一种经过检验的,具有特定功能的未成品软件  是一个应用程序的半成品 提供可重用的公共结构 按一定规则组织的一组组件">
+<meta property="og:type" content="article">
+<meta property="og:title" content="初始MyBatis框架">
+<meta property="og:url" content="https://olinl.gitee.io/2021/11/17/%E5%88%9D%E5%A7%8BMyBatis%E6%A1%86%E6%9E%B6/index.html">
+<meta property="og:site_name" content="拾柒的博客">
+<meta property="og:description" content="框架的简单介绍定义是一种经过检验的,具有特定功能的未成品软件  是一个应用程序的半成品 提供可重用的公共结构 按一定规则组织的一组组件">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://olinl.gitee.io/2021/11/17/%E5%88%9D%E5%A7%8BMyBatis%E6%A1%86%E6%9E%B6/image-20211117184314611.png">
+<meta property="og:image" content="https://olinl.gitee.io/2021/11/17/%E5%88%9D%E5%A7%8BMyBatis%E6%A1%86%E6%9E%B6/image-20211117184436238.png">
+<meta property="og:image" content="https://olinl.gitee.io/2021/11/17/%E5%88%9D%E5%A7%8BMyBatis%E6%A1%86%E6%9E%B6/image-20211117184618691.png">
+<meta property="og:image" content="https://olinl.gitee.io/2021/11/17/%E5%88%9D%E5%A7%8BMyBatis%E6%A1%86%E6%9E%B6/image-20211117184648598.png">
+<meta property="og:image" content="https://olinl.gitee.io/2021/11/17/%E5%88%9D%E5%A7%8BMyBatis%E6%A1%86%E6%9E%B6/image-20211117190825435.png">
+<meta property="og:image" content="https://olinl.gitee.io/2021/11/17/%E5%88%9D%E5%A7%8BMyBatis%E6%A1%86%E6%9E%B6/image-20211117192456398.png">
+<meta property="article:published_time" content="2021-11-17T10:24:44.000Z">
+<meta property="article:modified_time" content="2022-05-13T07:24:17.768Z">
+<meta property="article:author" content="姜霖">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://olinl.gitee.io/2021/11/17/%E5%88%9D%E5%A7%8BMyBatis%E6%A1%86%E6%9E%B6/image-20211117184314611.png">
+
+
+<link rel="canonical" href="https://olinl.gitee.io/2021/11/17/%E5%88%9D%E5%A7%8BMyBatis%E6%A1%86%E6%9E%B6/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://olinl.gitee.io/2021/11/17/%E5%88%9D%E5%A7%8BMyBatis%E6%A1%86%E6%9E%B6/","path":"2021/11/17/初始MyBatis框架/","title":"初始MyBatis框架"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>初始MyBatis框架 | 拾柒的博客</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+
+
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">拾柒的博客</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">顾拾柒</p>
+      <img class="custom-logo-image" src="/images/logo1.svg" alt="拾柒的博客">
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">4</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A1%86%E6%9E%B6%E7%9A%84%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">框架的简单介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89"><span class="nav-number">1.0.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%98%E7%82%B9"><span class="nav-number">1.0.2.</span> <span class="nav-text">优点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BB%E6%B5%81%E6%A1%86%E6%9E%B6"><span class="nav-number">1.0.3.</span> <span class="nav-text">主流框架</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#MyBatis"><span class="nav-number">1.0.3.1.</span> <span class="nav-text">MyBatis</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Spring"><span class="nav-number">1.0.3.2.</span> <span class="nav-text">Spring</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Spring-MVC"><span class="nav-number">1.0.3.3.</span> <span class="nav-text">Spring MVC</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Struts"><span class="nav-number">1.0.3.4.</span> <span class="nav-text">Struts</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HiberNate"><span class="nav-number">1.0.3.5.</span> <span class="nav-text">HiberNate</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%81%E4%B9%85%E5%8C%96"><span class="nav-number">1.0.4.</span> <span class="nav-text">持久化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ORM"><span class="nav-number">1.0.5.</span> <span class="nav-text">ORM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MyBatis%E7%AE%80%E4%BB%8B"><span class="nav-number">1.0.6.</span> <span class="nav-text">MyBatis简介</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%8A%E6%9C%BA%E5%AE%9E%E6%93%8D"><span class="nav-number">2.</span> <span class="nav-text">上机实操</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%90%AD%E5%BB%BAMyBatis%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83"><span class="nav-number">2.1.</span> <span class="nav-text">搭建MyBatis开发环境</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Mybatis%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8-X"><span class="nav-number">3.</span> <span class="nav-text">Mybatis基本使用(X)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B0%8F%E7%82%B9"><span class="nav-number">4.</span> <span class="nav-text">小点</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A5%E5%AE%9E%E4%BD%93%E7%B1%BB%E5%B0%81%E8%A3%85%E6%9F%A5%E8%AF%A2%E7%BB%93%E6%9E%9C"><span class="nav-number">4.1.</span> <span class="nav-text">以实体类封装查询结果</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Mapper%E6%8E%A5%E5%8F%A3%E4%B8%AD%E6%B7%BB%E5%8A%A0%E6%9F%A5%E8%AF%A2%E7%94%A8%E6%88%B7%E5%88%97%E8%A1%A8%E7%9A%84%E6%96%B9%E6%B3%95%E5%A3%B0%E6%98%8E"><span class="nav-number">4.1.1.</span> <span class="nav-text">Mapper接口中添加查询用户列表的方法声明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SQL%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E4%B8%AD%E6%B7%BB%E5%8A%A0%E6%9F%A5%E8%AF%A2%E7%94%A8%E6%88%B7%E5%88%97%E8%A1%A8%E7%9A%84select%E8%8A%82%E7%82%B9"><span class="nav-number">4.1.2.</span> <span class="nav-text">SQL映射文件中添加查询用户列表的select节点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8EJDBC%E7%9B%B4%E8%A7%82%E5%AF%B9%E6%AF%94"><span class="nav-number">4.2.</span> <span class="nav-text">与JDBC直观对比</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MyBatis%E5%B0%86%E4%BB%A3%E7%A0%81%E5%88%86%E8%A7%A3%E5%8C%85%E8%A3%85"><span class="nav-number">4.2.1.</span> <span class="nav-text">MyBatis将代码分解包装!!!</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MyBatis%E6%A1%86%E6%9E%B6%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="nav-number">4.3.</span> <span class="nav-text">MyBatis框架优缺点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%98%E7%82%B9-1"><span class="nav-number">4.3.1.</span> <span class="nav-text">优点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%BA%E7%82%B9"><span class="nav-number">4.3.2.</span> <span class="nav-text">缺点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MyBatis%E5%9F%BA%E6%9C%AC%E8%A6%81%E7%B4%A0"><span class="nav-number">4.4.</span> <span class="nav-text">MyBatis基本要素</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E6%8E%A5%E5%8F%A3%E5%92%8C%E7%B1%BB%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="nav-number">4.5.</span> <span class="nav-text">核心接口和类的关系</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SqlSessionFactoryBuilder"><span class="nav-number">4.5.1.</span> <span class="nav-text">SqlSessionFactoryBuilder</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SqlSessionFactory"><span class="nav-number">4.5.2.</span> <span class="nav-text">SqlSessionFactory</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SqlSession"><span class="nav-number">4.5.3.</span> <span class="nav-text">SqlSession</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93"><span class="nav-number">4.6.</span> <span class="nav-text">小结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MyBatis%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">4.7.</span> <span class="nav-text">MyBatis核心配置文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BB%E8%A6%81%E5%85%83%E7%B4%A0"><span class="nav-number">4.7.1.</span> <span class="nav-text">主要元素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEproperties%E5%85%83%E7%B4%A0"><span class="nav-number">4.7.2.</span> <span class="nav-text">配置properties元素</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEproperties%E5%85%83%E7%B4%A0%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E5%BC%8F"><span class="nav-number">4.7.2.1.</span> <span class="nav-text">配置properties元素的两种方式</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%80%9A%E8%BF%87%E6%8C%87%E5%AE%9A%E5%A4%96%E9%83%A8%E5%B1%9E%E6%80%A7%E6%96%87%E4%BB%B6"><span class="nav-number">4.7.2.1.1.</span> <span class="nav-text">通过指定外部属性文件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%9B%B4%E6%8E%A5%E9%85%8D%E7%BD%AEproperty%E5%AD%90%E8%8A%82%E7%82%B9"><span class="nav-number">4.7.2.1.2.</span> <span class="nav-text">直接配置property子节点</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%8B%A5%E4%B8%A4%E7%A7%8D%E6%96%B9%E5%BC%8F%E5%90%8C%E6%97%B6%E9%83%BD%E7%94%A8%E4%BA%86%EF%BC%8C%E5%93%AA%E7%A7%8D%E6%96%B9%E5%BC%8F%E7%94%9F%E6%95%88%EF%BC%9F"><span class="nav-number">4.7.2.2.</span> <span class="nav-text">若两种方式同时都用了，哪种方式生效？</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#resource%E5%B1%9E%E6%80%A7%E5%80%BC%E4%BC%9A%E8%A6%86%E7%9B%96property%E5%AD%90%E8%8A%82%E7%82%B9%E9%85%8D%E7%BD%AE%E7%9A%84%E5%90%8C%E5%90%8D%E5%B1%9E%E6%80%A7%E5%80%BC"><span class="nav-number">4.7.2.2.1.</span> <span class="nav-text">resource属性值会覆盖property子节点配置的同名属性值</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#settings%E5%85%83%E7%B4%A0"><span class="nav-number">4.8.</span> <span class="nav-text">settings元素</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#typeAliases%E5%85%83%E7%B4%A0"><span class="nav-number">4.9.</span> <span class="nav-text">typeAliases元素</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#environments%E5%85%83%E7%B4%A0"><span class="nav-number">4.10.</span> <span class="nav-text">environments元素</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mappers%E5%85%83%E7%B4%A0"><span class="nav-number">4.11.</span> <span class="nav-text">mappers元素</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E5%BC%8F%E4%B8%80%EF%BC%9A%E4%BD%BF%E7%94%A8%E7%B1%BB%E8%B5%84%E6%BA%90%E8%B7%AF%E5%BE%84%E8%8E%B7%E5%8F%96%E8%B5%84%E6%BA%90"><span class="nav-number">4.11.1.</span> <span class="nav-text">方式一：使用类资源路径获取资源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E5%BC%8F%E4%BA%8C%EF%BC%9A%E4%BD%BF%E7%94%A8Mapper%E6%8E%A5%E5%8F%A3%E7%9A%84%E5%8C%85%E8%B7%AF%E5%BE%84"><span class="nav-number">4.11.2.</span> <span class="nav-text">方式二：使用Mapper接口的包路径</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="姜霖"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">姜霖</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jianglin428" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jianglin428" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:jianglin428@yeah.net" title="E-Mail → mailto:jianglin428@yeah.net" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://jq.qq.com/?_wv=1027&k=4dyoeB6O" title="QQ群 → https:&#x2F;&#x2F;jq.qq.com&#x2F;?_wv&#x3D;1027&amp;k&#x3D;4dyoeB6O" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>QQ群</a>
+      </span>
+  </div>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://olinl.gitee.io/2021/11/17/%E5%88%9D%E5%A7%8BMyBatis%E6%A1%86%E6%9E%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="姜霖">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="拾柒的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          初始MyBatis框架
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-11-17 18:24:44" itemprop="dateCreated datePublished" datetime="2021-11-17T18:24:44+08:00">2021-11-17</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-05-13 15:24:17" itemprop="dateModified" datetime="2022-05-13T15:24:17+08:00">2022-05-13</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Java%E5%BC%80%E5%8F%91%E4%B9%8BSSM%E4%BC%81%E4%B8%9A%E8%BD%BB%E9%87%8F%E7%BA%A7%E5%BC%80%E5%8F%91%E6%A1%86%E6%9E%B6/" itemprop="url" rel="index"><span itemprop="name">Java开发之SSM企业轻量级开发框架</span></a>
+        </span>
+    </span>
+
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>5.7k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>5 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="框架的简单介绍"><a href="#框架的简单介绍" class="headerlink" title="框架的简单介绍"></a>框架的简单介绍</h1><h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>是一种经过检验的,具有特定功能的未成品软件</p>
+<ol>
+<li>是一个应用程序的半成品</li>
+<li>提供可重用的公共结构</li>
+<li>按一定规则组织的一组组件</li>
+</ol>
+<span id="more"></span>
+
+<h3 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h3><ol>
+<li>不用再考虑公共问题</li>
+<li>专心在业务实现上</li>
+<li>结构统一，易于学习、维护</li>
+<li>新手也可写出好程序 </li>
+</ol>
+<h3 id="主流框架"><a href="#主流框架" class="headerlink" title="主流框架"></a>主流框架</h3><h4 id="MyBatis"><a href="#MyBatis" class="headerlink" title="MyBatis"></a>MyBatis<img src="/2021/11/17/%E5%88%9D%E5%A7%8BMyBatis%E6%A1%86%E6%9E%B6/image-20211117184314611.png" alt="image-20211117184314611"></h4><ol>
+<li>半自动化的ORM实现</li>
+<li>DAO层 对数据库层打交道</li>
+<li>动态SQL</li>
+<li>小巧灵活、简单易学</li>
+</ol>
+<h4 id="Spring"><a href="#Spring" class="headerlink" title="Spring"></a>Spring<img src="/2021/11/17/%E5%88%9D%E5%A7%8BMyBatis%E6%A1%86%E6%9E%B6/image-20211117184436238.png" alt="image-20211117184436238"></h4><ol>
+<li><p>依赖注入容器 / AOP实现</p>
+</li>
+<li><p>声明式事务</p>
+</li>
+<li><p>简化Java EE应用</p>
+</li>
+<li><p>黏合剂，将大家组装到一起</p>
+</li>
+</ol>
+<h4 id="Spring-MVC"><a href="#Spring-MVC" class="headerlink" title="Spring MVC"></a>Spring MVC</h4><ol>
+<li>结构最清晰的MVC Model2实现</li>
+<li>高度可配置，支持多种视图技术</li>
+<li>定制化开发</li>
+</ol>
+<h4 id="Struts"><a href="#Struts" class="headerlink" title="Struts"></a>Struts<img src="/2021/11/17/%E5%88%9D%E5%A7%8BMyBatis%E6%A1%86%E6%9E%B6/image-20211117184618691.png" alt="image-20211117184618691"></h4><ol>
+<li>MVC设计模式的实现</li>
+<li>拦截器</li>
+<li>可变和可重用的标签</li>
+</ol>
+<h4 id="HiberNate"><a href="#HiberNate" class="headerlink" title="HiberNate"></a>HiberNate<img src="/2021/11/17/%E5%88%9D%E5%A7%8BMyBatis%E6%A1%86%E6%9E%B6/image-20211117184648598.png" alt="image-20211117184648598"></h4><ol>
+<li>ORM，简化数据库操作</li>
+<li>DAO层</li>
+</ol>
+<h3 id="持久化"><a href="#持久化" class="headerlink" title="持久化"></a>持久化</h3><ol>
+<li>定义：持久化是程序数据在瞬时状态和持久状态间转换的过程</li>
+<li>实现持久化的方式<ol>
+<li>文件</li>
+<li>数据库</li>
+</ol>
+</li>
+</ol>
+<h3 id="ORM"><a href="#ORM" class="headerlink" title="ORM"></a>ORM</h3><ol>
+<li><em>ORM</em>一般指对象关系映射。 对象关系映射（英语：Object Relational Mapping，简称<em>ORM</em>，或O/RM，或O/R mapping）<ol>
+<li>​      O Object 对象  R Relational 关系 M Mapping 映射</li>
+<li>​    编写程序的时候，以面向对象的方式处理数据</li>
+<li>保存数据的时候，却以关系型数据库的方式存储</li>
+</ol>
+</li>
+<li>ORM解决方案包含下面四个部分<ol>
+<li>在持久化对象上执行基本的增、删、改、查操作</li>
+<li>对持久化对象提供一种查询语言或者API</li>
+<li>对象关系映射工具</li>
+<li>提供与事务对象交互、执行检查、延迟加载以及其他优化功能</li>
+</ol>
+</li>
+</ol>
+<h3 id="MyBatis简介"><a href="#MyBatis简介" class="headerlink" title="MyBatis简介"></a>MyBatis简介</h3><ol>
+<li>MyBatis前身是iBatis，本是Apache的一个开源的项目</li>
+<li>官方网站:<a target="_blank" rel="noopener" href="http://mybatis.org/">http://mybatis.org</a></li>
+<li>ORM框架</li>
+<li>特点<ol>
+<li>实体类和SQL语句之间建立映射关系</li>
+<li>基于SQL语法，简单易学</li>
+<li>SQL语句封装在配置文件中，便于统一管理与维护，降低程序的耦合度</li>
+</ol>
+</li>
+</ol>
+<h1 id="上机实操"><a href="#上机实操" class="headerlink" title="上机实操"></a>上机实操</h1><h2 id="搭建MyBatis开发环境"><a href="#搭建MyBatis开发环境" class="headerlink" title="搭建MyBatis开发环境"></a>搭建MyBatis开发环境</h2><ol>
+<li>下载mybatis-3.5.1.jar</li>
+<li>将所需jar文件导入工程</li>
+<li>编写MyBatis核心配置文件 <strong>类似于BaseDao  用于连接的信息</strong></li>
+<li>创建实体类（POJO）</li>
+<li>定义DAO层Mapper接口</li>
+<li>定义SQL映射文件  <strong>类似于sql java代码</strong></li>
+<li>创建测试类<ol>
+<li>读取MyBatis核心配置文件</li>
+<li>创建SqlSessionFactory实例</li>
+<li>创建SqlSession实例</li>
+<li>创建Mapper实例执行SQL映射文件中的SQL语句</li>
+</ol>
+</li>
+</ol>
+<blockquote>
+<h1 id="Mybatis基本使用-X"><a href="#Mybatis基本使用-X" class="headerlink" title="Mybatis基本使用(X)"></a>Mybatis基本使用(<u>X</u>)</h1><ol>
+<li>创建web项目，加jar包</li>
+<li>编写mybatis核心配置文件mybatis_config.xml</li>
+<li>编写实体类(pojo)</li>
+<li>编写接口</li>
+<li>编写sql映射文件</li>
+<li>创建业务类<ol>
+<li>读取MyBatis核心配置文件</li>
+<li>创建SqlSessionFactory实例</li>
+<li>创建SqlSession实例</li>
+<li>创建Mapper实例执行SQL映射文件中的SQL语句</li>
+</ol>
+</li>
+<li>创建启动类并运行</li>
+</ol>
+</blockquote>
+<h1 id="小点"><a href="#小点" class="headerlink" title="小点"></a>小点</h1><h2 id="以实体类封装查询结果"><a href="#以实体类封装查询结果" class="headerlink" title="以实体类封装查询结果"></a>以实体类封装查询结果</h2><h3 id="Mapper接口中添加查询用户列表的方法声明"><a href="#Mapper接口中添加查询用户列表的方法声明" class="headerlink" title="Mapper接口中添加查询用户列表的方法声明"></a>Mapper接口中添加查询用户列表的方法声明</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span>  List&lt;SysUser&gt;  <span class="title">getUserList</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="SQL映射文件中添加查询用户列表的select节点"><a href="#SQL映射文件中添加查询用户列表的select节点" class="headerlink" title="SQL映射文件中添加查询用户列表的select节点"></a>SQL映射文件中添加查询用户列表的select节点</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">  &lt;select  id=&quot;getUserList&quot;  resultType=&quot;cn.cvs.pojo.SysUser&quot;&gt; </span><br><span class="line">&lt;!-- id是方法名 resultType 是返回值的类型 --&gt;</span><br><span class="line">      select * from t_sys_user</span><br><span class="line">  &lt;/select&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="与JDBC直观对比"><a href="#与JDBC直观对比" class="headerlink" title="与JDBC直观对比"></a>与JDBC直观对比</h2><h3 id="MyBatis将代码分解包装"><a href="#MyBatis将代码分解包装" class="headerlink" title="MyBatis将代码分解包装!!!"></a>MyBatis将代码分解包装!!!</h3><h2 id="MyBatis框架优缺点"><a href="#MyBatis框架优缺点" class="headerlink" title="MyBatis框架优缺点"></a>MyBatis框架优缺点</h2><h3 id="优点-1"><a href="#优点-1" class="headerlink" title="优点"></a>优点</h3><ol>
+<li>与JDBC相比，减少了50%以上的代码量</li>
+<li>最简单的持久化框架，小巧并简单易学</li>
+<li>SQL代码从程序代码中彻底分离，可重用</li>
+<li>提供XML标签，支持编写动态SQL</li>
+<li>提供映射标签，支持对象与数据库的ORM字段映射</li>
+</ol>
+<h3 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h3><ol>
+<li>SQL语句编写工作量大，对开发人员有一定要求</li>
+<li>数据库移植性差</li>
+</ol>
+<p><strong>MyBatis专注于SQL本身，是一个足够灵活的DAO层解决方案，适用于性能要求较高或者需求多变的互联网项目</strong></p>
+<h2 id="MyBatis基本要素"><a href="#MyBatis基本要素" class="headerlink" title="MyBatis基本要素"></a>MyBatis基本要素</h2><ol>
+<li>MyBatis的核心对象<ol>
+<li>SqlSessionFactoryBuilder</li>
+<li>SqlSessionFactory</li>
+<li>SqlSession</li>
+</ol>
+</li>
+<li>MyBatis核心配置文件</li>
+<li>SQL映射文件</li>
+</ol>
+<h2 id="核心接口和类的关系"><a href="#核心接口和类的关系" class="headerlink" title="核心接口和类的关系"></a>核心接口和类的关系</h2><p><img src="/2021/11/17/%E5%88%9D%E5%A7%8BMyBatis%E6%A1%86%E6%9E%B6/image-20211117190825435.png" alt="image-20211117190825435"></p>
+<h3 id="SqlSessionFactoryBuilder"><a href="#SqlSessionFactoryBuilder" class="headerlink" title="SqlSessionFactoryBuilder"></a><strong>SqlSessionFactoryBuilder</strong></h3><p>用过即丢，其生命周期只存在于方法体内<br>负责构建SqlSessionFactory，并提供多个build()方法的重载</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 读取XML文件构造方式</span></span><br><span class="line">String resource = <span class="string">&quot;mybatis-config.xml&quot;</span>; 　　</span><br><span class="line">InputStream is = Resources.getResourceAsStream(resource); 　　</span><br><span class="line">SqlSessionFactory sqlSessionFactory = <span class="keyword">new</span> SqlSessionFactoryBuilder().build(is);</span><br></pre></td></tr></table></figure>
+
+<h3 id="SqlSessionFactory"><a href="#SqlSessionFactory" class="headerlink" title="SqlSessionFactory"></a><strong>SqlSessionFactory</strong></h3><p>SqlSessionFactory是每个MyBatis应用的核心<br>作用：创建SqlSession实例</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">  openSession( <span class="keyword">boolean</span> autoCommit )	</span><br><span class="line"><span class="comment">//true ：关闭事务控制(默认)</span></span><br><span class="line"><span class="comment">//false：开启事务控制</span></span><br></pre></td></tr></table></figure>
+
+<p>生命周期与应用的生命周期相同</p>
+<p>单例 : 存在于整个应用运行时，并且同时只存在一个对象实例</p>
+<h3 id="SqlSession"><a href="#SqlSession" class="headerlink" title="SqlSession"></a><strong>SqlSession</strong></h3><p>包含了执行SQL所需的所有方法<br>非线程安全，不能共享<br>对应一次数据库会话，会话结束必须关闭</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. 创建SqlSession实例</span></span><br><span class="line">SqlSession sqlSession = MyBatisUtil.createSqlSession();</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="comment">// 2. do work</span></span><br><span class="line">&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">    <span class="comment">// 3. 关闭SqlSession//关闭SqlSession非常重要，必须要确保在finally方法体中正常关闭</span></span><br><span class="line">    MyBatisUtil.closeSqlSession(sqlSession);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>一个SqlSession实例可以执行多次SQL语句</strong></p>
+<p><strong>SqlSession的两种使用方式</strong></p>
+<ol>
+<li>通过 namespace+id 字符串运行映射的SQL语句</li>
+<li>基于Mapper接口方式执行SQL语句</li>
+</ol>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><ol>
+<li>非集成环境下的最佳实践<ol>
+<li>SqlSessionFactoryBuilder的最佳使用范围是什么？<ol>
+<li>用过即丢</li>
+<li>推荐作用域范围：局部变量</li>
+</ol>
+</li>
+<li>SqlSessionFactory的最佳使用范围是什么？<ol>
+<li>生命周期与应用的生命周期相同</li>
+<li>最佳作用域范围：应用的全局作用域</li>
+</ol>
+</li>
+<li>SqlSession的最佳使用范围是什么？<ol>
+<li>线程级</li>
+<li>一个request请求期间</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="MyBatis核心配置文件"><a href="#MyBatis核心配置文件" class="headerlink" title="MyBatis核心配置文件"></a>MyBatis核心配置文件</h2><h3 id="主要元素"><a href="#主要元素" class="headerlink" title="主要元素"></a>主要元素</h3><p>configuration        根节点<br>    <strong>properties                  描述一些外部的、可替代的属性</strong><br>    <strong>settings                      修改MyBatis的运行时行为</strong><br>    <strong>typeAliases            为Java类型指定一个别名</strong><br>    typeHandlers             类型处理器<br>    objectFactory             对象工厂<br>    plugins                       插件<br>    <strong>environments             环境配置<br>        environment                       一组环境配置<br>            transactionManager   事务管理器<br>            dataSource                 数据源</strong><br>    databaseIdProvider    启用多数据库厂商支持<br>    <strong>mappers                     映射器</strong></p>
+<h3 id="配置properties元素"><a href="#配置properties元素" class="headerlink" title="配置properties元素"></a>配置properties元素</h3><h4 id="配置properties元素的两种方式"><a href="#配置properties元素的两种方式" class="headerlink" title="配置properties元素的两种方式"></a>配置properties元素的两种方式</h4><h5 id="通过指定外部属性文件"><a href="#通过指定外部属性文件" class="headerlink" title="通过指定外部属性文件"></a>通过指定外部属性文件</h5><p>如：database.properties</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;properties  resource=&quot;database.properties&quot; /&gt;</span><br></pre></td></tr></table></figure>
+
+<h5 id="直接配置property子节点"><a href="#直接配置property子节点" class="headerlink" title="直接配置property子节点"></a>直接配置property子节点</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;properties&gt;</span><br><span class="line">	&lt;property  name=&quot;driver&quot;  value=&quot;com.mysql.cj.jdbc.Driver&quot; /&gt;</span><br><span class="line">	&lt;property  name=&quot;url&quot;  value=&quot;jdbc:mysql://127.0.0.1:3306/……&quot; /&gt;</span><br><span class="line">	&lt;property  name=&quot;user&quot;  value=&quot;root&quot; /&gt;</span><br><span class="line">	&lt;property  name=&quot;password&quot;  value=&quot;123456&quot; /&gt;</span><br><span class="line">&lt;/properties&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="若两种方式同时都用了，哪种方式生效？"><a href="#若两种方式同时都用了，哪种方式生效？" class="headerlink" title="若两种方式同时都用了，哪种方式生效？"></a>若两种方式同时都用了，哪种方式生效？</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;properties resource=&quot;database.properties&quot;&gt;</span><br><span class="line">	&lt;property name=&quot;driver&quot; value=&quot;com.mysql.cj.jdbc.Driver&quot;/&gt;</span><br><span class="line">	&lt;property name=&quot;url&quot; value=&quot;jdbc:mysql://127.0.0.1:3306/……&quot;/&gt;</span><br><span class="line">	&lt;property name=&quot;user&quot; value=&quot;root&quot;/&gt;</span><br><span class="line">	&lt;property name=&quot;password&quot; value=&quot;123456&quot;/&gt;</span><br><span class="line">&lt;/properties&gt;</span><br></pre></td></tr></table></figure>
+
+<h5 id="resource属性值会覆盖property子节点配置的同名属性值"><a href="#resource属性值会覆盖property子节点配置的同名属性值" class="headerlink" title="resource属性值会覆盖property子节点配置的同名属性值"></a>resource属性值会覆盖property子节点配置的同名属性值</h5><h2 id="settings元素"><a href="#settings元素" class="headerlink" title="settings元素"></a>settings元素</h2><p>用来修改MyBatis运行时的行为方式</p>
+<p>主要是MyBatis的一些全局配置属性的设置</p>
+<table>
+<thead>
+<tr>
+<th>设置项</th>
+<th>描述</th>
+<th>允许值</th>
+<th>默认值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>cacheEnabled</td>
+<td>对在此配置文件下的所有cache  进行全局性开/关设置</td>
+<td>true  | false</td>
+<td>true</td>
+</tr>
+<tr>
+<td>lazyLoadingEnabled</td>
+<td>全局性设置懒加载。如果设为false，则所有相关联的都会被初始化加载</td>
+<td>true  | false</td>
+<td>true</td>
+</tr>
+<tr>
+<td>autoMappingBehavior</td>
+<td>MyBatis自动映射匹配级别</td>
+<td>NONE  |  PARTIAL  |  FULL</td>
+<td>PARTIAL</td>
+</tr>
+<tr>
+<td>logImpl</td>
+<td>指定MyBatis应使用的日志记录实现。如果不设置将自动发现日志记录实现</td>
+<td>SLF4J  | LOG4J | LOG4J2 |  ……</td>
+<td>无</td>
+</tr>
+</tbody></table>
+<h2 id="typeAliases元素"><a href="#typeAliases元素" class="headerlink" title="typeAliases元素"></a>typeAliases元素</h2><p>类型别名<br>在SQL映射文件中简化冗长的Java类名</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;typeAliases&gt;</span><br><span class="line">	&lt;typeAlias alias=&quot;SysUser&quot; type=&quot;cn.cvs.pojo.SysUser&quot;/&gt;</span><br><span class="line">&lt;/typeAliases&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;typeAliases&gt;</span><br><span class="line">	&lt;package name =&quot;cn.cvs.pojo&quot; /&gt;&lt;!--默认名称：指定包下JavaBean的非限定类名--&gt;</span><br><span class="line">&lt;/typeAliases&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="environments元素"><a href="#environments元素" class="headerlink" title="environments元素"></a>environments元素</h2><ol>
+<li>environments元素<ol>
+<li>可以通过environment子元素节点配置MyBatis的多套运行环境</li>
+<li>必须通过default属性指定其中一个为默认运行环境</li>
+</ol>
+</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;environments default=&quot;development&quot;&gt; &lt;!--默认的运行环境 ID--&gt;</span><br><span class="line">	&lt;environment id=&quot;development&quot;&gt;&lt;!--运行环境 ID--&gt;</span><br><span class="line">		&lt;transactionManager type=&quot;JDBC&quot;/&gt;&lt;!--事务管理器配置--&gt;</span><br><span class="line">		&lt;dataSource type=&quot;POOLED&quot;&gt;&lt;!--数据源配置--&gt;</span><br><span class="line">			&lt;property name=&quot;driver&quot; value=&quot;$&#123;driver&#125;&quot;/&gt;</span><br><span class="line">			&lt;property name=&quot;url&quot; value=&quot;$&#123;url&#125;&quot;/&gt;</span><br><span class="line">			&lt;property name=&quot;username&quot; value=&quot;$&#123;user&#125;&quot;/&gt;</span><br><span class="line">			&lt;property name=&quot;password&quot; value=&quot;$&#123;password&#125;&quot;/&gt;</span><br><span class="line">		&lt;/dataSource&gt;</span><br><span class="line">	&lt;/environment&gt;</span><br><span class="line">	&lt;environment id=&quot;test&quot;&gt;&lt;!--运行环境 ID--&gt;</span><br><span class="line">		……</span><br><span class="line">	&lt;/environment&gt;</span><br><span class="line">&lt;/environments&gt;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>事务管理器transactionManager</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;transactionManager type=&quot;[ JDBC | MANAGED ]&quot; /&gt;</span><br><span class="line">                          &lt;!-JDBC     MANAGED（托管）  ---&gt;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li><p>dataSource</p>
+<ol>
+<li>dataSource元素使用基本的JDBC数据源接口来配置JDBC连接对象的资源</li>
+<li>有三种内建的数据源类型</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;dataSource type=&quot;[UNPOOLED|POOLED|JNDI]&quot; /&gt;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="mappers元素"><a href="#mappers元素" class="headerlink" title="mappers元素"></a>mappers元素</h2><p>SQL映射文件定义SQL语句映射<br>须在配置中引用SQL映射文件</p>
+<h3 id="方式一：使用类资源路径获取资源"><a href="#方式一：使用类资源路径获取资源" class="headerlink" title="方式一：使用类资源路径获取资源"></a>方式一：使用类资源路径获取资源</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;mappers&gt;</span><br><span class="line">     &lt;mapper  resource=&quot;cn/cvs/dao/sysUser/SysUserMapper.xml&quot; /&gt;</span><br><span class="line">     ……</span><br><span class="line">&lt;/mappers&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="方式二：使用Mapper接口的包路径"><a href="#方式二：使用Mapper接口的包路径" class="headerlink" title="方式二：使用Mapper接口的包路径"></a>方式二：使用Mapper接口的包路径</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 要求SQL映射文件与Mapper接口位于同一包路径下，并且名称相同 --&gt;</span><br><span class="line">&lt;mappers&gt;</span><br><span class="line">     &lt;package  name=&quot;cn.cvs.dao&quot; /&gt;</span><br><span class="line">&lt;/mappers&gt;</span><br></pre></td></tr></table></figure>
+
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p><img src="/2021/11/17/%E5%88%9D%E5%A7%8BMyBatis%E6%A1%86%E6%9E%B6/image-20211117192456398.png" alt="image-20211117192456398"></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>姜霖
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://olinl.gitee.io/2021/11/17/%E5%88%9D%E5%A7%8BMyBatis%E6%A1%86%E6%9E%B6/" title="初始MyBatis框架">https://olinl.gitee.io/2021/11/17/初始MyBatis框架/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/11/15/Mybatis%E7%9F%A5%E8%AF%86%E7%82%B9/" rel="prev" title="Mybatis知识点">
+                  <i class="fa fa-chevron-left"></i> Mybatis知识点
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/11/19/SQL%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%AF%A6%E8%A7%A3/" rel="next" title="SQL映射文件详解">
+                  SQL映射文件详解 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+        
+	<div style="text-align:center;color: #ccc;font-size:20px;">
+		---------本文结束---------
+	</div>
+
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">姜霖</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">67k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">1:01</span>
+  </span>
+</div>
+<span id="busuanzi_container_site_uv">
+  本站访问次数：1314520 次<span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+</span>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
+   <!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/clicklove.js"></script>
+   <!-- 动态背景 -->
+
+<script type="text/javascript"
+color="0,0,255" opacity='0.7' zIndex="-2" count="99" src="/js/canvas-nest.min.js"></script>
+
+<!-- 代码块复制功能 -->
+<script src="https://cdn.jsdelivr.net/npm/clipboard@1/dist/clipboard.min.js"></script>
+<script type="text/javascript" src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<!-- <script type="text/javascript" src="/js/clipboard.js"></script>  -->
+<script type="text/javascript" src="/js/clipboard_use.js"></script>

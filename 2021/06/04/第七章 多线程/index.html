@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-bbt.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-bbt.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"olinl.gitee.io","root":"/","images":"/images","scheme":"Gemini","version":"8.6.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="一、进程1.什么是进程：​    继承是程序的一次动态执行过程，他对应了从代码加载、执行至完成的一个完整过程，这个过程也是程序本身从产生、发展至消亡的过程。 ​    操作系统同时管理一个计算机系统中的多个进程，让计算机系统中的多个进程轮流使用CPU资源，或者共享操作系统的其他资源。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第七章 多线程">
+<meta property="og:url" content="https://olinl.gitee.io/2021/06/04/%E7%AC%AC%E4%B8%83%E7%AB%A0%20%E5%A4%9A%E7%BA%BF%E7%A8%8B/index.html">
+<meta property="og:site_name" content="拾柒的博客">
+<meta property="og:description" content="一、进程1.什么是进程：​    继承是程序的一次动态执行过程，他对应了从代码加载、执行至完成的一个完整过程，这个过程也是程序本身从产生、发展至消亡的过程。 ​    操作系统同时管理一个计算机系统中的多个进程，让计算机系统中的多个进程轮流使用CPU资源，或者共享操作系统的其他资源。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://olinimg.oss-cn-shanghai.aliyuncs.com/HexoImg/202205131510361.png">
+<meta property="og:image" content="https://olinimg.oss-cn-shanghai.aliyuncs.com/HexoImg/202205131510367.png">
+<meta property="article:published_time" content="2021-06-03T23:50:51.000Z">
+<meta property="article:modified_time" content="2022-05-13T07:10:43.991Z">
+<meta property="article:author" content="姜霖">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://olinimg.oss-cn-shanghai.aliyuncs.com/HexoImg/202205131510361.png">
+
+
+<link rel="canonical" href="https://olinl.gitee.io/2021/06/04/%E7%AC%AC%E4%B8%83%E7%AB%A0%20%E5%A4%9A%E7%BA%BF%E7%A8%8B/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://olinl.gitee.io/2021/06/04/%E7%AC%AC%E4%B8%83%E7%AB%A0%20%E5%A4%9A%E7%BA%BF%E7%A8%8B/","path":"2021/06/04/第七章 多线程/","title":"第七章 多线程"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>第七章 多线程 | 拾柒的博客</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+
+
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">拾柒的博客</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">顾拾柒</p>
+      <img class="custom-logo-image" src="/images/logo1.svg" alt="拾柒的博客">
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">4</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E8%BF%9B%E7%A8%8B"><span class="nav-number">1.</span> <span class="nav-text">一、进程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E4%BB%80%E4%B9%88%E6%98%AF%E8%BF%9B%E7%A8%8B%EF%BC%9A"><span class="nav-number">1.1.</span> <span class="nav-text">1.什么是进程：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E8%BF%9B%E7%A8%8B%E7%9A%84%E7%89%B9%E7%82%B9%EF%BC%9A"><span class="nav-number">1.2.</span> <span class="nav-text">2.进程的特点：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E7%BA%BF%E7%A8%8B"><span class="nav-number">2.</span> <span class="nav-text">二、线程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E4%BB%80%E4%B9%88%E6%98%AF%E7%BA%BF%E7%A8%8B%EF%BC%9A"><span class="nav-number">2.1.</span> <span class="nav-text">1.什么是线程：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%A4%9A%E7%BA%BF%E7%A8%8B"><span class="nav-number">3.</span> <span class="nav-text">三、多线程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E4%BB%80%E4%B9%88%E6%98%AF%E5%A4%9A%E7%BA%BF%E7%A8%8B"><span class="nav-number">3.1.</span> <span class="nav-text">1.什么是多线程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E5%A4%9A%E7%BA%BF%E7%A8%8B"><span class="nav-number">3.2.</span> <span class="nav-text">2.如何实现多线程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E4%B8%BB%E7%BA%BF%E7%A8%8B"><span class="nav-number">3.3.</span> <span class="nav-text">3.主线程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%BB%E7%BA%BF%E7%A8%8B%E7%9A%84%E9%87%8D%E8%A6%81%E6%80%A7%E4%B8%BB%E8%A6%81%E4%BD%93%E7%8E%B0%E5%9C%A8%E4%BB%A5%E4%B8%8B%E4%B8%A4%E4%B8%AA%E6%96%B9%E9%9D%A2"><span class="nav-number">3.3.1.</span> <span class="nav-text">主线程的重要性主要体现在以下两个方面</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E7%BA%BF%E7%A8%8B"><span class="nav-number">3.3.2.</span> <span class="nav-text">如何使用线程</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89%E4%B8%80%E4%B8%AA%E7%BA%BF%E7%A8%8B%EF%BC%8C%E5%90%8C%E6%97%B6%E6%8C%87%E6%98%8E%E8%BF%99%E4%B8%AA%E7%BA%BF%E7%A8%8B%E6%89%80%E8%A6%81%E6%89%A7%E8%A1%8C%E7%9A%84%E4%BB%A3%E7%A0%81%EF%BC%8C%E5%8D%B3%E6%9C%9F%E6%9C%9B%E5%AE%8C%E6%88%90%E7%9A%84%E5%8A%9F%E8%83%BD"><span class="nav-number">3.3.2.1.</span> <span class="nav-text">定义一个线程，同时指明这个线程所要执行的代码，即期望完成的功能</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E7%BA%BF%E7%A8%8B%E5%AF%B9%E8%B1%A1"><span class="nav-number">3.3.2.2.</span> <span class="nav-text">创建线程对象</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8%E7%BA%BF%E7%A8%8B"><span class="nav-number">3.3.2.3.</span> <span class="nav-text">启动线程</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BB%88%E6%AD%A2%E7%BA%BF%E7%A8%8B"><span class="nav-number">3.3.2.4.</span> <span class="nav-text">终止线程</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E7%8A%B6%E6%80%81"><span class="nav-number">3.3.3.</span> <span class="nav-text">线程状态</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E7%BA%BF%E7%A8%8B%E7%9A%84%E4%BC%98%E5%85%88%E7%BA%A7"><span class="nav-number">3.3.4.</span> <span class="nav-text">4.线程的优先级</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-%E7%BA%BF%E7%A8%8B%E7%9A%84%E4%BC%91%E7%9C%A0"><span class="nav-number">3.3.5.</span> <span class="nav-text">5. 线程的休眠</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%BC%BA%E5%88%B6%E8%BF%90%E8%A1%8C"><span class="nav-number">3.3.6.</span> <span class="nav-text">6. 线程的强制运行</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-%E7%BA%BF%E7%A8%8B%E7%9A%84%E7%A4%BC%E8%AE%A9"><span class="nav-number">3.3.7.</span> <span class="nav-text">7.线程的礼让</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%90%8C%E6%AD%A5"><span class="nav-number">3.3.8.</span> <span class="nav-text">8.线程的同步</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E6%80%BB%E7%BB%93"><span class="nav-number">4.</span> <span class="nav-text">四、总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="姜霖"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">姜霖</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jianglin428" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jianglin428" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:jianglin428@yeah.net" title="E-Mail → mailto:jianglin428@yeah.net" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://jq.qq.com/?_wv=1027&k=4dyoeB6O" title="QQ群 → https:&#x2F;&#x2F;jq.qq.com&#x2F;?_wv&#x3D;1027&amp;k&#x3D;4dyoeB6O" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>QQ群</a>
+      </span>
+  </div>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://olinl.gitee.io/2021/06/04/%E7%AC%AC%E4%B8%83%E7%AB%A0%20%E5%A4%9A%E7%BA%BF%E7%A8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="姜霖">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="拾柒的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          第七章 多线程
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-06-04 07:50:51" itemprop="dateCreated datePublished" datetime="2021-06-04T07:50:51+08:00">2021-06-04</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-05-13 15:10:43" itemprop="dateModified" datetime="2022-05-13T15:10:43+08:00">2022-05-13</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E4%BD%BF%E7%94%A8Java%E5%AE%9E%E7%8E%B0%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B%E6%95%B4%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">使用Java实现面向对象编程整理</span></a>
+        </span>
+    </span>
+
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>3.6k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="一、进程"><a href="#一、进程" class="headerlink" title="一、进程"></a>一、进程</h2><h3 id="1-什么是进程："><a href="#1-什么是进程：" class="headerlink" title="1.什么是进程："></a>1.什么是进程：</h3><p>​    继承是程序的一次动态执行过程，他对应了从代码加载、执行至完成的一个完整过程，这个过程也是程序本身从产生、发展至消亡的过程。</p>
+<p>​    操作系统同时管理一个计算机系统中的多个进程，让计算机系统中的多个进程轮流使用CPU资源，或者共享操作系统的其他资源。</p>
+<span id="more"></span>
+
+<h3 id="2-进程的特点："><a href="#2-进程的特点：" class="headerlink" title="2.进程的特点："></a>2.进程的特点：</h3><ul>
+<li><p> 继承是系统运行程序的基本单位。</p>
+</li>
+<li><p>每一个进程都有自己独立的一块内存空间，一组系统资源。</p>
+</li>
+<li><p>每一个进程的内部数据和状态都是完全独立的。</p>
+</li>
+</ul>
+<h2 id="二、线程"><a href="#二、线程" class="headerlink" title="二、线程"></a>二、线程</h2><h3 id="1-什么是线程："><a href="#1-什么是线程：" class="headerlink" title="1.什么是线程："></a>1.什么是线程：</h3><p>​    线程是进程中执行运算的最小单位，可完成一个独立的顺序控制流程。每个进程中，必须至少建立一个线程（这个线程成为主线程）来作为这个程序的入口点。</p>
+<p>​    如果在一个进程中同时运行多个线程来完成不同的工作，称之为“多线程”。    是多个线程共享相同的地址空间并且共同分享同一个进程    ，这些进程可以在操作系统的管理下并发执行。</p>
+<h2 id="三、多线程"><a href="#三、多线程" class="headerlink" title="三、多线程"></a>三、多线程</h2><h3 id="1-什么是多线程"><a href="#1-什么是多线程" class="headerlink" title="1.什么是多线程"></a>1.什么是多线程</h3><ul>
+<li>充分利用CPU资源：执行单线程程序时，若程序发生阻塞，CPU可能会处于空闲状态，这将会造成计算机资源浪费，而使用多线程可以在某个线程处理休眠或阻塞状态时运行其他线程，这样大大提高了资源利用率。</li>
+<li>简化编程模型：一个即长又复杂的进程可以分为多个线程，成为几个独立的运行部分，如果写成单线程程序可能需要多重循环判断，而如果使用多线程控制，每个线程仅需要实现简单的流程，简化了程序逻辑。</li>
+<li>带来良好的用户体验：由于多个线程可以交替执行，减少避免了因程序阻塞或意外情况造成的响应过慢现象。</li>
+</ul>
+<h3 id="2-如何实现多线程"><a href="#2-如何实现多线程" class="headerlink" title="2.如何实现多线程"></a>2.如何实现多线程</h3><p> 用 <strong>Thread</strong> 类      <strong>Thread</strong> 类支持多线程</p>
+<table>
+<thead>
+<tr>
+<th>构造方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Thread（）</strong></td>
+<td>分配新的 <strong>Thread（）</strong> 对象</td>
+</tr>
+<tr>
+<td><strong>Thread（Runnable targe）</strong></td>
+<td>分配新的 <strong>Thread（）</strong> 对象， <strong>target</strong> 为 <strong>run（）</strong> 方法被调用的对象</td>
+</tr>
+<tr>
+<td><strong>Thread（Runnable targe，String name）</strong></td>
+<td>分配新的 <strong>Thread（）</strong> 对象， <strong>target</strong> 为 <strong>run（）</strong> 方法被调用的对象，<strong>name</strong> 作为新线程的名称</td>
+</tr>
+<tr>
+<td><strong>void run（）</strong></td>
+<td>执行任务操作的方法</td>
+</tr>
+<tr>
+<td><strong>void start（）</strong></td>
+<td>使线程开始执行，Java虚拟机代用该线程的 <strong>run（）</strong> 方法</td>
+</tr>
+<tr>
+<td><strong>void sleep(long millis)</strong></td>
+<td>在指定的毫秒数内让当前正在执行的线程休眠（暂停执行）</td>
+</tr>
+<tr>
+<td><strong>String getName（）</strong></td>
+<td>返回线程的名称</td>
+</tr>
+<tr>
+<td><strong>int getPriorty（）</strong></td>
+<td>返回线程的优先级</td>
+</tr>
+<tr>
+<td><strong>void setPriority（int newPriority）</strong></td>
+<td>更改线程的优先级</td>
+</tr>
+<tr>
+<td><strong>static Thread currentThread（）</strong></td>
+<td>返回当前正在执行的线程对象的引用</td>
+</tr>
+<tr>
+<td><strong>boolean isAlive（）</strong></td>
+<td>测速线程是否属于活动状态</td>
+</tr>
+<tr>
+<td><strong>void join（）</strong></td>
+<td>等待该线程终止</td>
+</tr>
+<tr>
+<td><strong>void interrupt</strong></td>
+<td>中断线程</td>
+</tr>
+<tr>
+<td><strong>void yield（）</strong></td>
+<td>暂停当前正在执行的线程对象，并执行其他线程</td>
+</tr>
+</tbody></table>
+<h3 id="3-主线程"><a href="#3-主线程" class="headerlink" title="3.主线程"></a>3.主线程</h3><p>​    每个进程至少有一个主线程。他是从程序开始的时候开始执行的。</p>
+<ol>
+<li><h4 id="主线程的重要性主要体现在以下两个方面"><a href="#主线程的重要性主要体现在以下两个方面" class="headerlink" title="主线程的重要性主要体现在以下两个方面"></a>主线程的重要性主要体现在以下两个方面</h4></li>
+</ol>
+<ul>
+<li>他是产生其他子线程的线程</li>
+<li>通常它必须最后完成执行，因为它执行各种关闭动作</li>
+</ul>
+<ol start="2">
+<li><h4 id="如何使用线程"><a href="#如何使用线程" class="headerlink" title="如何使用线程"></a>如何使用线程</h4><ol>
+<li><h5 id="定义一个线程，同时指明这个线程所要执行的代码，即期望完成的功能"><a href="#定义一个线程，同时指明这个线程所要执行的代码，即期望完成的功能" class="headerlink" title="定义一个线程，同时指明这个线程所要执行的代码，即期望完成的功能"></a>定义一个线程，同时指明这个线程所要执行的代码，即期望完成的功能</h5></li>
+<li><h5 id="创建线程对象"><a href="#创建线程对象" class="headerlink" title="创建线程对象"></a>创建线程对象</h5><p>创建线程类两种方法，一种是继承 <strong>Thread</strong> 类，另一种是实现 <strong>Runnable</strong> 接口。</p>
+<ol>
+<li> 继承 <strong>Thread</strong> 类创建线程</li>
+<li>需要重写 <strong>Thread</strong> 类并重写 <strong>Thread</strong> 类的 <strong>run（）</strong> 方法。因为 <strong>Thread</strong> 类的 <strong>run（）</strong> 方法是线程要执行操作任务，所以线程要执行的操作代码都要写在 <strong>run（）</strong> 方法中，并通过调用 <strong>start（）</strong> 方法启动线程后调用。</li>
+<li>实现 <strong>Runnable</strong> 接口创建线程<ol>
+<li>  <strong>Runnable</strong> 接口定义在 <strong>java.lang</strong> 包中，其中声明了一个抽象方法 <strong>run（）</strong> ，即 <strong>public void run（）</strong> ，一个类可以同实现 <strong>Runnable</strong> 接口并实现其 <strong>run（）</strong> 方法完成线程的活动，已实现的 <strong>run（）</strong> 方法成为该线程的线程体。任何实现 <strong>Runnable</strong> 接口的对象都可以作为一个线程的目标对象。</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><h5 id="启动线程"><a href="#启动线程" class="headerlink" title="启动线程"></a>启动线程</h5></li>
+<li><h5 id="终止线程"><a href="#终止线程" class="headerlink" title="终止线程"></a>终止线程</h5></li>
+</ol>
+</li>
+<li><h4 id="线程状态"><a href="#线程状态" class="headerlink" title="线程状态"></a>线程状态</h4><p>如何线程都具有五种状态，即创建，就绪，运行，阻塞，死亡状态。</p>
+<p><img src="https://olinimg.oss-cn-shanghai.aliyuncs.com/HexoImg/202205131510361.png" alt="线程的状态"></p>
+<ol>
+<li><p>创建状态</p>
+<pre><code>     - 在程序中用构造方法创建了一个线程对象后，新的线程对象就处于创建状态，此时，他已经获取了相应的资源，但还没有处于可运行的状态，这时可以通过 **Thread** 类的方法来设置线程对象的属性。如线程名，设置线程的优先级等。
+</code></pre>
+</li>
+<li><p>就绪状态</p>
+<ul>
+<li>线程创建玩之后，就可以通过调用 <strong>start（）</strong> 方法启动线程，即进入就绪状态，此时，线程将进入线程队列排队，等待CPU资源，这表明他已经具备了运行条件，在未获得CPU资源时，仍然不能真正执行。</li>
+</ul>
+</li>
+<li><p>运行状态</p>
+<ul>
+<li>当就绪状态的线程获得CPU资源时，即可转入运行状态，执行 <strong>run（）</strong> 方法。对只有一个CPU的计算机而言，任何时空只能有一个处于运行状态的线程占用CPU，即获得CPU资源。</li>
+</ul>
+</li>
+<li><p>阻塞状态</p>
+<ul>
+<li><p>一个正在运行的线程因某种原因不能继续运行时，进入阻塞庄园。阻塞状态时一种“不可运行”的状态，而处于这种状态的线程在得到一个特定的事件后转回可运行状态。</p>
+</li>
+<li><p>可能使线程暂停执行的条件如下：</p>
+<ul>
+<li>由于线程的优先级比较低，因此他不能获得CPU资源。</li>
+<li>使用 <strong>slept（）</strong> 方法使线程休眠</li>
+<li>通过调用 <strong>wait（）</strong> 方法，使线程等待</li>
+<li>通过调用 <strong>yield（）</strong> 线程显式让出CPU控制权。</li>
+<li>线程由于等待一个文件，I/O事件被阻塞</li>
+</ul>
+</li>
+</ul>
+<ol start="5">
+<li>死亡状态<ul>
+<li>一个线程的 <strong>run（）</strong> 方法运行完毕，线程则进入死亡状态，处于死亡状态的线程不具有继续运行的能力。</li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h4 id="4-线程的优先级"><a href="#4-线程的优先级" class="headerlink" title="4.线程的优先级"></a>4.线程的优先级</h4><p>​    懂同一时刻有一个或得个线程处于可运行状态时，他们需要排队等待CPU资源，每个线程会自动获得一个线程的优先级，优先级的高低反映线程的重要或紧急程度。</p>
+<p>​    线程的优先级用1~10表示，1表示优先级最低，10表示优先级最高，默认值是5。</p>
+<h4 id="5-线程的休眠"><a href="#5-线程的休眠" class="headerlink" title="5. 线程的休眠"></a>5. 线程的休眠</h4><p>​    在程序程序组允许一个线程进行短暂休眠，直接调用 <strong>Thread.sleep()</strong> 方法即可实现线程的休眠</p>
+<p>​    <strong>sleep（）</strong> 方法会让当前线程休眠（停止执行）mills毫秒，线程由运行中的状态进入不可运行状态，睡眠时间过后会再次进入就绪状态，需要判断他是否死亡 需要处理 <strong>InterruptedException</strong> 异常。</p>
+<h4 id="6-线程的强制运行"><a href="#6-线程的强制运行" class="headerlink" title="6. 线程的强制运行"></a>6. 线程的强制运行</h4><p>​    <strong>join()</strong> 方法使当前的线程暂停执行，等待调用该方法的线程结束后再继续执行本线程。它有三个重载方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">join</span><span class="params">()</span></span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">join</span><span class="params">(<span class="keyword">long</span> mills)</span></span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">join</span><span class="params">(<span class="keyword">long</span> mills,<span class="keyword">int</span> nanos)</span></span></span><br></pre></td></tr></table></figure>
+
+<p>需要判断他是否死亡 需要处理 <strong>InterruptedException</strong> 异常。</p>
+<h4 id="7-线程的礼让"><a href="#7-线程的礼让" class="headerlink" title="7.线程的礼让"></a>7.线程的礼让</h4><p>​    <strong>yield（）</strong> 方法可以暂停当前的线程执行，允许其他线程具有相同优先级的线程获得运行机会，该线程仍处于就绪状态，不转为阻塞状态，此时相同现在其他相同或更高优先级的线程执行，如无其他相同或更高优先级的线程，则该线程继续执行。</p>
+<h4 id="8-线程的同步"><a href="#8-线程的同步" class="headerlink" title="8.线程的同步"></a>8.线程的同步</h4><p>​    有一些同时运行的线程需要共享数据，此时就需要考虑其他线程的状态和行为，否则不能保证程序运行结果的准确性。</p>
+<p>​    如何实现：</p>
+<p>​    一个线程类如果是通过实现 <strong>Runnable</strong> 接口实现的，那么类中的属性有可能被多个该类的线程对象共享，就有可能引发线程不同步的问题。</p>
+<p>采用线程同步有两种方式 </p>
+<ol>
+<li><p>同步方法<br> 使用 <strong>synchronized</strong> 修饰的方法控制对类成员的访问。每个类实例对应一把锁，方法一旦执行，就独占该锁。直到从该方法返回时才将锁释放，从此以后被阻塞的线程方能获得该锁，重新进入可执行状态。</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//通过哎方法声明中加入synchronized关键字来声明同步方法</span></span><br><span class="line">	访问修饰符 <span class="keyword">synchronized</span> 返回值类型 方法名 （参数列表）&#123;<span class="comment">//省略方法体。。。。。。&#125;</span></span><br><span class="line">或者</span><br><span class="line">    <span class="keyword">synchronized</span> 访问修饰符 返回值类型 方法名 （参数列表）&#123;<span class="comment">//省略方法体。。。。。。&#125;</span></span><br></pre></td></tr></table></figure>
+<p> 在语法中：</p>
+<p> ​    <strong>synchronized</strong> 是同步关键词。</p>
+<p> ​    访问修饰符是指 <strong>public</strong> ， <strong>private</strong> 等。</p>
+</li>
+<li><p>同步代码块</p>
+<p> 代码块即使用{}括起来的一段代码，使用 <strong>synchronized</strong> 关键字修饰的代码块，成为同步代码块。</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">synchronized</span> （syncObject）&#123;</span><br><span class="line">	<span class="comment">//需要同步的代码</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  <strong>synchronized</strong> 块中的代码必须获得对象 <strong>syncObject</strong> 的锁才能执行，具体机制和代码同步一致。可以制定上锁的对象。</p>
+</li>
+<li><p>常见类型对比</p>
+<ol>
+<li><p><strong>Hashtable &amp;&amp; HashMap</strong></p>
+<ul>
+<li><p><strong>Hashtable</strong></p>
+<p>​    1. 继承 关系</p>
+<p>​        实现了<strong>Map</strong>接口，<strong>Hashtable</strong>继承<strong>Dictionary</strong>类</p>
+<p>​    2. 线程安全，效率较低</p>
+<p>​    3. 键和值都不允许为<strong>null</strong></p>
+</li>
+<li><p><strong>HashMap</strong></p>
+<ol>
+<li>继承关系</li>
+</ol>
+<p>​        实现了<strong>Map</strong>接口，继承<strong>AbstractMap</strong>类</p>
+<ol start="2">
+<li><p>非线程安全，效率较高</p>
+</li>
+<li><p>键和值都允许为<strong>null</strong></p>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p><strong>StringBuffer</strong> <strong>&amp;&amp;</strong> <strong>StringBuilder</strong></p>
+<p> 前者线程安全，后者非线程安全</p>
+</li>
+</ol>
+<h2 id="四、总结"><a href="#四、总结" class="headerlink" title="四、总结"></a>四、总结</h2></li>
+</ol>
+<p><img src="https://olinimg.oss-cn-shanghai.aliyuncs.com/HexoImg/202205131510367.png" alt="第七章多线程2"></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>姜霖
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://olinl.gitee.io/2021/06/04/%E7%AC%AC%E4%B8%83%E7%AB%A0%20%E5%A4%9A%E7%BA%BF%E7%A8%8B/" title="第七章 多线程">https://olinl.gitee.io/2021/06/04/第七章 多线程/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/06/04/%E7%AC%AC%E5%85%AD%E7%AB%A0%20%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/" rel="prev" title="第六章 集合框架">
+                  <i class="fa fa-chevron-left"></i> 第六章 集合框架
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/06/04/%E7%AC%AC%E5%85%AB%E7%AB%A0%20File%20IO/" rel="next" title="第八章 File I/O">
+                  第八章 File I/O <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+        
+	<div style="text-align:center;color: #ccc;font-size:20px;">
+		---------本文结束---------
+	</div>
+
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">姜霖</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">67k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">1:01</span>
+  </span>
+</div>
+<span id="busuanzi_container_site_uv">
+  本站访问次数：1314520 次<span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+</span>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
+   <!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/clicklove.js"></script>
+   <!-- 动态背景 -->
+
+<script type="text/javascript"
+color="0,0,255" opacity='0.7' zIndex="-2" count="99" src="/js/canvas-nest.min.js"></script>
+
+<!-- 代码块复制功能 -->
+<script src="https://cdn.jsdelivr.net/npm/clipboard@1/dist/clipboard.min.js"></script>
+<script type="text/javascript" src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<!-- <script type="text/javascript" src="/js/clipboard.js"></script>  -->
+<script type="text/javascript" src="/js/clipboard_use.js"></script>

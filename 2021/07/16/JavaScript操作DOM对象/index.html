@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-bbt.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-bbt.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"olinl.gitee.io","root":"/","images":"/images","scheme":"Gemini","version":"8.6.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="DOM是Document Object Model的缩写，即文档对象模型,是基于文档编程的一套API接口。 使用JavaScript操作DOM分为三个方面：DOM Core (核心) ，HTML-DOM和CSS-DOM。通过这些标准开发人员可以让网页真正动起来，动态得增加，修好，删除数据，使用户与计算机的交互更加便捷，交互也更加丰富，那么下面，大家就一起学习JavaScript操作DOM吧。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript操作DOM对象">
+<meta property="og:url" content="https://olinl.gitee.io/2021/07/16/JavaScript%E6%93%8D%E4%BD%9CDOM%E5%AF%B9%E8%B1%A1/index.html">
+<meta property="og:site_name" content="拾柒的博客">
+<meta property="og:description" content="DOM是Document Object Model的缩写，即文档对象模型,是基于文档编程的一套API接口。 使用JavaScript操作DOM分为三个方面：DOM Core (核心) ，HTML-DOM和CSS-DOM。通过这些标准开发人员可以让网页真正动起来，动态得增加，修好，删除数据，使用户与计算机的交互更加便捷，交互也更加丰富，那么下面，大家就一起学习JavaScript操作DOM吧。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://olinimg.oss-cn-shanghai.aliyuncs.com/HexoImg/202205131511386.png">
+<meta property="og:image" content="https://olinimg.oss-cn-shanghai.aliyuncs.com/HexoImg/202205131511814.png">
+<meta property="og:image" content="https://olinimg.oss-cn-shanghai.aliyuncs.com/HexoImg/202205131511311.png">
+<meta property="article:published_time" content="2021-07-16T01:54:30.000Z">
+<meta property="article:modified_time" content="2022-05-13T07:11:41.170Z">
+<meta property="article:author" content="姜霖">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://olinimg.oss-cn-shanghai.aliyuncs.com/HexoImg/202205131511386.png">
+
+
+<link rel="canonical" href="https://olinl.gitee.io/2021/07/16/JavaScript%E6%93%8D%E4%BD%9CDOM%E5%AF%B9%E8%B1%A1/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://olinl.gitee.io/2021/07/16/JavaScript%E6%93%8D%E4%BD%9CDOM%E5%AF%B9%E8%B1%A1/","path":"2021/07/16/JavaScript操作DOM对象/","title":"JavaScript操作DOM对象"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>JavaScript操作DOM对象 | 拾柒的博客</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+
+
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">拾柒的博客</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">顾拾柒</p>
+      <img class="custom-logo-image" src="/images/logo1.svg" alt="拾柒的博客">
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">4</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%8A%82%E7%82%B9%E5%92%8C%E8%8A%82%E7%82%B9%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="nav-number">1.</span> <span class="nav-text">节点和节点的关系</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%BF%E9%97%AE%E8%8A%82%E7%82%B9"><span class="nav-number">2.</span> <span class="nav-text">访问节点</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8A%82%E7%82%B9%E5%B1%9E%E6%80%A7"><span class="nav-number">2.1.</span> <span class="nav-text">节点属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#element%E5%B1%9E%E6%80%A7"><span class="nav-number">2.2.</span> <span class="nav-text">element属性</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%8A%82%E7%82%B9%E4%BF%A1%E6%81%AF"><span class="nav-number">3.</span> <span class="nav-text">节点信息</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E8%8A%82%E7%82%B9"><span class="nav-number">4.</span> <span class="nav-text">操作节点</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E8%8A%82%E7%82%B9%E7%9A%84%E5%B1%9E%E6%80%A7"><span class="nav-number">4.1.</span> <span class="nav-text">操作节点的属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E5%92%8C%E6%8F%92%E5%85%A5%E8%8A%82%E7%82%B9"><span class="nav-number">4.2.</span> <span class="nav-text">创建和插入节点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E5%92%8C%E6%9B%BF%E6%8D%A2%E8%8A%82%E7%82%B9"><span class="nav-number">4.3.</span> <span class="nav-text">删除和替换节点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E8%8A%82%E7%82%B9%E6%A0%B7%E5%BC%8F"><span class="nav-number">4.4.</span> <span class="nav-text">操作节点样式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#style%E5%B1%9E%E6%80%A7"><span class="nav-number">4.4.1.</span> <span class="nav-text">style属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#className%E5%B1%9E%E6%80%A7"><span class="nav-number">4.4.2.</span> <span class="nav-text">className属性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E5%85%83%E7%B4%A0%E7%9A%84%E6%A0%B7%E5%BC%8F"><span class="nav-number">4.5.</span> <span class="nav-text">获取元素的样式</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E5%85%83%E7%B4%A0%E4%BD%8D%E7%BD%AE"><span class="nav-number">5.</span> <span class="nav-text">获取元素位置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%83%E7%B4%A0%E5%B1%9E%E6%80%A7%E4%B8%80%E6%A0%B7"><span class="nav-number">5.1.</span> <span class="nav-text">元素属性一样</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">6.</span> <span class="nav-text">总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="姜霖"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">姜霖</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jianglin428" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jianglin428" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:jianglin428@yeah.net" title="E-Mail → mailto:jianglin428@yeah.net" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://jq.qq.com/?_wv=1027&k=4dyoeB6O" title="QQ群 → https:&#x2F;&#x2F;jq.qq.com&#x2F;?_wv&#x3D;1027&amp;k&#x3D;4dyoeB6O" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>QQ群</a>
+      </span>
+  </div>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://olinl.gitee.io/2021/07/16/JavaScript%E6%93%8D%E4%BD%9CDOM%E5%AF%B9%E8%B1%A1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="姜霖">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="拾柒的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          JavaScript操作DOM对象
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-07-16 09:54:30" itemprop="dateCreated datePublished" datetime="2021-07-16T09:54:30+08:00">2021-07-16</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-05-13 15:11:41" itemprop="dateModified" datetime="2022-05-13T15:11:41+08:00">2022-05-13</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E4%BD%BF%E7%94%A8jQuery%E5%BF%AB%E9%80%9F%E9%AB%98%E6%95%88%E5%88%B6%E4%BD%9C%E7%BD%91%E9%A1%B5%E4%BA%A4%E4%BA%92%E7%89%B9%E6%95%88/" itemprop="url" rel="index"><span itemprop="name">使用jQuery快速高效制作网页交互特效</span></a>
+        </span>
+    </span>
+
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>5.6k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>5 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>DOM是Document Object Model的缩写，即文档对象模型,是基于文档编程的一套API接口。</p>
+<p>使用JavaScript操作DOM分为三个方面：DOM Core (核心) ，HTML-DOM和CSS-DOM。通过这些标准开发人员可以让网页真正动起来，动态得增加，修好，删除数据，使用户与计算机的交互更加便捷，交互也更加丰富，那么下面，大家就一起学习JavaScript操作DOM吧。</p>
+<span id="more"></span>
+
+<p><img src="https://olinimg.oss-cn-shanghai.aliyuncs.com/HexoImg/202205131511386.png" alt="image-20210716105304043"></p>
+<ol>
+<li><h1 id="节点和节点的关系"><a href="#节点和节点的关系" class="headerlink" title="节点和节点的关系"></a>节点和节点的关系</h1></li>
+</ol>
+<p><img src="https://olinimg.oss-cn-shanghai.aliyuncs.com/HexoImg/202205131511814.png" alt="image-20210716105352860"></p>
+<p>HTML中的每个标签和元素都是一个节点,在DOM中是这样规定的.</p>
+<ul>
+<li>整个文档是一个文档节点</li>
+<li>每个HTML标签是一个元素节点</li>
+<li>包含在HTML元素中的文本是文本节点</li>
+<li>每个HTML属性是一个属性节点</li>
+<li>注释属于注释节点</li>
+</ul>
+<p>一个HTML文档是由各个不同的节点组成的.</p>
+<p>使用父（parent）、子（child）和同胞（sibling）等术语来描述这些节点的层次关系，父节点拥有子节点，同级的子节点被称为同胞或兄弟节点，他们的关系如下</p>
+<ul>
+<li>在父节点树种，顶部节点被称为根（root），如&lt;HTML&gt;节点。</li>
+<li>每个节点都有父节点，除了根（他没有父节点），如&lt;head&gt;和&lt;body&gt;的父节点都是&lt;HTML&gt;、文本节点“DOM应用”的父节点是&lt;p&gt;节点。</li>
+<li>一个节点可以拥有任意数量的子节点，如&lt;body&gt;节点的子节点有&lt;img&gt;、&lt;h1&gt;和&lt;p&gt;。</li>
+<li>同胞节点可以拥有任意数量的子节点，如&lt;img&gt;、&lt;h1&gt;和&lt;p&gt;就是兄弟节点，他们的父节点均为&lt;body&gt;节点。</li>
+</ul>
+<p>由于HTML文档中的标签，元素都是一个节点，并且各个节点之间都存在关系，因此JavaScript可以通过访问或改变节点的方式来改变页面的内容使用JavaScript操作JavaScript操作节点主要是访问节点，在文章中创建和增加节点，删除节点，替换节点，移机操作节点属性和样式等，</p>
+<ol start="2">
+<li><h1 id="访问节点"><a href="#访问节点" class="headerlink" title="访问节点"></a>访问节点</h1><ol>
+<li><p>使用getElement系列方法访问指定节点</p>
+<ol>
+<li>getElementById（）：返回按id属性查找的第一个对象的引用</li>
+<li>getElementsByName（）：返回按带有指定名称name查找的对象的借还，由于一个文档中可能会有多个同名节点（如复选框、单选按钮），因此返回的是元素数组。</li>
+<li>getElementsByTagName（）：返回带有指定标签名，TagName查找的是对象的集合，由于一个文档中可能会有多个同类型的标签节点（如图片组，文本输入框，因此返回的元素数组。）</li>
+</ol>
+</li>
+<li><h2 id="节点属性"><a href="#节点属性" class="headerlink" title="节点属性"></a>节点属性</h2><table>
+<thead>
+<tr>
+<th>属性名称</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>parentNode</td>
+<td>返回节点的父节点</td>
+</tr>
+<tr>
+<td>childNodes</td>
+<td>返回子节点集合，childNodes[i]</td>
+</tr>
+<tr>
+<td>firstChild</td>
+<td>返回节点的第一个子节点，最普遍的用法是访问该元素的文本节点</td>
+</tr>
+<tr>
+<td>lastChild</td>
+<td>返回节点的最后一个子节点</td>
+</tr>
+<tr>
+<td>nextSibling</td>
+<td>下一个节点</td>
+</tr>
+<tr>
+<td>previousSibling</td>
+<td>上一个节点</td>
+</tr>
+</tbody></table>
+</li>
+<li><h2 id="element属性"><a href="#element属性" class="headerlink" title="element属性"></a>element属性</h2><table>
+<thead>
+<tr>
+<th>属性名称</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>firstElementChild</td>
+<td>返回节点的第一个子节点，最普遍的用法是访问该元素的文本节点</td>
+</tr>
+<tr>
+<td>lastElementChild</td>
+<td>返回节点的最后一个子节点</td>
+</tr>
+<tr>
+<td>nextElementSibling</td>
+<td>下一个节点</td>
+</tr>
+<tr>
+<td>previousElementSibling</td>
+<td>上一个节点</td>
+</tr>
+</tbody></table>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">oNext = oParent.nextElementSibling || oParent.nextSibling   </span><br><span class="line">oPre = oParent.previousElementSibling || oParent.previousSibling  </span><br><span class="line">oFirst = oParent. firstElementChild  ||  oParent.firstChild   </span><br><span class="line">oLast = oParent.lastElementChild || oParent.lastChild </span><br><span class="line"></span><br><span class="line">如果||前面有值，那变量就等于前面的，如果没有就等于后面的。</span><br></pre></td></tr></table></figure>
+
+<p>非IE下由于会吧标签之间的空格，换行当成文本节点，因此为了准确的找到相应的元素，使用firstElementChild  lastElementChild  nextElementSibling  previousElementSibling  </p>
+</li>
+</ol>
+</li>
+<li><h1 id="节点信息"><a href="#节点信息" class="headerlink" title="节点信息"></a>节点信息</h1><p>节点是DOM层次结构中的任何类型对象的通用名称，每个节点都拥有包含着关于节点的某些信息的属性，</p>
+<ul>
+<li>nodeName（节点名称）</li>
+<li>nodeValue（节点值）</li>
+<li>nodeType（节点类型）</li>
+</ul>
+<ol>
+<li><p>nodeName属性包含某个节点的名称，元素节点的nodeName是标签名吃，属性节点的nodeName是属性名称，文本节点的nodeName永远是#text，文档节点的nodeName永远是#document。</p>
+</li>
+<li><p>nodeValue节点值，对于文本节点，nodeValue属性包含文本；对于属性节点，nodeValue属性包含属性值；nodeValue属性对于文档节点和元素节点是不可用的。</p>
+</li>
+<li><p>nodeType属性可返回节点的类型，是一个只读属性，如返回的元素节点，文本节点，注释节点等。</p>
+</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>节点类型</th>
+<th>NodeType值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>元素element</td>
+<td>1</td>
+</tr>
+<tr>
+<td>属性attr</td>
+<td>2</td>
+</tr>
+<tr>
+<td>文本text</td>
+<td>3</td>
+</tr>
+<tr>
+<td>注释comments</td>
+<td>8</td>
+</tr>
+<tr>
+<td>文档document</td>
+<td>9</td>
+</tr>
+</tbody></table>
+</li>
+<li><h1 id="操作节点"><a href="#操作节点" class="headerlink" title="操作节点"></a>操作节点</h1><ol>
+<li><h2 id="操作节点的属性"><a href="#操作节点的属性" class="headerlink" title="操作节点的属性"></a>操作节点的属性</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">getAttribute(<span class="string">&quot;属性名&quot;</span>);			<span class="comment">//用来获取属性的值</span></span><br><span class="line">setAttribute(<span class="string">&quot;属性名&quot;</span>,<span class="string">&quot;属性值&quot;</span>);	  <span class="comment">//用来设置属性的值</span></span><br></pre></td></tr></table></figure></li>
+<li><h2 id="创建和插入节点"><a href="#创建和插入节点" class="headerlink" title="创建和插入节点"></a>创建和插入节点</h2><p>使用JavaScript操作DOM有很多方法可以创建或增加一个新节点</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>createElement( tagName)</td>
+<td>创建一个标签名为tagName的新元素节点</td>
+</tr>
+<tr>
+<td>A.appendChild(  B)</td>
+<td>把B节点追加至A节点的末尾</td>
+</tr>
+<tr>
+<td>insertBefore(  A,B )</td>
+<td>把A节点插入到B节点之前</td>
+</tr>
+<tr>
+<td>cloneNode(deep)</td>
+<td>复制某个指定的节点</td>
+</tr>
+</tbody></table>
+<ul>
+<li>insertBefore(  A,B )  中有两个参数。A是必选想，表示新插入的节点；B是可选项，表示新节点被插入B节点的前面。</li>
+<li>cloneNode(deep)  中的参数deep为布尔值，若deep值为true，则复制改节点，及该节点的所有子节点，若deep值为false，则只复制该节点和其属性。</li>
+</ul>
+</li>
+<li><h2 id="删除和替换节点"><a href="#删除和替换节点" class="headerlink" title="删除和替换节点"></a>删除和替换节点</h2><p>使用Core HTML删除和替换节点的方法：</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>removeChild( node)</td>
+<td>删除指定的节点</td>
+</tr>
+<tr>
+<td>replaceChild( newNode, oldNode）</td>
+<td>用其他的节点替换指定的节点</td>
+</tr>
+</tbody></table>
+<p>方法  replaceChild( newNode, oldNode）中的两个参数，newNode是替换的新节点，oldNode是要替换的节点。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> delNode=<span class="built_in">document</span>.getElementById(<span class="string">&quot;first&quot;</span>);</span><br><span class="line">delNode.parentNode.removeChild(delNode);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> oldNode=<span class="built_in">document</span>.getElementById(<span class="string">&quot;second&quot;</span>);</span><br><span class="line"><span class="keyword">var</span> newNode=<span class="built_in">document</span>.createElement(<span class="string">&quot;img&quot;</span>);</span><br><span class="line">newNode.setAttribute(<span class="string">&quot;src&quot;</span>,<span class="string">&quot;images/f03.jpg&quot;</span>);</span><br><span class="line">oldNode.parentNode.replaceChild(newNode,oldNode);</span><br></pre></td></tr></table></figure></li>
+<li><h2 id="操作节点样式"><a href="#操作节点样式" class="headerlink" title="操作节点样式"></a>操作节点样式</h2><p>在JavaScript中，有两种方式可以动态的改变样式的属性，一种是使用样式的style属性，另一种是使用样式的className属性。</p>
+<ol>
+<li><h3 id="style属性"><a href="#style属性" class="headerlink" title="style属性"></a>style属性</h3><p>在HTML DOM中，style是一个对象，代表一个单独的样式声明，可通过应用样式的文档或元素访问style对象，使用style属性改变样式的语法如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">HTML元素.style.样式属性＝<span class="string">&quot;值&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//实例</span></span><br><span class="line"><span class="built_in">document</span>.getElementById(<span class="string">&quot;titles&quot;</span>).style.color=<span class="string">&quot;#ff0000&quot;</span>; </span><br><span class="line"><span class="built_in">document</span>.getElementById(<span class="string">&quot;titles&quot;</span>).style.fontSize=<span class="string">&quot;25px &quot;</span>;</span><br></pre></td></tr></table></figure>
+
+<p><strong>style常用的属性</strong></p>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>属性</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>background（背景）</td>
+<td>backgroundColor</td>
+<td>设置元素的背景颜色</td>
+</tr>
+<tr>
+<td>background（背景）</td>
+<td>backgroundImage</td>
+<td>设置元素的背景图像</td>
+</tr>
+<tr>
+<td>background（背景）</td>
+<td>backgroundRepeat</td>
+<td>设置是否及如何重复背景图像</td>
+</tr>
+<tr>
+<td>text（文本）</td>
+<td>fontSize</td>
+<td>设置元素的字体大小</td>
+</tr>
+<tr>
+<td>text（文本）</td>
+<td>fontWeight</td>
+<td>设置字体的粗细</td>
+</tr>
+<tr>
+<td>text（文本）</td>
+<td>textAlign</td>
+<td>排列文本</td>
+</tr>
+<tr>
+<td>text（文本）</td>
+<td>textDecoration</td>
+<td>设置文本的修饰</td>
+</tr>
+<tr>
+<td>text（文本）</td>
+<td>font</td>
+<td>设置同一字体的属性</td>
+</tr>
+<tr>
+<td>text（文本）</td>
+<td>color</td>
+<td>设置文本的颜色</td>
+</tr>
+<tr>
+<td>padding（边距）</td>
+<td>padding</td>
+<td>设置元素的填充</td>
+</tr>
+<tr>
+<td>padding（边距）</td>
+<td>paddingTop<br>paddingBottom<br>paddingLeft<br>paddingRight</td>
+<td>设置元素的上、下、左、右填充</td>
+</tr>
+<tr>
+<td>border（边框）</td>
+<td>border</td>
+<td>设置四个边框的属性</td>
+</tr>
+<tr>
+<td>border（边框）</td>
+<td>borderTop<br>borderBottom<br>borderLeft<br>borderLeft<br>borderRight</td>
+<td>设置上、下、左、右边框的属性</td>
+</tr>
+</tbody></table>
+<p><strong>事件</strong></p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>onclick</td>
+<td>当用户单击某个对象时调用事件</td>
+</tr>
+<tr>
+<td>onmouseover</td>
+<td>鼠标移到某元素之上</td>
+</tr>
+<tr>
+<td>onmouseout</td>
+<td>鼠标从某元素移开</td>
+</tr>
+<tr>
+<td>onmousedown</td>
+<td>鼠标按钮被按下</td>
+</tr>
+</tbody></table>
+</li>
+<li><h3 id="className属性"><a href="#className属性" class="headerlink" title="className属性"></a>className属性</h3><p>在HTML DOM中，className属性可以设置或返回元素的class样式</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">HTML元素.className=<span class="string">&quot;样式名称&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//实例</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">over</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">     <span class="built_in">document</span>.getElementById(<span class="string">&quot;cart&quot;</span>).className=<span class="string">&quot;cartOver&quot;</span>;</span><br><span class="line">     <span class="built_in">document</span>.getElementById(<span class="string">&quot;cartList&quot;</span>).className=<span class="string">&quot;cartListOver&quot;</span>;</span><br><span class="line">     &#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">out</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">     <span class="built_in">document</span>.getElementById(<span class="string">&quot;cart&quot;</span>).className=<span class="string">&quot;cartOut&quot;</span>;</span><br><span class="line">     <span class="built_in">document</span>.getElementById(<span class="string">&quot;cartList&quot;</span>).className=<span class="string">&quot;cartListOut&quot;</span>;</span><br><span class="line">     &#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<p>​        </p>
+<ol start="5">
+<li><h2 id="获取元素的样式"><a href="#获取元素的样式" class="headerlink" title="获取元素的样式"></a>获取元素的样式</h2><ol>
+<li><p>在JavaScript中可以使用style属性获取样式的属性值，语法如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">HTML元素.style.样式属性;</span><br><span class="line"></span><br><span class="line"><span class="comment">//实例</span></span><br><span class="line">alert(<span class="built_in">document</span>.getElementById(<span class="string">&quot;cartList&quot;</span>).display);</span><br></pre></td></tr></table></figure></li>
+<li><p>使用上面的只能获取内联样式的属性值，无法获取内部样式表或外部样式表的属性值。所以说不用</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">HTML元素. currentStyle.样式属性;	currentStyle是只读的</span><br><span class="line"></span><br><span class="line"><span class="comment">//实例 兼容IE</span></span><br><span class="line">alert(<span class="built_in">document</span>.getElementById(<span class="string">&quot;cartList&quot;</span>).currentStyle.display);</span><br></pre></td></tr></table></figure>
+
+<p><strong>非IE的！！！！！！！！！！！！！！！！！！！</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.defaultView.getComputedStyle(元素,<span class="literal">null</span>).属性;</span><br><span class="line"></span><br><span class="line"><span class="comment">//实例</span></span><br><span class="line"><span class="keyword">var</span> cartList=<span class="built_in">document</span>.getElementById(<span class="string">&quot;cartList&quot;</span>);</span><br><span class="line">alert(<span class="built_in">document</span>.defaultView.getComputedStyle(cartList,<span class="literal">null</span>).display);</span><br></pre></td></tr></table></figure></li>
+</ol>
+</li>
+<li><h1 id="获取元素位置"><a href="#获取元素位置" class="headerlink" title="获取元素位置"></a>获取元素位置</h1><ol>
+<li><p>使用currentStyle或getComputerStyle（）可以获得元素的属性值，即可以获取元素在页面上的位置，固定效果如何实现？</p>
+</li>
+<li><h2 id="元素属性一样"><a href="#元素属性一样" class="headerlink" title="元素属性一样"></a>元素属性一样</h2><p>一些属性可以获取滚动状态下的元素的一些属性。</p>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>offsetLeft</td>
+<td>返回当前元素左边界到它上级元素的左边界的距离，只读属性</td>
+</tr>
+<tr>
+<td>offsetTop</td>
+<td>返回当前元素上边界到它上级元素的上边界的距离，只读属性</td>
+</tr>
+<tr>
+<td>offsetHeight</td>
+<td>返回元素的高度</td>
+</tr>
+<tr>
+<td>offsetWidth</td>
+<td>返回元素的宽度</td>
+</tr>
+<tr>
+<td>offsetParent</td>
+<td>返回元素的偏移容器，即对最近的动态定位的包含元素的引用</td>
+</tr>
+<tr>
+<td>scrollTop</td>
+<td>返回匹配元素的滚动条的垂直位置</td>
+</tr>
+<tr>
+<td>scrollLeft</td>
+<td>返回匹配元素的滚动条的水平位置</td>
+</tr>
+<tr>
+<td>clientWidth</td>
+<td>返回元素的可见宽度</td>
+</tr>
+<tr>
+<td>clientHeight</td>
+<td>返回元素的可见高度</td>
+</tr>
+</tbody></table>
+<p>获取滚动条滚动的距离，这就需要使用scrollTop，scrollLeft这两个属性，获得数值单位是像素（PX），对于不滚动的元素，这两个元素值总是0。这两个属性获取滚动条在窗口中滚动的距离。语法如下</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//标准浏览器</span></span><br><span class="line"><span class="built_in">document</span>.documentElement.scrollTop;</span><br><span class="line"><span class="built_in">document</span>.documentElement.scrollLeft;</span><br><span class="line">或者</span><br><span class="line"><span class="comment">//Chrome</span></span><br><span class="line"><span class="built_in">document</span>.body.scrollTop;</span><br><span class="line"><span class="built_in">document</span>.body.scrollLeft;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> sTop=<span class="built_in">document</span>.documentElement.scrollTop||<span class="built_in">document</span>.body.scrollTop;</span><br></pre></td></tr></table></figure></li>
+</ol>
+</li>
+<li><h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1></li>
+</ol>
+<p><img src="https://olinimg.oss-cn-shanghai.aliyuncs.com/HexoImg/202205131511311.png" alt="image-20210716155346308"></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>姜霖
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://olinl.gitee.io/2021/07/16/JavaScript%E6%93%8D%E4%BD%9CDOM%E5%AF%B9%E8%B1%A1/" title="JavaScript操作DOM对象">https://olinl.gitee.io/2021/07/16/JavaScript操作DOM对象/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/07/11/JavaScript%E6%93%8D%E4%BD%9CBOM%E5%AF%B9%E8%B1%A1/" rel="prev" title="JavaScript操作BOM对象">
+                  <i class="fa fa-chevron-left"></i> JavaScript操作BOM对象
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/07/18/JavaScript%E5%AF%B9%E8%B1%A1%E5%8F%8A%E5%88%9D%E5%A7%8B%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/" rel="next" title="JavaScript对象及初始面向对象">
+                  JavaScript对象及初始面向对象 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+        
+	<div style="text-align:center;color: #ccc;font-size:20px;">
+		---------本文结束---------
+	</div>
+
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">姜霖</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">67k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">1:01</span>
+  </span>
+</div>
+<span id="busuanzi_container_site_uv">
+  本站访问次数：1314520 次<span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+</span>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
+   <!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/clicklove.js"></script>
+   <!-- 动态背景 -->
+
+<script type="text/javascript"
+color="0,0,255" opacity='0.7' zIndex="-2" count="99" src="/js/canvas-nest.min.js"></script>
+
+<!-- 代码块复制功能 -->
+<script src="https://cdn.jsdelivr.net/npm/clipboard@1/dist/clipboard.min.js"></script>
+<script type="text/javascript" src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<!-- <script type="text/javascript" src="/js/clipboard.js"></script>  -->
+<script type="text/javascript" src="/js/clipboard_use.js"></script>

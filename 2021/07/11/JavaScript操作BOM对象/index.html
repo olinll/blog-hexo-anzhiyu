@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-bbt.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-bbt.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"olinl.gitee.io","root":"/","images":"/images","scheme":"Gemini","version":"8.6.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="BOM模型 BOM：浏览器对象模型（Browser Object Model）  BOM提供了独立于内容的、可以与浏览器窗口进行互动的对象结构">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript操作BOM对象">
+<meta property="og:url" content="https://olinl.gitee.io/2021/07/11/JavaScript%E6%93%8D%E4%BD%9CBOM%E5%AF%B9%E8%B1%A1/index.html">
+<meta property="og:site_name" content="拾柒的博客">
+<meta property="og:description" content="BOM模型 BOM：浏览器对象模型（Browser Object Model）  BOM提供了独立于内容的、可以与浏览器窗口进行互动的对象结构">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://olinimg.oss-cn-shanghai.aliyuncs.com/HexoImg/202205131511906.png">
+<meta property="og:image" content="https://olinimg.oss-cn-shanghai.aliyuncs.com/HexoImg/202205131511775.png">
+<meta property="og:image" content="https://olinimg.oss-cn-shanghai.aliyuncs.com/HexoImg/202205131511983.png">
+<meta property="article:published_time" content="2021-07-11T01:47:10.000Z">
+<meta property="article:modified_time" content="2022-05-13T07:11:30.816Z">
+<meta property="article:author" content="姜霖">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://olinimg.oss-cn-shanghai.aliyuncs.com/HexoImg/202205131511906.png">
+
+
+<link rel="canonical" href="https://olinl.gitee.io/2021/07/11/JavaScript%E6%93%8D%E4%BD%9CBOM%E5%AF%B9%E8%B1%A1/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://olinl.gitee.io/2021/07/11/JavaScript%E6%93%8D%E4%BD%9CBOM%E5%AF%B9%E8%B1%A1/","path":"2021/07/11/JavaScript操作BOM对象/","title":"JavaScript操作BOM对象"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>JavaScript操作BOM对象 | 拾柒的博客</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+
+
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">拾柒的博客</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">顾拾柒</p>
+      <img class="custom-logo-image" src="/images/logo1.svg" alt="拾柒的博客">
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">4</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#BOM%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.</span> <span class="nav-text">BOM模型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#window%E5%AF%B9%E8%B1%A1"><span class="nav-number">2.</span> <span class="nav-text">window对象</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E7%9A%84%E5%B1%9E%E6%80%A7"><span class="nav-number">2.1.</span> <span class="nav-text">常用的属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E7%9A%84%E6%96%B9%E6%B3%95"><span class="nav-number">2.2.</span> <span class="nav-text">常用的方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#confirm-%E6%96%B9%E6%B3%95"><span class="nav-number">2.2.1.</span> <span class="nav-text">confirm()方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#open-%E6%96%B9%E6%B3%95"><span class="nav-number">2.2.2.</span> <span class="nav-text">open()方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#history%E5%AF%B9%E8%B1%A1"><span class="nav-number">2.3.</span> <span class="nav-text">history对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#location%E5%AF%B9%E8%B1%A1"><span class="nav-number">2.4.</span> <span class="nav-text">location对象</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%B1%9E%E6%80%A7"><span class="nav-number">2.4.1.</span> <span class="nav-text">常用属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95"><span class="nav-number">2.4.2.</span> <span class="nav-text">常用方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#location%E5%92%8Chistory%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%BA%94%E7%94%A8"><span class="nav-number">2.5.</span> <span class="nav-text">location和history对象的应用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Document%E5%AF%B9%E8%B1%A1"><span class="nav-number">3.</span> <span class="nav-text">Document对象</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%B1%9E%E6%80%A7-1"><span class="nav-number">3.0.1.</span> <span class="nav-text">常用属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Document%E5%AF%B9%E8%B1%A1%E5%BA%94%E7%94%A8"><span class="nav-number">3.0.2.</span> <span class="nav-text">Document对象应用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Document%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95"><span class="nav-number">3.0.3.</span> <span class="nav-text">Document对象的常用方法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#JavaScript%E5%86%85%E7%BD%AE%E5%AF%B9%E8%B1%A1"><span class="nav-number">4.</span> <span class="nav-text">JavaScript内置对象</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Date%E5%AF%B9%E8%B1%A1"><span class="nav-number">4.1.</span> <span class="nav-text">Date对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Date%E5%AF%B9%E8%B1%A1%E7%9A%84%E6%96%B9%E6%B3%95"><span class="nav-number">4.2.</span> <span class="nav-text">Date对象的方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%B6%E4%BD%9C%E6%97%B6%E9%92%9F%E7%89%B9%E6%95%88"><span class="nav-number">4.3.</span> <span class="nav-text">制作时钟特效</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Math%E5%AF%B9%E8%B1%A1"><span class="nav-number">4.4.</span> <span class="nav-text">Math对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9A%E6%97%B6%E5%87%BD%E6%95%B0"><span class="nav-number">4.5.</span> <span class="nav-text">定时函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#setTimeout-%E5%92%8CclearTimeout"><span class="nav-number">4.5.1.</span> <span class="nav-text">**setTimeout()**和clearTimeout()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#clearTimeout-%E8%A7%A3%E9%99%A4%E5%AE%9A%E6%97%B6%E5%87%BD%E6%95%B0"><span class="nav-number">4.5.2.</span> <span class="nav-text">**clearTimeout()**解除定时函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#setInterval-%E5%92%8CclearInterval"><span class="nav-number">4.5.3.</span> <span class="nav-text">setInterval()和clearInterval ()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#clearInterval-%E8%A7%A3%E9%99%A4%E5%AE%9A%E6%97%B6%E5%87%BD%E6%95%B0"><span class="nav-number">4.5.4.</span> <span class="nav-text">clearInterval ()解除定时函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%B6%E4%BD%9C12%E8%BF%9B%E5%88%B6%E7%9A%84%E6%97%B6%E9%92%9F%E7%89%B9%E6%95%88"><span class="nav-number">4.5.5.</span> <span class="nav-text">制作12进制的时钟特效</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="姜霖"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">姜霖</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jianglin428" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jianglin428" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:jianglin428@yeah.net" title="E-Mail → mailto:jianglin428@yeah.net" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://jq.qq.com/?_wv=1027&k=4dyoeB6O" title="QQ群 → https:&#x2F;&#x2F;jq.qq.com&#x2F;?_wv&#x3D;1027&amp;k&#x3D;4dyoeB6O" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>QQ群</a>
+      </span>
+  </div>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://olinl.gitee.io/2021/07/11/JavaScript%E6%93%8D%E4%BD%9CBOM%E5%AF%B9%E8%B1%A1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="姜霖">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="拾柒的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          JavaScript操作BOM对象
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-07-11 09:47:10" itemprop="dateCreated datePublished" datetime="2021-07-11T09:47:10+08:00">2021-07-11</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-05-13 15:11:30" itemprop="dateModified" datetime="2022-05-13T15:11:30+08:00">2022-05-13</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E4%BD%BF%E7%94%A8jQuery%E5%BF%AB%E9%80%9F%E9%AB%98%E6%95%88%E5%88%B6%E4%BD%9C%E7%BD%91%E9%A1%B5%E4%BA%A4%E4%BA%92%E7%89%B9%E6%95%88/" itemprop="url" rel="index"><span itemprop="name">使用jQuery快速高效制作网页交互特效</span></a>
+        </span>
+    </span>
+
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>6.3k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>6 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="BOM模型"><a href="#BOM模型" class="headerlink" title="BOM模型"></a>BOM模型</h1><ol>
+<li><p>BOM：浏览器对象模型（Browser Object Model）</p>
+</li>
+<li><p>BOM提供了独立于内容的、可以与浏览器窗口进行互动的对象结构</p>
+<span id="more"></span></li>
+</ol>
+<p><img src="https://olinimg.oss-cn-shanghai.aliyuncs.com/HexoImg/202205131511906.png" alt="image-20210711112651203"></p>
+<ol start="3">
+<li>BOM可实现功能<ol>
+<li>弹出新的浏览器窗口</li>
+<li>移动、关闭浏览器窗口以及调整窗口的大小</li>
+<li>页面的前进、后退</li>
+</ol>
+</li>
+</ol>
+<h1 id="window对象"><a href="#window对象" class="headerlink" title="window对象"></a>window对象</h1><ol>
+<li><h2 id="常用的属性"><a href="#常用的属性" class="headerlink" title="常用的属性"></a>常用的属性</h2><table>
+<thead>
+<tr>
+<th>属性名称</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>history</strong></td>
+<td>有关客户访问过的URL的信息</td>
+</tr>
+<tr>
+<td><strong>location</strong></td>
+<td>有关当前 URL 的信息</td>
+</tr>
+</tbody></table>
+<p>​    语法</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.属性名= <span class="string">&quot;属性值&quot;</span> </span><br></pre></td></tr></table></figure>
+
+<p>​    示例</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.location=<span class="string">&quot;http://www.bdqn.cn&quot;</span> ;      <span class="comment">//表示跳转到北大青鸟首页</span></span><br></pre></td></tr></table></figure></li>
+<li><h2 id="常用的方法"><a href="#常用的方法" class="headerlink" title="常用的方法"></a>常用的方法</h2><table>
+<thead>
+<tr>
+<th>方法名称</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>prompt( )</strong></td>
+<td>显示可提示用户输入的对话框</td>
+</tr>
+<tr>
+<td><strong>alert( )</strong></td>
+<td>显示带有一个提示信息和一个确定按钮的警示框</td>
+</tr>
+<tr>
+<td><strong>confirm( )</strong></td>
+<td>显示一个带有提示信息、确定和取消按钮的对话框</td>
+</tr>
+<tr>
+<td><strong>close( )</strong></td>
+<td>关闭浏览器窗口</td>
+</tr>
+<tr>
+<td><strong>open( )</strong></td>
+<td>打开一个新的浏览器窗口，加载给定 URL 所指定的文档</td>
+</tr>
+<tr>
+<td><strong>setTimeout( )</strong></td>
+<td>在指定的毫秒数后调用函数或计算表达式</td>
+</tr>
+<tr>
+<td><strong>setInterval()</strong></td>
+<td>按照指定的周期（以毫秒计）来调用函数或表达式</td>
+</tr>
+</tbody></table>
+<ol>
+<li><h3 id="confirm-方法"><a href="#confirm-方法" class="headerlink" title="confirm()方法"></a>confirm()方法</h3><ol>
+<li>confirm()：将弹出一个确认对话框</li>
+<li>confirm()与alert ()、 prompt()区别<ol>
+<li>alert( )：一个参数，仅显示警告对话框的消息，无返回值，不能对脚本产生任何改变</li>
+<li>prompt( )：两个参数，输入对话框，用来提示用户输入一些信息，单击“取消”按钮则返回null，击“确定”按钮则返回用户输入的值，常用于收集用户关于特定问题而反馈的信息</li>
+<li>confirm( )：一个参数，确认对话框，显示提示对话框的消息、“确定”按钮和“取消”按钮，单击“定”按钮返回true，单击“取消”按钮返回false，因此与if-else语句搭配使用</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//示例</span></span><br><span class="line">confirm(<span class="string">&quot;对话框中显示的纯文本&quot;</span>)</span><br><span class="line"></span><br><span class="line">&lt;script type=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><br><span class="line">   <span class="keyword">var</span> flag=confirm(<span class="string">&quot;确认要删除此条信息吗？&quot;</span>);</span><br><span class="line">    <span class="keyword">if</span>(flag==<span class="literal">true</span>)</span><br><span class="line">	      alert(<span class="string">&quot;删除成功！&quot;</span>);</span><br><span class="line">      <span class="keyword">else</span></span><br><span class="line">	       alert(<span class="string">&quot;你取消了删除&quot;</span>);</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><h3 id="open-方法"><a href="#open-方法" class="headerlink" title="open()方法"></a>open()方法</h3><ol>
+<li><p>窗口特征</p>
+<table>
+<thead>
+<tr>
+<th>属性名称</th>
+<th>说   明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>height、width</td>
+<td>窗口文档显示区的高度、宽度。以像素计</td>
+</tr>
+<tr>
+<td>left、top</td>
+<td>窗口的x坐标、y坐标。以像素计</td>
+</tr>
+<tr>
+<td>toolbar=yes |no |1 |0</td>
+<td>是否显示浏览器的工具栏。黙认是yes</td>
+</tr>
+<tr>
+<td>scrollbars=yes |no |1 |0</td>
+<td>是否显示滚动条。黙认是yes</td>
+</tr>
+<tr>
+<td>location=yes |no |1 |0</td>
+<td>是否显示地址地段。黙认是yes</td>
+</tr>
+<tr>
+<td>status=yes |no |1 |0</td>
+<td>是否添加状态栏。黙认是yes</td>
+</tr>
+<tr>
+<td>menubar=yes |no |1 |0</td>
+<td>是否显示菜单栏。黙认是yes</td>
+</tr>
+<tr>
+<td>resizable=yes |no |1 |0</td>
+<td>窗口是否可调节尺寸。黙认是yes</td>
+</tr>
+<tr>
+<td>titlebar=yes |no |1 |0</td>
+<td>是否显示标题栏。黙认是yes</td>
+</tr>
+<tr>
+<td>fullscreen=yes |no |1 |0</td>
+<td>是否使用全屏模式显示浏览器。黙认是no。<br>处于全屏模式的窗口必须同时处于剧院模式</td>
+</tr>
+</tbody></table>
+<p>语法:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.open(<span class="string">&quot;弹出窗口的url&quot;</span>,<span class="string">&quot;窗口名称&quot;</span>,<span class="string">&quot;窗口特征”)</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+</li>
+</ol>
+</li>
+<li><h2 id="history对象"><a href="#history对象" class="headerlink" title="history对象"></a>history对象</h2><ol>
+<li><p>常用方法</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>back()</td>
+<td>加载 history 对象列表中的前一个URL</td>
+</tr>
+<tr>
+<td>forward()</td>
+<td>加载 history 对象列表中的下一个URL</td>
+</tr>
+<tr>
+<td>go()</td>
+<td>加载 history 对象列表中的某个具体URL</td>
+</tr>
+</tbody></table>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">history.back()		<span class="comment">/*等价于*/</span>		history.go(-<span class="number">1</span>)	<span class="comment">//浏览器中的后退</span></span><br><span class="line">history.forward()	<span class="comment">/*等价于*/</span>		history.go(<span class="number">1</span>)	<span class="comment">//浏览器中的后退</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+</li>
+<li><h2 id="location对象"><a href="#location对象" class="headerlink" title="location对象"></a>location对象</h2><ol>
+<li><h3 id="常用属性"><a href="#常用属性" class="headerlink" title="常用属性"></a>常用属性</h3><table>
+<thead>
+<tr>
+<th>名称</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>host</td>
+<td>设置或返回主机名和当前URL的端口号</td>
+</tr>
+<tr>
+<td>hostname</td>
+<td>设置或返回当前URL的主机名</td>
+</tr>
+<tr>
+<td>href</td>
+<td>设置或返回完整的URL</td>
+</tr>
+</tbody></table>
+</li>
+<li><h3 id="常用方法"><a href="#常用方法" class="headerlink" title="常用方法"></a>常用方法</h3><table>
+<thead>
+<tr>
+<th>常用方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>reload()</td>
+<td>重新加载当前文档</td>
+</tr>
+<tr>
+<td>replace()</td>
+<td>用新的文档替换当前文档</td>
+</tr>
+</tbody></table>
+</li>
+</ol>
+</li>
+<li><h2 id="location和history对象的应用"><a href="#location和history对象的应用" class="headerlink" title="location和history对象的应用"></a>location和history对象的应用</h2><ol>
+<li><p>主页面使用href实现跳转和刷新本页</p>
+</li>
+<li><p>示例</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;a href=<span class="string">&quot;javascript:location.href=&#x27;flower.html&#x27;&quot;</span>&gt;查看鲜花详情&lt;/a&gt;  </span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;javascript:location.reload()&quot;</span>&gt;</span>刷新本页<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;javascript:history.back()&quot;</span>&gt;</span>返回主页面<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span></span><br></pre></td></tr></table></figure></li>
+</ol>
+</li>
+</ol>
+<h1 id="Document对象"><a href="#Document对象" class="headerlink" title="Document对象"></a>Document对象</h1><ol>
+<li><h3 id="常用属性-1"><a href="#常用属性-1" class="headerlink" title="常用属性"></a>常用属性</h3><table>
+<thead>
+<tr>
+<th>名称</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>referrer</strong></td>
+<td>返回载入当前文档的URL</td>
+</tr>
+<tr>
+<td><strong>URL</strong></td>
+<td>返回当前文档的URL</td>
+</tr>
+</tbody></table>
+<p>语法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.referrer</span><br><span class="line"><span class="built_in">document</span>.URL</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://olinimg.oss-cn-shanghai.aliyuncs.com/HexoImg/202205131511775.png" alt="image-20210711114644954"></p>
+</li>
+<li><h3 id="Document对象应用"><a href="#Document对象应用" class="headerlink" title="Document对象应用"></a>Document对象应用</h3><ol>
+<li><p>判断页面是否是链接进入</p>
+</li>
+<li><p>自动跳转到登录页面</p>
+</li>
+<li><p>示例</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> preUrl=<span class="built_in">document</span>.referrer;  <span class="comment">//载入本页面文档的地址</span></span><br><span class="line"><span class="keyword">if</span>(preUrl==<span class="string">&quot;&quot;</span>)&#123;	</span><br><span class="line">      <span class="built_in">document</span>.write(<span class="string">&quot;&lt;h2&gt;您不是从领奖页面进入，5秒后将自动 </span></span><br><span class="line"><span class="string">                         跳转到登录页面&lt;/h2&gt;&quot;</span>);</span><br><span class="line">      <span class="built_in">setTimeout</span>(<span class="string">&quot;javascript:location.href=&#x27;login.html&#x27;&quot;</span>,<span class="number">5000</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+</li>
+<li><h3 id="Document对象的常用方法"><a href="#Document对象的常用方法" class="headerlink" title="Document对象的常用方法"></a>Document对象的常用方法</h3><table>
+<thead>
+<tr>
+<th>名称</th>
+<th>说明</th>
+<th>应用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>getElementById()</td>
+<td>返回对拥有指定id的第一个对象的引用</td>
+<td><strong>对象的id唯一</strong></td>
+</tr>
+<tr>
+<td>getElementsByName()</td>
+<td>返回带有指定名称的对象的数组</td>
+<td>相同name属性</td>
+</tr>
+<tr>
+<td>getElementsByTagName()</td>
+<td>返回带有指定标签名的对象的数组</td>
+<td><strong>相同的元素</strong></td>
+</tr>
+<tr>
+<td>write()</td>
+<td>向文档写文本、HTML表达式或JavaScript代码</td>
+<td></td>
+</tr>
+</tbody></table>
+<ol>
+<li><p>动态改变层、标签中的内容</p>
+</li>
+<li><p>访问相同name的元素</p>
+</li>
+<li><p>访问相同标签的元素</p>
+</li>
+<li><p>示例</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.getElementById(<span class="string">&quot;book&quot;</span>).innerHTML=<span class="string">&quot;现象级全球畅销书&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> aInput=<span class="built_in">document</span>.getElementsByTagName(<span class="string">&quot;input&quot;</span>);</span><br><span class="line"><span class="keyword">var</span> sStr=<span class="string">&quot;&quot;</span>;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">0</span>;i&lt;aInput.length;i++)&#123;</span><br><span class="line">       sStr+=aInput[i].value+<span class="string">&quot;&amp;nbsp;&amp;nbsp;&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">document</span>.getElementById(<span class="string">&quot;replace&quot;</span>).innerHTML=sStr;</span><br></pre></td></tr></table></figure></li>
+</ol>
+</li>
+</ol>
+<h1 id="JavaScript内置对象"><a href="#JavaScript内置对象" class="headerlink" title="JavaScript内置对象"></a>JavaScript内置对象</h1><ol>
+<li>Array：用于在单独的变量名中存储一系列的值</li>
+<li>String：用于支持对字符串的处理</li>
+<li>Math：用于执行常用的数学任务，它包含了若干个数字常量和函数</li>
+<li>Date：用于操作日期和时间</li>
+</ol>
+<ol>
+<li><h2 id="Date对象"><a href="#Date对象" class="headerlink" title="Date对象"></a>Date对象</h2></li>
+</ol>
+<p>使用Date对象获得时、分、秒</p>
+<ol start="2">
+<li><h2 id="Date对象的方法"><a href="#Date对象的方法" class="headerlink" title="Date对象的方法"></a>Date对象的方法</h2></li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>getDate()</strong></td>
+<td>返回 Date 对象的一个月中的每一天，其值介于1～31之间</td>
+</tr>
+<tr>
+<td><strong>getDay()</strong></td>
+<td>返回 Date 对象的星期中的每一天，其值介于0～6之间</td>
+</tr>
+<tr>
+<td><strong>getHours()</strong></td>
+<td>返回 Date 对象的小时数，其值介于0～23之间</td>
+</tr>
+<tr>
+<td><strong>getMinutes()</strong></td>
+<td>返回 Date 对象的分钟数，其值介于0～59之间</td>
+</tr>
+<tr>
+<td><strong>getSeconds()</strong></td>
+<td>返回 Date 对象的秒数，其值介于0～59之间</td>
+</tr>
+<tr>
+<td><strong>getMonth()</strong></td>
+<td>返回 Date 对象的月份，其值介于0～11之间</td>
+</tr>
+<tr>
+<td><strong>getFullYear()</strong></td>
+<td>返回 Date 对象的年份，其值为4位数</td>
+</tr>
+<tr>
+<td><strong>getTime()</strong></td>
+<td>返回自某一时刻（1970年1月1日）以来的毫秒数</td>
+</tr>
+</tbody></table>
+<ol start="3">
+<li><h2 id="制作时钟特效"><a href="#制作时钟特效" class="headerlink" title="制作时钟特效"></a>制作时钟特效</h2></li>
+</ol>
+<p>使用Date对象的方法显示当前时间的小时、分钟和秒</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">disptime</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"><span class="keyword">var</span> today = <span class="keyword">new</span> <span class="built_in">Date</span>();  </span><br><span class="line"><span class="keyword">var</span> hh = today.getHours(); </span><br><span class="line"><span class="keyword">var</span> mm = today.getMinutes();</span><br><span class="line"><span class="keyword">var</span> ss = today.getSeconds();</span><br><span class="line"><span class="built_in">document</span>.getElementById(<span class="string">&quot;myclock&quot;</span>).innerHTML=<span class="string">&quot;现在是:&quot;</span>+hh +<span class="string">&quot;:&quot;</span>+mm+<span class="string">&quot;: &quot;</span>+ss;</span><br><span class="line">&#125;</span><br><span class="line">disptime();</span><br><span class="line"></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;myclock&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li><h2 id="Math对象"><a href="#Math对象" class="headerlink" title="Math对象"></a>Math对象</h2></li>
+</ol>
+<p>常用方法</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+<th>实例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ceil()</td>
+<td>对数进行上舍入</td>
+<td>Math.ceil(25.5);返回26  Math.ceil(-25.5);返回-25</td>
+</tr>
+<tr>
+<td>floor()</td>
+<td>对数进行下舍入</td>
+<td>Math.floor(25.5);返回25  Math.floor(-25.5);返回-26</td>
+</tr>
+<tr>
+<td>round()</td>
+<td>把数四舍五入为最接近的数</td>
+<td>Math.round(25.5);返回26  Math.round(-25.5);返回-26</td>
+</tr>
+<tr>
+<td>random()</td>
+<td>返回0~1之间的随机数</td>
+<td>Math.random();例如：0.6273608814137365</td>
+</tr>
+</tbody></table>
+<p>如何实现返回的整数范围为2~99？</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> iNum=<span class="built_in">Math</span>.floor(<span class="built_in">Math</span>.random()*<span class="number">98</span>+<span class="number">2</span>);</span><br></pre></td></tr></table></figure>
+
+<p>随机选择颜色</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">selColor</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">var</span> color=<span class="built_in">Array</span>(<span class="string">&quot;红色&quot;</span>,<span class="string">&quot;黄色&quot;</span>,<span class="string">&quot;蓝色&quot;</span>,<span class="string">&quot;绿色&quot;</span>,<span class="string">&quot;橙色&quot;</span>,<span class="string">&quot;青色&quot;</span>,<span class="string">&quot;紫色&quot;</span>);</span><br><span class="line">        <span class="keyword">var</span> num=<span class="built_in">Math</span>.ceil(<span class="built_in">Math</span>.random()*<span class="number">7</span>)-<span class="number">1</span>;</span><br><span class="line">        <span class="built_in">document</span>.getElementById(<span class="string">&quot;color&quot;</span>).innerHTML=color[num];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<ol start="5">
+<li><h2 id="定时函数"><a href="#定时函数" class="headerlink" title="定时函数"></a>定时函数</h2></li>
+<li><h3 id="setTimeout-和clearTimeout"><a href="#setTimeout-和clearTimeout" class="headerlink" title="**setTimeout()**和clearTimeout()"></a>**setTimeout()**和clearTimeout()</h3></li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">setTimeout</span>()</span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="string">&quot;调用的函数&quot;</span>,等待的毫秒数)</span><br></pre></td></tr></table></figure>
+
+<p>示例</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span>  myTime＝<span class="built_in">setTimeout</span>(<span class="string">&quot;disptime() &quot;</span>, <span class="number">1000</span> );</span><br><span class="line"></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">input</span> <span class="attr">name</span>=<span class="string">&quot;s&quot;</span> <span class="attr">type</span>=<span class="string">&quot;button&quot;</span> <span class="attr">value</span>=<span class="string">&quot;显示提示消息&quot;</span> <span class="attr">onclick</span>=<span class="string">&quot;timer()&quot;</span> /&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">timer</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">var</span> t=<span class="built_in">setTimeout</span>(<span class="string">&quot;alert(&#x27;3 seconds&#x27;)&quot;</span>,<span class="number">3000</span>);</span><br><span class="line">    <span class="comment">//1秒(1000毫秒)之后执行函数disptime()一次</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="clearTimeout-解除定时函数"><a href="#clearTimeout-解除定时函数" class="headerlink" title="**clearTimeout()**解除定时函数"></a>**clearTimeout()**解除定时函数</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">clearTimeout</span>(setTimeOut()返回的ID值)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span>  myTime＝<span class="built_in">setTimeout</span>(<span class="string">&quot;disptime() &quot;</span>, <span class="number">1000</span> );</span><br><span class="line"><span class="built_in">clearTimeout</span>(myTime)；</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><h3 id="setInterval-和clearInterval"><a href="#setInterval-和clearInterval" class="headerlink" title="setInterval()和clearInterval ()"></a><strong>setInterval()<strong>和</strong>clearInterval ()</strong></h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">setInterval</span>()</span><br><span class="line"><span class="built_in">setInterval</span>(<span class="string">&quot;调用的函数&quot;</span>,间隔的毫秒数)</span><br></pre></td></tr></table></figure>
+
+<p>示例</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span>  myTime＝<span class="built_in">setInterval</span>(<span class="string">&quot;disptime() &quot;</span>, <span class="number">1000</span> );</span><br></pre></td></tr></table></figure>
+
+<p>如果要多次调用，使用setInterval()或者让disptime()自身再次调用setTimeout()</p>
+<h3 id="clearInterval-解除定时函数"><a href="#clearInterval-解除定时函数" class="headerlink" title="clearInterval ()解除定时函数"></a>clearInterval ()解除定时函数</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">clearInterval</span>(<span class="built_in">setInterval</span>()返回的ID值)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span>  myTime＝<span class="built_in">setInterval</span>(<span class="string">&quot;disptime() &quot;</span>, <span class="number">1000</span> );</span><br><span class="line"><span class="built_in">clearInterval</span>(myTime)；</span><br></pre></td></tr></table></figure>
+
+<h3 id="制作12进制的时钟特效"><a href="#制作12进制的时钟特效" class="headerlink" title="制作12进制的时钟特效"></a>制作12进制的时钟特效</h3><p>代码:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">title</span>&gt;</span><span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">h1</span> <span class="attr">id</span>=<span class="string">&quot;time&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">	<span class="function"><span class="keyword">function</span> <span class="title">showTime</span>(<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">		<span class="keyword">var</span> timefinly = <span class="keyword">new</span> <span class="built_in">Date</span>();</span></span><br><span class="line"><span class="javascript">		<span class="keyword">var</span> year = timefinly.getFullYear(); <span class="comment">//年</span></span></span><br><span class="line"><span class="javascript">		<span class="keyword">var</span> month = timefinly.getMonth() + <span class="number">1</span>; <span class="comment">//月</span></span></span><br><span class="line"><span class="javascript">		<span class="keyword">var</span> day = timefinly.getDate(); <span class="comment">//日</span></span></span><br><span class="line"><span class="javascript">		<span class="keyword">var</span> hour = timefinly.getHours(); <span class="comment">//时</span></span></span><br><span class="line"><span class="javascript">		<span class="keyword">var</span> APM = <span class="string">&quot;AM&quot;</span>;</span></span><br><span class="line"><span class="javascript">		<span class="keyword">if</span> (hour &gt; <span class="number">12</span>) &#123;</span></span><br><span class="line"><span class="javascript">			APM = <span class="string">&quot;PM&quot;</span>;</span></span><br><span class="line"><span class="javascript">		&#125;</span></span><br><span class="line"><span class="javascript">		<span class="keyword">var</span> min = timefinly.getMinutes(); <span class="comment">//分</span></span></span><br><span class="line"><span class="javascript">		<span class="keyword">var</span> sec = timefinly.getSeconds(); <span class="comment">//秒</span></span></span><br><span class="line"><span class="javascript">		<span class="keyword">var</span> weekNum = timefinly.getDay(); <span class="comment">//周</span></span></span><br><span class="line"><span class="javascript">		<span class="keyword">if</span> (weekNum == <span class="number">0</span>) &#123;</span></span><br><span class="line"><span class="javascript">			weekNum = <span class="number">7</span>;</span></span><br><span class="line"><span class="javascript">		&#125;</span></span><br><span class="line"><span class="javascript">		<span class="keyword">var</span> week=<span class="string">&quot;&quot;</span>;</span></span><br><span class="line"><span class="javascript">		<span class="keyword">switch</span> (weekNum) &#123;</span></span><br><span class="line"><span class="javascript">			<span class="keyword">case</span> <span class="number">1</span>:</span></span><br><span class="line"><span class="javascript">			week=<span class="string">&quot;一&quot;</span>;</span></span><br><span class="line"><span class="javascript">				<span class="keyword">break</span>;</span></span><br><span class="line"><span class="javascript">			<span class="keyword">case</span> <span class="number">2</span>:</span></span><br><span class="line"><span class="javascript">			week=<span class="string">&quot;二&quot;</span>;</span></span><br><span class="line"><span class="javascript">				<span class="keyword">break</span>;</span></span><br><span class="line"><span class="javascript">			<span class="keyword">case</span> <span class="number">3</span>:</span></span><br><span class="line"><span class="javascript">			week=<span class="string">&quot;三&quot;</span>;</span></span><br><span class="line"><span class="javascript">				<span class="keyword">break</span>;</span></span><br><span class="line"><span class="javascript">			<span class="keyword">case</span> <span class="number">4</span>:</span></span><br><span class="line"><span class="javascript">			week=<span class="string">&quot;四&quot;</span>;</span></span><br><span class="line"><span class="javascript">				<span class="keyword">break</span>;</span></span><br><span class="line"><span class="javascript">			<span class="keyword">case</span> <span class="number">5</span>:</span></span><br><span class="line"><span class="javascript">			week=<span class="string">&quot;五&quot;</span>;</span></span><br><span class="line"><span class="javascript">				<span class="keyword">break</span>;</span></span><br><span class="line"><span class="javascript">			<span class="keyword">case</span> <span class="number">6</span>:</span></span><br><span class="line"><span class="javascript">			week=<span class="string">&quot;六&quot;</span>;</span></span><br><span class="line"><span class="javascript">				<span class="keyword">break</span>;</span></span><br><span class="line"><span class="javascript">			<span class="keyword">case</span> <span class="number">7</span>:</span></span><br><span class="line"><span class="javascript">			week=<span class="string">&quot;日&quot;</span>;</span></span><br><span class="line"><span class="javascript">				<span class="keyword">break</span>;</span></span><br><span class="line"><span class="javascript">		&#125;</span></span><br><span class="line"><span class="javascript">		<span class="keyword">var</span> content = year + <span class="string">&quot;年&quot;</span> + month + <span class="string">&quot;月&quot;</span> + day + <span class="string">&quot;日     &quot;</span> + hour + <span class="string">&quot;:&quot;</span> + min + <span class="string">&quot;:&quot;</span> + sec + <span class="string">&quot;     &quot;</span> + APM +</span></span><br><span class="line"><span class="javascript">			<span class="string">&quot;    星期&quot;</span> + week</span></span><br><span class="line"><span class="javascript">		<span class="built_in">document</span>.getElementById(<span class="string">&quot;time&quot;</span>).innerText = content;</span></span><br><span class="line"><span class="javascript">	&#125;</span></span><br><span class="line"><span class="javascript">	showTime();</span></span><br><span class="line"><span class="javascript">	<span class="keyword">var</span> atime = <span class="built_in">setInterval</span>(<span class="string">&quot;showTime()&quot;</span>, <span class="number">1000</span>);</span></span><br><span class="line"><span class="javascript">	<span class="comment">//clearInterval(atime);</span></span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p><img src="https://olinimg.oss-cn-shanghai.aliyuncs.com/HexoImg/202205131511983.png" alt="image-20210714100816234"></p>
+</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>姜霖
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://olinl.gitee.io/2021/07/11/JavaScript%E6%93%8D%E4%BD%9CBOM%E5%AF%B9%E8%B1%A1/" title="JavaScript操作BOM对象">https://olinl.gitee.io/2021/07/11/JavaScript操作BOM对象/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/07/09/%E5%AE%89%E8%A3%85Hexo/" rel="prev" title="安装Hexo">
+                  <i class="fa fa-chevron-left"></i> 安装Hexo
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/07/16/JavaScript%E6%93%8D%E4%BD%9CDOM%E5%AF%B9%E8%B1%A1/" rel="next" title="JavaScript操作DOM对象">
+                  JavaScript操作DOM对象 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+        
+	<div style="text-align:center;color: #ccc;font-size:20px;">
+		---------本文结束---------
+	</div>
+
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">姜霖</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">67k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">1:01</span>
+  </span>
+</div>
+<span id="busuanzi_container_site_uv">
+  本站访问次数：1314520 次<span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+</span>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
+   <!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/clicklove.js"></script>
+   <!-- 动态背景 -->
+
+<script type="text/javascript"
+color="0,0,255" opacity='0.7' zIndex="-2" count="99" src="/js/canvas-nest.min.js"></script>
+
+<!-- 代码块复制功能 -->
+<script src="https://cdn.jsdelivr.net/npm/clipboard@1/dist/clipboard.min.js"></script>
+<script type="text/javascript" src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<!-- <script type="text/javascript" src="/js/clipboard.js"></script>  -->
+<script type="text/javascript" src="/js/clipboard_use.js"></script>

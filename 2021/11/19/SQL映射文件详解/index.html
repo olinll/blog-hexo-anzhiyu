@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-bbt.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-bbt.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"olinl.gitee.io","root":"/","images":"/images","scheme":"Gemini","version":"8.6.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="SQL映射的XML文件特点MyBatis真正的特色在于SQL映射语句，功能强大，使用简单">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SQL映射文件详解">
+<meta property="og:url" content="https://olinl.gitee.io/2021/11/19/SQL%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%AF%A6%E8%A7%A3/index.html">
+<meta property="og:site_name" content="拾柒的博客">
+<meta property="og:description" content="SQL映射的XML文件特点MyBatis真正的特色在于SQL映射语句，功能强大，使用简单">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://olinimg.oss-cn-shanghai.aliyuncs.com/HexoImg/202205131512260.png">
+<meta property="article:published_time" content="2021-11-19T10:33:05.000Z">
+<meta property="article:modified_time" content="2022-05-13T07:24:57.786Z">
+<meta property="article:author" content="姜霖">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://olinimg.oss-cn-shanghai.aliyuncs.com/HexoImg/202205131512260.png">
+
+
+<link rel="canonical" href="https://olinl.gitee.io/2021/11/19/SQL%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%AF%A6%E8%A7%A3/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://olinl.gitee.io/2021/11/19/SQL%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%AF%A6%E8%A7%A3/","path":"2021/11/19/SQL映射文件详解/","title":"SQL映射文件详解"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>SQL映射文件详解 | 拾柒的博客</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+
+
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">拾柒的博客</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">顾拾柒</p>
+      <img class="custom-logo-image" src="/images/logo1.svg" alt="拾柒的博客">
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">4</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#SQL%E6%98%A0%E5%B0%84%E7%9A%84XML%E6%96%87%E4%BB%B6"><span class="nav-number">1.</span> <span class="nav-text">SQL映射的XML文件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%B9%E7%82%B9"><span class="nav-number">1.1.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SQL%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E7%9A%84%E5%87%A0%E4%B8%AA%E9%A1%B6%E7%BA%A7%E5%85%83%E7%B4%A0"><span class="nav-number">1.2.</span> <span class="nav-text">SQL映射文件的几个顶级元素</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mybatis%E6%A1%86%E6%9E%B6%E7%9A%84%E6%9D%A1%E4%BB%B6%E6%9F%A5%E8%AF%A2"><span class="nav-number">1.3.</span> <span class="nav-text">Mybatis框架的条件查询</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#select%E5%8D%95%E4%B8%80%E6%9D%A1%E4%BB%B6%E6%9F%A5%E8%AF%A2"><span class="nav-number">1.3.1.</span> <span class="nav-text">select单一条件查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#select%E5%A4%9A%E6%9D%A1%E4%BB%B6%E6%9F%A5%E8%AF%A2"><span class="nav-number">1.3.2.</span> <span class="nav-text">select多条件查询</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#parameterType"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">parameterType</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#resultMap"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">resultMap</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B5%8C%E5%A5%97%E7%BB%93%E6%9E%9C%E6%98%A0%E5%B0%84"><span class="nav-number">1.4.</span> <span class="nav-text">嵌套结果映射</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#association"><span class="nav-number">1.4.1.</span> <span class="nav-text">association</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#collection"><span class="nav-number">1.4.2.</span> <span class="nav-text">collection</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93"><span class="nav-number">1.4.3.</span> <span class="nav-text">小结</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#resultType"><span class="nav-number">1.4.3.1.</span> <span class="nav-text">resultType</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#resultMap-1"><span class="nav-number">1.4.3.2.</span> <span class="nav-text">resultMap</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MyBatis%E8%87%AA%E5%8A%A8%E6%98%A0%E5%B0%84"><span class="nav-number">1.4.4.</span> <span class="nav-text">MyBatis自动映射</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mybatis%E6%A1%86%E6%9E%B6%E7%9A%84%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5%E6%93%8D%E4%BD%9C"><span class="nav-number">1.5.</span> <span class="nav-text">Mybatis框架的增删改查操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#insert"><span class="nav-number">1.5.1.</span> <span class="nav-text">insert</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#update"><span class="nav-number">1.5.2.</span> <span class="nav-text">update</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#delete"><span class="nav-number">1.5.3.</span> <span class="nav-text">delete</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MyBatis%E4%BC%A0%E5%8F%82%E6%96%B9%E5%BC%8F%E9%80%89%E6%8B%A9"><span class="nav-number">1.5.4.</span> <span class="nav-text">MyBatis传参方式选择</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%93%E5%AD%98"><span class="nav-number">1.5.5.</span> <span class="nav-text">缓存</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">2.</span> <span class="nav-text">总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="姜霖"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">姜霖</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jianglin428" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jianglin428" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:jianglin428@yeah.net" title="E-Mail → mailto:jianglin428@yeah.net" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://jq.qq.com/?_wv=1027&k=4dyoeB6O" title="QQ群 → https:&#x2F;&#x2F;jq.qq.com&#x2F;?_wv&#x3D;1027&amp;k&#x3D;4dyoeB6O" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>QQ群</a>
+      </span>
+  </div>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://olinl.gitee.io/2021/11/19/SQL%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%AF%A6%E8%A7%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="姜霖">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="拾柒的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          SQL映射文件详解
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-11-19 18:33:05" itemprop="dateCreated datePublished" datetime="2021-11-19T18:33:05+08:00">2021-11-19</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-05-13 15:24:57" itemprop="dateModified" datetime="2022-05-13T15:24:57+08:00">2022-05-13</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Java%E5%BC%80%E5%8F%91%E4%B9%8BSSM%E4%BC%81%E4%B8%9A%E8%BD%BB%E9%87%8F%E7%BA%A7%E5%BC%80%E5%8F%91%E6%A1%86%E6%9E%B6/" itemprop="url" rel="index"><span itemprop="name">Java开发之SSM企业轻量级开发框架</span></a>
+        </span>
+    </span>
+
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>4.4k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="SQL映射的XML文件"><a href="#SQL映射的XML文件" class="headerlink" title="SQL映射的XML文件"></a>SQL映射的XML文件</h1><h2 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h2><p>MyBatis真正的特色在于SQL映射语句，功能强大，使用简单</p>
+<span id="more"></span>
+
+<h2 id="SQL映射文件的几个顶级元素"><a href="#SQL映射文件的几个顶级元素" class="headerlink" title="SQL映射文件的几个顶级元素"></a>SQL映射文件的几个顶级元素</h2><ol>
+<li><p>mapper – SQL映射文件的根元素，有一个namespace属性</p>
+<ol>
+<li><p>namespace属性，区别不同的mapper</p>
+<ol>
+<li>namespace和子元素的id联合保证唯一</li>
+<li>绑定DAO接口<ol>
+<li>namespace的命名必须跟某个接口同名</li>
+<li>接口中的方法与映射文件中SQL语句id一一对应</li>
+</ol>
+</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;mapper namespace=&quot;cn.cvs.dao.sysUser.SysUserMapper&quot;&gt;</span><br><span class="line">	&lt;select id=&quot;getUserList&quot; … &gt;</span><br><span class="line">		……</span><br><span class="line">	&lt;/select&gt;</span><br><span class="line">&lt;/mapper&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+</ol>
+</li>
+<li><p>cache – 配置给定命名空间的缓存</p>
+</li>
+<li><p>cache-ref – 从其他命名空间引用缓存配置</p>
+</li>
+<li><p><strong>resultMap</strong> – 用来描述数据库结果集和对象的对应关系</p>
+</li>
+<li><p>sql – 可以重用的SQL块，也可以被其他语句引用</p>
+</li>
+<li><p>insert – 映射插入语句</p>
+</li>
+<li><p>update – 映射更新语句</p>
+</li>
+<li><p>delete – 映射删除语句</p>
+</li>
+<li><p>select – 映射查询语句</p>
+</li>
+</ol>
+<h2 id="Mybatis框架的条件查询"><a href="#Mybatis框架的条件查询" class="headerlink" title="Mybatis框架的条件查询"></a>Mybatis框架的条件查询</h2><h3 id="select单一条件查询"><a href="#select单一条件查询" class="headerlink" title="select单一条件查询"></a>select单一条件查询</h3><p>select是MyBatis中最常用的元素之一</p>
+<p>select元素有很多属性，可以详细配置每一条查询语句</p>
+<ol>
+<li>id<ol>
+<li>命名空间中唯一的标识符</li>
+<li>接口中的方法与映射文件中的SQL语句id一一对应</li>
+</ol>
+</li>
+<li>parameterType<ol>
+<li>传入SQL语句的参数类型</li>
+</ol>
+</li>
+<li>resultType<ol>
+<li>SQL语句返回值类型的完整类名或别名</li>
+</ol>
+</li>
+</ol>
+<p>Mybatis框架内建的部分别名与java数据类型的映射关系</p>
+<table>
+<thead>
+<tr>
+<th>别名</th>
+<th>映射类型</th>
+<th>别名</th>
+<th>映射类型</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>boolean</td>
+<td>Boolean</td>
+<td>string</td>
+<td>String</td>
+</tr>
+<tr>
+<td>byte</td>
+<td>Byte</td>
+<td>bigdcimal或decimal</td>
+<td>BigDecimal</td>
+</tr>
+<tr>
+<td>long</td>
+<td>Long</td>
+<td>date</td>
+<td>Date</td>
+</tr>
+<tr>
+<td>short</td>
+<td>Short</td>
+<td>map</td>
+<td>Map</td>
+</tr>
+<tr>
+<td>int或integer</td>
+<td>Integer</td>
+<td>hashmap</td>
+<td>HashMap</td>
+</tr>
+<tr>
+<td>double</td>
+<td>Double</td>
+<td>list</td>
+<td>List</td>
+</tr>
+<tr>
+<td>float</td>
+<td>Float</td>
+<td>arraylist</td>
+<td>ArrayList</td>
+</tr>
+</tbody></table>
+<h3 id="select多条件查询"><a href="#select多条件查询" class="headerlink" title="select多条件查询"></a>select多条件查询</h3><h4 id="parameterType"><a href="#parameterType" class="headerlink" title="parameterType"></a>parameterType</h4><ol>
+<li>使用复杂数据类型<ol>
+<li>Java实体类</li>
+<li>Map</li>
+<li>通过 #{属性名} 或者 #{map的keyName} 获取传入的值</li>
+</ol>
+</li>
+<li>使用多个简单数据类型<ol>
+<li>int、String、Date等，一个参数传递单一数值</li>
+<li>使用@Param注解为参数命名，通过 #{参数名} 获取传入的值</li>
+</ol>
+</li>
+</ol>
+<h4 id="resultMap"><a href="#resultMap" class="headerlink" title="resultMap"></a>resultMap</h4><p>resultMap描述如何将结果集映射到Java对象</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;resultMap id=&quot;userWithRoleName&quot; type=&quot;sysuser&quot;&gt;</span><br><span class="line">	&lt;id property=&quot;id&quot; column=&quot;id&quot;/&gt;</span><br><span class="line">&lt;result property=&quot;userRoleName&quot; column=&quot;roleName&quot;/&gt;&lt;!--从数据库中查询 的列名或者别名--&gt;</span><br><span class="line">&lt;/resultMap&gt;&lt;!--表示查询出来的字段的值 赋给实体对象的哪个属性--&gt;</span><br><span class="line">&lt;select id=&quot;getUserListWithRoleName&quot;</span><br><span class="line">&lt;resultMap=&quot;userWithRoleName&quot; parameterType=&quot;sysuser&quot;&gt;</span><br><span class="line">					&lt;!-- 一个外部resultMap的id，表示根据哪一个resultMap 映射查询结果--&gt;</span><br><span class="line">    select u.*, r.roleName from t_sys_user u, t_sys_role r</span><br><span class="line">    where u.realName like CONCAT (&#x27;%&#x27;, #&#123;realName&#125;, &#x27;%&#x27;)</span><br><span class="line">    and u.roleId = #&#123;roleId&#125; and u.roleId = r.id</span><br><span class="line">&lt;/select&gt;</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>resultMap元素的属性<ol>
+<li>id：resultMap的唯一标识</li>
+<li>type：映射的结果类型</li>
+</ol>
+</li>
+<li>resultMap元素的子元素<ol>
+<li>id：指定和数据表主键字段对应的标识属性<ol>
+<li>设置此项可提高MyBatis性能</li>
+</ol>
+</li>
+<li>result：指定结果集字段和实体类属性的映射关系</li>
+<li>association：映射“多对一”或“一对一”关系</li>
+<li>collection：映射“一对多”关系</li>
+</ol>
+</li>
+</ol>
+<h2 id="嵌套结果映射"><a href="#嵌套结果映射" class="headerlink" title="嵌套结果映射"></a>嵌套结果映射</h2><h3 id="association"><a href="#association" class="headerlink" title="association"></a>association</h3><ul>
+<li><p>复杂的关联类型，映射一个嵌套JavaBean属性</p>
+</li>
+<li><p>多对一或一对一</p>
+</li>
+<li><p>属性</p>
+<ul>
+<li>property：用来映射查询结果子集的实体属性</li>
+<li>javaType：完整Java类名或者别名</li>
+<li>resultMap：引用外部resultMap</li>
+</ul>
+</li>
+<li><p>子元素</p>
+<ul>
+<li><p>id</p>
+</li>
+<li><p>result</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;id property=&quot;id&quot; column=&quot;id&quot;&gt;&lt;/id&gt;</span><br><span class="line">    </span><br><span class="line">      &lt;!-- &lt;result property=&quot;name&quot; column=&quot;name&quot;&gt;&lt;/result&gt;</span><br><span class="line">       &lt;result property=&quot;age&quot; column=&quot;age&quot;&gt;&lt;/result&gt;</span><br><span class="line">       &lt;result property=&quot;address&quot; column=&quot;address&quot;&gt;&lt;/result&gt;</span><br><span class="line">       &lt;result property=&quot;dept_id&quot; column=&quot;dept_id&quot;&gt;&lt;/result&gt;--&gt;</span><br><span class="line">    </span><br><span class="line">       &lt;!--对象属性--&gt;</span><br><span class="line">       &lt;association property=&quot;dept&quot; javaType=&quot;com.s3.pojo.Dept&quot;&gt;</span><br><span class="line">           &lt;id property=&quot;id&quot; column=&quot;id&quot;&gt;&lt;/id&gt;</span><br><span class="line">           &lt;!--&lt;result property=&quot;dept_name&quot; column=&quot;dept_name&quot;&gt;&lt;/result&gt;--&gt;</span><br><span class="line">       &lt;/association&gt;</span><br><span class="line">   &lt;/resultMap&gt;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<h3 id="collection"><a href="#collection" class="headerlink" title="collection"></a>collection</h3><ul>
+<li><p>复杂类型集合，映射嵌套结果集到一个列表</p>
+</li>
+<li><p><strong>一对多</strong></p>
+</li>
+<li><p>属性</p>
+<ul>
+<li>property：实体类中用来映射查询结果子集的集合属性</li>
+<li>ofType：集合中元素的类型，完整Java类名或者别名</li>
+<li>resultMap：引用外部resultMap</li>
+</ul>
+</li>
+<li><p>子元素</p>
+<ul>
+<li>id</li>
+<li>result</li>
+</ul>
+</li>
+</ul>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><h4 id="resultType"><a href="#resultType" class="headerlink" title="resultType"></a>resultType</h4><ul>
+<li>直接表示返回类型</li>
+<li>适用于比较简单直接的数据封装场景</li>
+</ul>
+<h4 id="resultMap-1"><a href="#resultMap-1" class="headerlink" title="resultMap"></a>resultMap</h4><ul>
+<li>是对外部resultMap的引用</li>
+<li>能够处理结果集字段名与实体类属性名不一致、或者需要对连接查询结果使用嵌套映射等较为复杂的问题</li>
+</ul>
+<p><strong>二者本质上都是基于Map数据结构，不能同时使用</strong></p>
+<h3 id="MyBatis自动映射"><a href="#MyBatis自动映射" class="headerlink" title="MyBatis自动映射"></a>MyBatis自动映射</h3><ul>
+<li><p>自动映射的前提：属性名与字段名一致</p>
+</li>
+<li><p>自动映射级别：autoMappingBehavior</p>
+</li>
+</ul>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;settings&gt;</span><br><span class="line">	&lt;setting  name=&quot;autoMappingBehavior&quot; </span><br><span class="line">			   value=&quot;[ NONE | PARTIAL | FULL ]&quot; /&gt;</span><br><span class="line">&lt;/settings&gt;</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>自动映射行为</th>
+<th>resultType  （不支持嵌套映射）</th>
+<th>没有嵌套映射的resultMap</th>
+<th>有嵌套映射的resultMap</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>NONE</td>
+<td>失效</td>
+<td>手工映射</td>
+<td>手工映射</td>
+</tr>
+<tr>
+<td>PARTIAL</td>
+<td>自动映射</td>
+<td>自动映射</td>
+<td>手工映射</td>
+</tr>
+<tr>
+<td>FULL</td>
+<td>自动映射</td>
+<td>自动映射</td>
+<td>自动映射</td>
+</tr>
+</tbody></table>
+<h2 id="Mybatis框架的增删改查操作"><a href="#Mybatis框架的增删改查操作" class="headerlink" title="Mybatis框架的增删改查操作"></a>Mybatis框架的增删改查操作</h2><h3 id="insert"><a href="#insert" class="headerlink" title="insert"></a>insert</h3><ul>
+<li><p>id</p>
+</li>
+<li><p>parameterType</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;insert id=&quot;add&quot; parameterType=&quot;sysuser&quot;&gt;</span><br><span class="line">    insert into t_sys_user (account, realName, password, …… )</span><br><span class="line">    values (#&#123;account&#125;, #&#123;realName&#125;, #&#123;password&#125;, …… )</span><br><span class="line">&lt;/insert&gt;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>增删改（insert、update、delete）这类操作通常返回影响行数，<br>insert、update、delete元素均没有resultType/resultMap属性</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="update"><a href="#update" class="headerlink" title="update"></a>update</h3><ul>
+<li>id</li>
+<li>parameterType</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;update id=&quot;modify&quot; parameterType=&quot;sysuser&quot;&gt;</span><br><span class="line">update t_sys_user set account=#&#123;account&#125;, realName=#&#123;realName&#125;, ……</span><br><span class="line">where id = #&#123;id&#125;</span><br><span class="line">&lt;/update&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="delete"><a href="#delete" class="headerlink" title="delete"></a>delete</h3><ul>
+<li>id</li>
+<li>parameterType</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;delete id=&quot;deleteUserById&quot; parameterType=&quot;integer&quot;&gt;</span><br><span class="line">    delete from t_sys_user where id=#&#123;id&#125;</span><br><span class="line">&lt;/delete&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="MyBatis传参方式选择"><a href="#MyBatis传参方式选择" class="headerlink" title="MyBatis传参方式选择"></a>MyBatis传参方式选择</h3><blockquote>
+<p>参数较多时最好封装成对象入参<br>参数组合比较固定的业务方法，最好使用多参数入参，代码可读性高</p>
+</blockquote>
+<h3 id="缓存"><a href="#缓存" class="headerlink" title="缓存"></a>缓存</h3><ul>
+<li>一级缓存</li>
+<li>二级缓存</li>
+</ul>
+<p>二级缓存的配置</p>
+<ul>
+<li><p>MyBatis的全局cache配置</p>
+ <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">settings</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">setting</span> <span class="attr">name</span>=<span class="string">&quot;cacheEnabled&quot;</span> <span class="attr">value</span>=<span class="string">&quot;true&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">settings</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li><p>在SQL映射文件中设置缓存，默认情况下是没有开启缓存的</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;cache eviction=&quot;FIFO&quot; flushInterval=&quot;60000&quot; </span><br><span class="line">        size=&quot;512&quot; readOnly=&quot;true&quot; /&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+<li><p>在SQL映射文件配置支持cache后，如果需要对个别查询进行调整，可以单独设置</p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;select id=&quot;selectAll&quot; resultType=&quot;SysUser&quot; </span><br><span class="line">        useCache=&quot;true&quot;&gt;</span><br><span class="line">	……</span><br></pre></td></tr></table></figure>
+
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>  <img src="https://olinimg.oss-cn-shanghai.aliyuncs.com/HexoImg/202205131512260.png" alt="image-20211119190552285"></p>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>姜霖
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://olinl.gitee.io/2021/11/19/SQL%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%AF%A6%E8%A7%A3/" title="SQL映射文件详解">https://olinl.gitee.io/2021/11/19/SQL映射文件详解/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/11/17/%E5%88%9D%E5%A7%8BMyBatis%E6%A1%86%E6%9E%B6/" rel="prev" title="初始MyBatis框架">
+                  <i class="fa fa-chevron-left"></i> 初始MyBatis框架
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/11/24/MyBatis%E5%8A%A8%E6%80%81SQL/" rel="next" title="MyBatis动态SQL">
+                  MyBatis动态SQL <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+        
+	<div style="text-align:center;color: #ccc;font-size:20px;">
+		---------本文结束---------
+	</div>
+
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">姜霖</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">67k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">1:01</span>
+  </span>
+</div>
+<span id="busuanzi_container_site_uv">
+  本站访问次数：1314520 次<span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+</span>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
+   <!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/clicklove.js"></script>
+   <!-- 动态背景 -->
+
+<script type="text/javascript"
+color="0,0,255" opacity='0.7' zIndex="-2" count="99" src="/js/canvas-nest.min.js"></script>
+
+<!-- 代码块复制功能 -->
+<script src="https://cdn.jsdelivr.net/npm/clipboard@1/dist/clipboard.min.js"></script>
+<script type="text/javascript" src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<!-- <script type="text/javascript" src="/js/clipboard.js"></script>  -->
+<script type="text/javascript" src="/js/clipboard_use.js"></script>

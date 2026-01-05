@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-bbt.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-bbt.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"olinl.gitee.io","root":"/","images":"/images","scheme":"Gemini","version":"8.6.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="1.为什么使用集合框架 数组长度固定不变，不能很好地适应元素数量动态变化的情况。 课通过数组名**.length**获取数组的长度，取无法直接获取数组中真实存储的个数。 数组采用在内存中分配连续空间的存储方式，根据下标可以快速获取对应的信息，但根据信息查找时效率低下，需要多次比较。在进行频繁插入、删除操作时同样效率低下">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第六章 集合框架">
+<meta property="og:url" content="https://olinl.gitee.io/2021/06/04/%E7%AC%AC%E5%85%AD%E7%AB%A0%20%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/index.html">
+<meta property="og:site_name" content="拾柒的博客">
+<meta property="og:description" content="1.为什么使用集合框架 数组长度固定不变，不能很好地适应元素数量动态变化的情况。 课通过数组名**.length**获取数组的长度，取无法直接获取数组中真实存储的个数。 数组采用在内存中分配连续空间的存储方式，根据下标可以快速获取对应的信息，但根据信息查找时效率低下，需要多次比较。在进行频繁插入、删除操作时同样效率低下">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://olinl.gitee.io/2021/06/04/%E7%AC%AC%E5%85%AD%E7%AB%A0%20%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/img%5Cimage-20210528165408509.png">
+<meta property="og:image" content="https://olinimg.oss-cn-shanghai.aliyuncs.com/HexoImg/202205131510202.png">
+<meta property="article:published_time" content="2021-06-03T22:50:51.000Z">
+<meta property="article:modified_time" content="2022-05-13T07:10:33.632Z">
+<meta property="article:author" content="姜霖">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://olinl.gitee.io/2021/06/04/%E7%AC%AC%E5%85%AD%E7%AB%A0%20%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/img%5Cimage-20210528165408509.png">
+
+
+<link rel="canonical" href="https://olinl.gitee.io/2021/06/04/%E7%AC%AC%E5%85%AD%E7%AB%A0%20%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://olinl.gitee.io/2021/06/04/%E7%AC%AC%E5%85%AD%E7%AB%A0%20%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/","path":"2021/06/04/第六章 集合框架/","title":"第六章 集合框架"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>第六章 集合框架 | 拾柒的博客</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+
+
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">拾柒的博客</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">顾拾柒</p>
+      <img class="custom-logo-image" src="/images/logo1.svg" alt="拾柒的博客">
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">4</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%BF%E7%94%A8%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6"><span class="nav-number">1.</span> <span class="nav-text">1.为什么使用集合框架</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Java%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6%E5%8C%85%E5%90%AB%E7%9A%84%E5%86%85%E5%AE%B9"><span class="nav-number">2.</span> <span class="nav-text">2.Java集合框架包含的内容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-List%E6%8E%A5%E5%8F%A3"><span class="nav-number">3.</span> <span class="nav-text">3.List接口</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-Map%E6%8E%A5%E5%8F%A3"><span class="nav-number">3.1.</span> <span class="nav-text">4.Map接口</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-Map%E6%8E%A5%E5%8F%A3%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95"><span class="nav-number">3.1.1.</span> <span class="nav-text">1.Map接口常用方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E8%BF%AD%E4%BB%A3%E5%99%A8Iterator"><span class="nav-number">3.1.2.</span> <span class="nav-text">2.迭代器Iterator</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-%E6%B3%9B%E5%9E%8B%E9%9B%86%E5%90%88"><span class="nav-number">3.1.3.</span> <span class="nav-text">5.泛型集合</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E6%80%BB%E7%BB%93"><span class="nav-number">4.</span> <span class="nav-text">4.总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="姜霖"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">姜霖</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jianglin428" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jianglin428" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:jianglin428@yeah.net" title="E-Mail → mailto:jianglin428@yeah.net" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://jq.qq.com/?_wv=1027&k=4dyoeB6O" title="QQ群 → https:&#x2F;&#x2F;jq.qq.com&#x2F;?_wv&#x3D;1027&amp;k&#x3D;4dyoeB6O" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>QQ群</a>
+      </span>
+  </div>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://olinl.gitee.io/2021/06/04/%E7%AC%AC%E5%85%AD%E7%AB%A0%20%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="姜霖">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="拾柒的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          第六章 集合框架
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-06-04 06:50:51" itemprop="dateCreated datePublished" datetime="2021-06-04T06:50:51+08:00">2021-06-04</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-05-13 15:10:33" itemprop="dateModified" datetime="2022-05-13T15:10:33+08:00">2022-05-13</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E4%BD%BF%E7%94%A8Java%E5%AE%9E%E7%8E%B0%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B%E6%95%B4%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">使用Java实现面向对象编程整理</span></a>
+        </span>
+    </span>
+
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.8k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>2 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="1-为什么使用集合框架"><a href="#1-为什么使用集合框架" class="headerlink" title="1.为什么使用集合框架"></a>1.为什么使用集合框架</h2><ul>
+<li>数组长度固定不变，不能很好地适应元素数量动态变化的情况。</li>
+<li>课通过数组名**.length**获取数组的长度，取无法直接获取数组中真实存储的个数。</li>
+<li>数组采用在内存中分配连续空间的存储方式，根据下标可以快速获取对应的信息，但根据信息查找时效率低下，需要多次比较。在进行频繁插入、删除操作时同样效率低下<span id="more"></span></li>
+</ul>
+<h2 id="2-Java集合框架包含的内容"><a href="#2-Java集合框架包含的内容" class="headerlink" title="2.Java集合框架包含的内容"></a>2.Java集合框架包含的内容</h2><p>集合框架是为表示和操作借还而规定的一种统一的标准结构体系。集合框架都包含三大块内容：对外的接口，接口的实现和对集合运算的算法。</p>
+<ul>
+<li>接口：表示集合的抽象类数据类型。</li>
+<li>实现：集合框架中接口的具体实现。</li>
+<li>算法：在一个实现了某个集合框架中的接口的对象身上完成某种有用的计算的方法</li>
+</ul>
+<p>Java集合框架中的两大类的接口：<strong>Collection</strong> 和 <strong>Map</strong> 。</p>
+<ul>
+<li><strong>Collection</strong> 接口可以存储一组不唯一，无序的对象<ul>
+<li> <strong>Set</strong> 接口继承 <strong>Collection</strong> 接口，存储一组唯一、无序的对象。</li>
+<li> <strong>List</strong> 接口继承 <strong>Collection</strong> 接口，存储一组不唯一、有序的对象</li>
+</ul>
+</li>
+<li> <strong>Map</strong> 接口存储一组成对的键-值对象，提供 <strong>key（键）</strong> 到 <strong>value（值）</strong> 的映射。<strong>Map</strong> 中的 <strong>key</strong> 不要求有序，不允许重复。 <strong>value</strong> 同样不要求有序，但运行重复。</li>
+<li> <strong>lterator</strong> 接口负责定义访问和遍历元素的接口。</li>
+</ul>
+<p><img src="/2021/06/04/%E7%AC%AC%E5%85%AD%E7%AB%A0%20%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/img%5Cimage-20210528165408509.png" alt="image-20210528165408509"></p>
+<h2 id="3-List接口"><a href="#3-List接口" class="headerlink" title="3.List接口"></a>3.List接口</h2><ul>
+<li>实现List接口的常用类有 <strong>ArrayList</strong> 和 <strong>LinkedList</strong> 。他们都可以容纳所有类型的对象，包括null，允许重复，并且都包子元素的存储顺序。</li>
+</ul>
+<p>（1）LinkedList采用链表存储方式，有点在与插入，删除元素是效率比较高。</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>void addFirst(Object o)</td>
+<td>在列表的首部添加元素</td>
+</tr>
+<tr>
+<td>void addLast(Object o)</td>
+<td>在列表的末尾添加元素</td>
+</tr>
+<tr>
+<td>Object getFirst()</td>
+<td>返回列表中的第一个元素</td>
+</tr>
+<tr>
+<td>Object getLast()</td>
+<td>返回列表中的最后一个元素</td>
+</tr>
+<tr>
+<td>Object removeFirst()</td>
+<td>删除并返回列表中的第一个元素</td>
+</tr>
+<tr>
+<td>Object removeLast()</td>
+<td>删除并返回列表中的最后一个元素</td>
+</tr>
+</tbody></table>
+<p>（2）ArrayList集合类</p>
+<table>
+<thead>
+<tr>
+<th>方法名</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>boolean</strong> <strong>add(Object o)</strong></td>
+<td>在列表的末尾顺序添加元素，起始索引位置从0开始</td>
+</tr>
+<tr>
+<td><strong>void add(int index,Object o)</strong></td>
+<td>在指定的索引位置添加元素。索引位置必须介于0和列表中元素个数之间</td>
+</tr>
+<tr>
+<td><strong>int size()</strong></td>
+<td>返回列表中的元素个数</td>
+</tr>
+<tr>
+<td><strong>Object get(int index)</strong></td>
+<td>返回指定索引位置处的元素。取出的元素是Object类型，使用前需要进行强制类型转换</td>
+</tr>
+<tr>
+<td><strong>boolean contains(Object o)</strong></td>
+<td>判断列表中是否存在指定元素</td>
+</tr>
+<tr>
+<td><strong>boolean remove(Object o)</strong></td>
+<td>从列表中删除元素</td>
+</tr>
+<tr>
+<td><strong>Object remove(int index)</strong></td>
+<td>从列表中删除指定位置元素，起始索引位置从0开始</td>
+</tr>
+</tbody></table>
+<p>List接口的 <strong>add(Object o)</strong> 方法的参数类型是 <strong>Object</strong> ，即使在调用时形参是插入时的类型，但系统认为是 <strong>Object</strong> ，所以在 <strong>get()</strong> 获取必需强转。</p>
+<h3 id="4-Map接口"><a href="#4-Map接口" class="headerlink" title="4.Map接口"></a>4.Map接口</h3><h4 id="1-Map接口常用方法"><a href="#1-Map接口常用方法" class="headerlink" title="1.Map接口常用方法"></a>1.Map接口常用方法</h4><table>
+<thead>
+<tr>
+<th>方法名</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Object put(Object key, Object val)</strong></td>
+<td>以“键-值对”的方式进行存储</td>
+</tr>
+<tr>
+<td><strong>Object get (Object key)</strong></td>
+<td>根据键返回相关联的值，如果不存在指定的键，返回null</td>
+</tr>
+<tr>
+<td><strong>Object remove (Object key)</strong></td>
+<td>删除由指定的键映射的“键-值对”</td>
+</tr>
+<tr>
+<td><strong>int size()</strong></td>
+<td>返回元素个数</td>
+</tr>
+<tr>
+<td><strong>Set keySet ()</strong></td>
+<td>返回键的集合</td>
+</tr>
+<tr>
+<td><strong>Collection values ()</strong></td>
+<td>返回值的集合</td>
+</tr>
+<tr>
+<td><strong>boolean containsKey (Object key)</strong></td>
+<td>如果存在由指定的键映射的“键-值对”，返回true</td>
+</tr>
+</tbody></table>
+<h4 id="2-迭代器Iterator"><a href="#2-迭代器Iterator" class="headerlink" title="2.迭代器Iterator"></a>2.迭代器Iterator</h4><p><strong>Collection</strong> 接口的iterator()方法返回一个 <strong>Iterator</strong> ，然后通过 <strong>Iterator</strong> 接口的两个方法即可方便的实现遍历</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">hasNext</span><span class="params">()</span></span>; <span class="comment">//判断是否存在另一个可访问的元素</span></span><br><span class="line"><span class="function">Object <span class="title">next</span><span class="params">()</span></span>;	   <span class="comment">//返回要访问的下一个元素</span></span><br></pre></td></tr></table></figure>
+
+<p>增强for循环</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(元素类型t  元素变量x : 数组或集合对象)&#123;</span><br><span class="line">         引用了x的java语句</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="5-泛型集合"><a href="#5-泛型集合" class="headerlink" title="5.泛型集合"></a>5.泛型集合</h4><p>如何解决以下强制类型转换时容易出现的异常问题?</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">List <span class="title">get</span><span class="params">(<span class="keyword">int</span> index)</span>方法获取元素</span></span><br><span class="line"><span class="function">Map <span class="title">get</span><span class="params">(Object key)</span>方法获取元素</span></span><br><span class="line"><span class="function">Iterator <span class="title">next</span><span class="params">()</span>方法获取元素</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="4-总结"><a href="#4-总结" class="headerlink" title="4.总结"></a>4.总结</h2><p><img src="https://olinimg.oss-cn-shanghai.aliyuncs.com/HexoImg/202205131510202.png" alt="第六章 集合框架"></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>姜霖
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://olinl.gitee.io/2021/06/04/%E7%AC%AC%E5%85%AD%E7%AB%A0%20%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/" title="第六章 集合框架">https://olinl.gitee.io/2021/06/04/第六章 集合框架/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/06/04/%E7%AC%AC%E4%BA%94%E7%AB%A0%20%E5%BC%82%E5%B8%B8/" rel="prev" title="第五章 异常">
+                  <i class="fa fa-chevron-left"></i> 第五章 异常
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/06/04/%E7%AC%AC%E4%B8%83%E7%AB%A0%20%E5%A4%9A%E7%BA%BF%E7%A8%8B/" rel="next" title="第七章 多线程">
+                  第七章 多线程 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+        
+	<div style="text-align:center;color: #ccc;font-size:20px;">
+		---------本文结束---------
+	</div>
+
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">姜霖</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">67k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">1:01</span>
+  </span>
+</div>
+<span id="busuanzi_container_site_uv">
+  本站访问次数：1314520 次<span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+</span>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
+   <!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/clicklove.js"></script>
+   <!-- 动态背景 -->
+
+<script type="text/javascript"
+color="0,0,255" opacity='0.7' zIndex="-2" count="99" src="/js/canvas-nest.min.js"></script>
+
+<!-- 代码块复制功能 -->
+<script src="https://cdn.jsdelivr.net/npm/clipboard@1/dist/clipboard.min.js"></script>
+<script type="text/javascript" src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<!-- <script type="text/javascript" src="/js/clipboard.js"></script>  -->
+<script type="text/javascript" src="/js/clipboard_use.js"></script>
